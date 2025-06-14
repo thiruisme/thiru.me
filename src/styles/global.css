@@ -1,0 +1,350 @@
+/*==========  RESET  ==========*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/*==========  EMERALD CHECKER BACKDROP  ==========*/
+:root {
+  --emerald-dark: #1b4d3e;
+  --emerald-light: #2b7a57;
+  --accent-top: #a7f542;
+  --accent-bot: #5db92c;
+  --shell-width: 960px;
+}
+
+html,
+body {
+  font: 16px/1.5 Arial, Helvetica, sans-serif;
+  color: #222;
+  background:
+    repeating-linear-gradient(0deg, var(--emerald-dark) 0 8px, var(--emerald-light) 8px 16px),
+    repeating-linear-gradient(90deg, var(--emerald-dark) 0 8px, var(--emerald-light) 8px 16px);
+}
+
+/*==========  FLUID SHELL  ==========*/
+.shell {
+  width: 100%;
+  max-width: var(--shell-width);
+  margin: 0 auto;
+  background: #fff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, .35);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/*==========  SITE HEADER  ==========*/
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* children (nav) will fill full shell width */
+  margin-bottom: 16px;
+  background-color: var(--emerald-dark);
+}
+
+.header img {
+  align-self: center;
+  /* logo stays centered */
+  margin: 16px 0;
+}
+
+/*==========  HERO  ==========*/
+/*==========  HERO (now image-based)  ==========*/
+.hero {}
+
+/*==========  NAV BAR (fills shell)  ==========*/
+nav {
+  width: 100%;
+  /* now fills the shell container */
+  background: var(--emerald-dark);
+  padding: 8px 0;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  display: inline-block;
+  padding: 8px 14px;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  background: linear-gradient(var(--accent-top), var(--accent-bot));
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .4);
+  transition: background .15s;
+}
+
+nav a:hover {
+  background: linear-gradient(#c1ff71, #7fd943);
+}
+
+/*==========  MAIN CONTENT  ==========*/
+.content {
+  padding: 24px;
+  flex: 1;
+}
+
+.content h1 {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  color: #0f623b;
+}
+
+.content h2 {
+  font-size: 1.4rem;
+  margin: 24px 0 8px;
+  color: #0f623b;
+}
+
+.content p {
+  margin-bottom: 12px;
+}
+
+/*==========  HOMEPAGE GRID  ==========*/
+.home-grid {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.sidebar {
+  position: sticky;
+  top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/*==========  CARD GRID  ==========*/
+/* Global default: 3 columns */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* Homepage override: 2 columns */
+.home-grid .cards {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Remove underlines on card links */
+.home-grid .cards a,
+.cards a {
+  text-decoration: none;
+}
+
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: #F5FFF4;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .15);
+}
+
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-title {
+  font-weight: bold;
+  color: #064926;
+  font-size: 1.05rem;
+}
+
+.card-text {
+  font-size: .9rem;
+  flex: 1;
+}
+
+/*==========  FOOTER  ==========*/
+footer {
+  padding: 16px;
+  text-align: center;
+  font-size: .8rem;
+  background: #dcefd9;
+  color: #225327;
+}
+
+/*==========  RESPONSIVE BREAKPOINTS  ==========*/
+/* Collapse to 2 columns under 960px */
+@media (max-width: 959px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Collapse to 1 column under 600px */
+@media (max-width: 599px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  /* Homepage: force 1 column */
+  .home-grid .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Collapse homepage grid to 1 column under 800px */
+@media (max-width: 800px) {
+  .home-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 1️⃣ Body / default text */
+body {
+  font-family: "avenir-lt-pro", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* 2️⃣ Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "aesthet-nova", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Italic body text */
+em,
+.italic {
+  font-style: italic;
+  /* uses the 400 italic or 700 italic variant */
+}
+
+/* Bold body text */
+strong,
+.bold {
+  font-weight: 700;
+  /* uses the 700 normal variant */
+}
+
+/* Bold italic */
+.italic.bold {
+  font-weight: 700;
+  font-style: italic;
+}
+
+/*==========  Remove underline & default link color from cards  ==========*/
+.cards .card>a {
+  text-decoration: none;
+  /* no underline */
+  color: inherit;
+  /* use the card’s text color */
+}
+
+/* make sure hover/visited don’t re-introduce it */
+.cards .card>a:hover,
+.cards .card>a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+/*==========  CARD HOVER ANIMATION  ==========*/
+/* Ensure the card and its text transition smoothly */
+.cards .card {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Also transition the nested title/text */
+.cards .card .card-title,
+.cards .card .card-text {
+  transition: color 0.3s ease;
+}
+
+/* On hover: dark emerald BG + white text */
+.cards .card:hover {
+  background-color: var(--emerald-dark);
+}
+
+.cards .card:hover .card-title {
+  color: var(--accent-top);
+}
+
+.cards .card:hover .card-text {
+  color: #fff;
+}
+
+/*==========  CARD RISE ON HOVER  ==========*/
+.cards .card {
+  /* ensure smooth movement */
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.cards .card:hover {
+  /* lift the card up */
+  transform: translateY(-6px);
+  /* deepen the shadow for extra pop */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/*==========  SHELL BACKDROP (text area) ==========*/
+:root {
+  /*
+  --shell-bg-light: #e8f5e9;
+ very pale mint 
+  --shell-bg-grid: #c8e6c9;
+ slightly darker mint */
+  --shell-bg-light: #e8f5e9;
+  /* very pale mint */
+  --shell-bg-grid: #dceedc;
+  /* slightly darker mint */
+  --shell-grid-size: 20px;
+  /* size of each grid cell */
+}
+
+.shell {
+  /* base pastel fill */
+  background-color: var(--shell-bg-light);
+
+  /* overlay a light grid */
+  background-image:
+    linear-gradient(to right, var(--shell-bg-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--shell-bg-grid) 1px, transparent 1px);
+  background-size: var(--shell-grid-size) var(--shell-grid-size);
+
+  /* keep your existing layout rules */
+  width: 100%;
+  max-width: var(--shell-width);
+  margin: 0 auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, .35);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-top: 16px;
+}

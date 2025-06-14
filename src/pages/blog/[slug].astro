@@ -1,0 +1,37 @@
+---
+// 1️⃣ Imports + Static Paths
+import Layout from "../../components/Layout.astro";
+import { getCollection, getEntryBySlug, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  return posts.map((p) => ({
+    params: { slug: p.slug },
+  }));
+}
+
+// 2️⃣ Fetch + compile
+const { slug } = Astro.params;
+const post = await getEntryBySlug("posts", slug);
+if (!post) throw new Error(`Post not found: ${slug}`);
+
+const { Content } = await render(post);
+---
+
+<Layout current="blog" hero={true} title={`${post.data.title} – Emerald Blog`}>
+  <article>
+    <!-- post title & date -->
+    <h1>{post.data.title}</h1>
+    <p style="font-size:0.6rem; margin-bottom:1rem;">
+      <em>{new Date(post.data.date).toLocaleDateString()}</em>
+    </p>
+
+    <!-- the compiled HTML -->
+    <Content />
+
+    <!-- back link -->
+    <p style="margin-top:2rem;">
+      <a class="button" href="/blog/">&larr; Back to Blog</a>
+    </p>
+  </article>
+</Layout>

@@ -1,16 +1,82 @@
 ---
+import Layout from "../components/Layout.astro";
+import { getCollection } from "astro:content";
 
+const posts = await getCollection("posts");
 ---
+<Layout current="home" hero={true} title="GBA • Emerald Fan Blog">
+  <!-- two-col layout: main + sidebar -->
+  <div class="home-grid">
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+    <!-- ——— MAIN COLUMN ——— -->
+    <main class="content">
+      <h1>Latest Posts</h1>
+
+      <section class="cards">
+        {posts
+          .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+          .slice(0, 6)
+          .map((p) => (
+            <article class="card">
+              <a href={`/blog/${p.slug}/`}>
+                <img
+                  src={p.data.thumbnail ?? "https://placehold.co/280x160?text=Thumbnail"}
+                  alt={p.data.title}
+                />
+                <div class="card-body">
+                  <div class="card-title">{p.data.title}</div>
+                  <p class="card-text">{p.data.excerpt}</p>
+                </div>
+              </a>
+            </article>
+          ))}
+      </section>
+
+      <section>
+        <h2>Quick Facts</h2>
+        <p>
+          The GBA sold over <strong>80 million</strong> units worldwide.
+          The SP’s back-light dropped in 2003!
+        </p>
+      </section>
+
+      <section>
+        <h2>Popular Tags</h2>
+        <div class="tags" style="display:flex;flex-wrap:wrap;gap:8px;">
+          <a class="tag" href="#">Emerald</a>
+          <a class="tag" href="#">Hoenn</a>
+          <a class="tag" href="#">Hidden Abilities</a>
+          <a class="tag" href="#">Fan Art</a>
+          <a class="tag" href="#">Speedruns</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- ——— SIDEBAR ——— -->
+    <aside class="sidebar">
+      <section>
+        <h2>Tip of the Day</h2>
+        <p>
+          In Pokémon Emerald, using&nbsp;<strong>Rain Dance</strong> plus
+          <em>Swift Swim</em> can make Ludicolo faster than almost any other
+          Pokémon!
+        </p>
+      </section>
+
+      <section>
+        <h2>Upcoming Event</h2>
+        <p>Join our <strong>GBA Fan Jam</strong> on Discord—June 20, 2025.</p>
+      </section>
+
+      <section>
+        <h2>Random Pokémon</h2>
+        <img
+          src="https://placehold.co/200x200?text=Pokémon"
+          alt="Random Pokémon"
+          style="width:100%;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.15)"
+        />
+      </section>
+    </aside>
+
+  </div>
+</Layout>

@@ -1,0 +1,20 @@
+---
+// src/components/Header.astro
+export interface Props { current?: "home" | "blog" | "contact" | "links"; }
+const { current = "" } = Astro.props;
+---
+<header class="header">
+  <img
+    src="/public/images/thiru-banner.webp"
+    alt="Emerald Logo"
+    style="height:48px; width:auto;"
+  />
+  <nav>
+    <ul>
+      <li><a href="/"       class={current==="home"    ? "active" : ""}>Home</a></li>
+      <li><a href="/blog"   class={current==="blog"    ? "active" : ""}>Blog</a></li>
+      <li><a href="/links"  class={current==="links"   ? "active" : ""}>Links</a></li>
+      <li><a href="/contact"class={current==="contact" ? "active" : ""}>Contact</a></li>
+    </ul>
+  </nav>
+</header>

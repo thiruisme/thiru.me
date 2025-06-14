@@ -1,0 +1,54 @@
+---
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
+import "../styles/global.css";
+
+export interface Props {
+  title?: string;
+  current?: "home" | "blog" | "links" | "contact";
+  hero?: boolean;
+}
+const {
+  title   = "Pokémon Emerald Blog",
+  current,
+  hero    = false
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://use.typekit.net/qft7ovr.css">
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="shell">
+      {hero && (
+        <header class="hero">
+          <picture>
+            <!-- Mobile: up to 600px -->
+            <source
+              media="(max-width: 600px)"
+              srcset="/images/hero-mobile.webp"
+            />
+            <!-- Desktop fallback -->
+            <img
+              src="/images/hero-desktop.webp"
+              alt="Pokémon Emerald Banner"
+              width="960" height="360"
+              style="display:block; width:100%; height:auto;"
+            />
+          </picture>
+        </header>
+      )}
+      <Header current={current} />
+
+      <main class="content">
+        <slot />
+      </main>
+
+      <Footer />
+    </div>
+  </body>
+</html>

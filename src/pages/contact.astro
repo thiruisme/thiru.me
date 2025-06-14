@@ -1,0 +1,56 @@
+---
+import Layout from "../components/Layout.astro";
+---
+<Layout current="contact" title="Contact Us – Emerald Blog">
+  <h1>Contact Us</h1>
+  <p>
+    If you’ve got questions, feedback, or just want to say hi, click “Send
+    Message” and your mail app will open ready to send to us.
+  </p>
+
+  <!-- Add an ID so we can hook JS to it -->
+  <form id="contact-form" style="display:flex;flex-direction:column;gap:12px;margin-top:1rem;">
+    <label>
+      Name:<br />
+      <input type="text" name="name" placeholder="Your name" required
+        style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;" />
+    </label>
+
+    <label>
+      Email:<br />
+      <input type="email" name="email" placeholder="you@example.com" required
+        style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;" />
+    </label>
+
+    <label>
+      Message:<br />
+      <textarea name="message" rows="6" required
+        style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;"></textarea>
+    </label>
+
+    <button type="submit" class="button" style="align-self:start;">
+      Send Message
+    </button>
+  </form>
+
+  <!-- Inline script to build the mailto: URL -->
+  <script is:inline>
+    const form = document.getElementById("contact-form");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const nameVal = form.elements["name"].value;
+      const emailVal = form.elements["email"].value;
+      const msgVal = form.elements["message"].value;
+
+      const to = "hey@thiru.me"; 
+      const subject = encodeURIComponent(`Contact from ${nameVal} via thiru.me`);
+      const body = encodeURIComponent(
+        `Name: ${nameVal}\nEmail: ${emailVal}\n\n${msgVal}`
+      );
+
+      // Launch the default mail client:
+      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    });
+  </script>
+</Layout>

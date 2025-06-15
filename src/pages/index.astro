@@ -15,7 +15,7 @@ const posts = await getCollection("posts");
       <section class="cards">
         {posts
           .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-          .slice(0, 6)
+          .slice(0, 4)
           .map((p) => (
             <article class="card">
               <a href={`/blog/${p.slug}/`}>

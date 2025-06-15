@@ -39,7 +39,7 @@ const { Content } = await render(post);
       <a href="/blog/">&larr; Back to Blog</a>
     </div>
     <!-- post title & date -->
-    <h1>{post.data.title}</h1>
+    <h1 class="post-date">{post.data.title}</h1>
     <p style="font-size:0.6rem; margin-bottom:1rem;">
       <em>{new Date(post.data.date).toLocaleDateString()}</em>
     </p>

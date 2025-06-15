@@ -453,6 +453,33 @@ background: linear-gradient(190deg, rgba(0, 0, 0, 1) 0%, rgba(4, 42, 89, 1) 62%,
   color: var(--emerald-dark);
 }
 
+.button {
+  border: none;
+  background-color: var(--accent-bot);
+  color: currentColor;
+  box-shadow: none;
+  text-shadow: none;
+  padding: 8px 15px;
+  font: inherit;
+  color: white;
+  border-radius: 5px;
+}
+
+.button:hover {
+  background-color: var(--emerald-light);
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  width: 150px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 /*==================================================
   6. BLOG - PROSE TYPOGRAPHY (scoped to .prose-blog)
 ==================================================*/

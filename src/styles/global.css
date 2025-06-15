@@ -55,7 +55,7 @@ body {
 
 /*==========  HERO  ==========*/
 /*==========  HERO (now image-based)  ==========*/
-.hero {}
+/*.hero {} */
 
 /*==========  NAV BAR (fills shell)  ==========*/
 nav {
@@ -87,6 +87,25 @@ nav a {
 }
 
 nav a:hover {
+  background: linear-gradient(#c1ff71, #7fd943);
+}
+
+/* Useful Links buttons styled like nav links */
+.links-list a {
+  display: inline-block;
+  width: 300px;
+  padding: 8px 14px;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  background: linear-gradient(var(--accent-top), var(--accent-bot));
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .4);
+  transition: background 0.15s;
+  margin: 5px 0px 5px 0px;
+}
+
+.links-list a:hover {
   background: linear-gradient(#c1ff71, #7fd943);
 }
 
@@ -347,4 +366,11 @@ strong,
   flex-direction: column;
   min-height: 100vh;
   padding-top: 16px;
+}
+
+.links-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }

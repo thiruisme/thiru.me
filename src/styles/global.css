@@ -1,4 +1,21 @@
-/*==========  RESET  ==========*/
+/*==================================================
+  Table of Contents
+====================================================
+  1.  GLOBAL & RESET
+  2.  ROOT VARIABLES
+  3.  BASE & TYPOGRAPHY
+  4.  LAYOUT (SHELL, HEADER, FOOTER, GRIDS)
+  5.  COMPONENTS
+      - Navigation Tabs
+      - Cards
+      - Buttons & Links
+  6.  BLOG - PROSE TYPOGRAPHY
+  7.  RESPONSIVE STYLES
+==================================================*/
+
+/*=================================
+  1. GLOBAL & RESET
+=================================*/
 *,
 *::before,
 *::after {
@@ -7,198 +24,123 @@
   padding: 0;
 }
 
-/*==========  EMERALD CHECKER BACKDROP  ==========*/
+/*=================================
+  2. ROOT VARIABLES
+=================================*/
 :root {
+  /* Colors */
   --emerald-dark: #1b4d3e;
   --emerald-light: #2b7a57;
   --accent-top: #a7f542;
   --accent-bot: #5db92c;
+  --text-color: #222;
+  --heading-color: #0f623b;
+  --footer-bg: #dcefd9;
+  --footer-text: #225327;
+
+  /* Shell Grid Background */
+  --shell-bg-light: #e8f5e9;
+  --shell-bg-grid: #dceedc;
+  --shell-grid-size: 20px;
+
+  /* Layout */
   --shell-width: 960px;
 }
 
+/*=================================
+  3. BASE & TYPOGRAPHY
+=================================*/
 html,
 body {
-  font: 16px/1.5 Arial, Helvetica, sans-serif;
-  color: #222;
+  /* Typography */
+  color: var(--text-color);
+  font: 16px/1.5 "avenir-lt-pro", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  /* Visuals */
   background:
     repeating-linear-gradient(0deg, var(--emerald-dark) 0 8px, var(--emerald-light) 8px 16px),
     repeating-linear-gradient(90deg, var(--emerald-dark) 0 8px, var(--emerald-light) 8px 16px);
+  background-attachment: fixed, fixed;
 }
 
-/*==========  FLUID SHELL  ==========*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--heading-color);
+  font-family: "aesthet-nova", serif;
+  font-style: normal;
+  font-weight: 400;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 1.4rem;
+  margin: 24px 0 8px;
+}
+
+p {
+  margin-bottom: 12px;
+}
+
+em,
+.italic {
+  font-style: italic;
+}
+
+strong,
+.bold {
+  font-weight: 700;
+}
+
+.italic.bold {
+  font-style: italic;
+  font-weight: 700;
+}
+
+/*=================================
+  4. LAYOUT (SHELL, HEADER, FOOTER, GRIDS)
+=================================*/
 .shell {
-  width: 100%;
-  max-width: var(--shell-width);
-  margin: 0 auto;
-  background: #fff;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* drop only downward */
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  z-index: 10;
-}
-
-/*==========  SITE HEADER  ==========*/
-.header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 50px;
-  margin-bottom: 24px;
-  /* children (nav) will fill full shell width */
-  margin-bottom: 16px;
-  background-color: var(--emerald-dark);
-}
-
-.header img {
-  align-self: center;
-  /* logo stays centered */
-}
-
-/*==========  HERO  ==========*/
-/*==========  HERO (now image-based)  ==========*/
-/*.hero {} */
-
-/*==========  NAV BAR (fills shell)  ==========*/
-nav {
   width: 100%;
-  /* now fills the shell container */
-  background: var(--emerald-dark);
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 16px;
-  justify-content: flex-start;
-  margin: 0;
-  padding: 0;
-}
-
-/* ——— SLANTED “PAPER” TABS ——— */
-nav {
-  position: relative;
-  z-index: 1;
-  white-space: nowrap;
-  /* keep your existing background/padding */
-  color: #064926;
-}
-
-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  gap: 0;           /* we’ll overlap links with negative margins */
-}
-
-nav li {
-  /* allow links to overlap slightly for seamless joins */
-  margin: 0 -6px;
-}
-
-nav a {
-  position: relative;
-  display: inline-block;
-padding: 1.2em 2em 0.7em;
-  color: inherit;
-  text-decoration: none;
-  /* pull them together to hide adjoining borders */
-  margin: 0;
-  /* preserve your top‐corner rounding */
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-    font-size: 1.1rem;
-    
-}
-
-/* the “tab face” */
-nav a::before {
-  content: "";
-  position: absolute;
-  top: -10px; 
-  right: 0; 
-  left: 0; 
-  bottom: 0em;
-  z-index: -1;
-  border: 1px solid var(--accent-bot);
-  border-bottom: none;
-  border-radius: 8px 8px 0 0;
-background: #DCEFD9;
-  box-shadow: 0 2px hsla(0,0%,100%,.5) inset;
-  /* slight perspective tilt */
-  transform: perspective(5px) rotateX(2deg);
-  transform-origin: bottom;
-  transition: background 0.2s, margin-bottom 0.2s;
-  
-}
-
-/* hover state */
-nav a:hover::before {
-  background: #F7FFF7;
-}
-
-/* active tab sits “in front” */
-nav a.active {
-  z-index: 2;
-}
-
-/* extend active tab face down to meet content */
-nav a.active::before {
-  margin-bottom: -1px;
-  /* match your shell grid background */
+  max-width: var(--shell-width);
+  min-height: 100vh;
+  margin: 0 auto;
   background-color: var(--shell-bg-light);
   background-image:
     linear-gradient(to right, var(--shell-bg-grid) 1px, transparent 1px),
     linear-gradient(to bottom, var(--shell-bg-grid) 1px, transparent 1px);
   background-size: var(--shell-grid-size) var(--shell-grid-size);
-  border-color: #dadce0;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+  z-index: 10;
 }
 
-/* Useful Links buttons styled like nav links */
-.links-list a {
-  display: inline-block;
-  width: 300px;
-  padding: 8px 14px;
-  font-weight: bold;
-  color: #fff;
-  text-decoration: none;
-  background: linear-gradient(var(--accent-top), var(--accent-bot));
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .4);
-  transition: background 0.15s;
-  margin: 5px 0px 5px 0px;
+.header {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  background-color: var(--emerald-dark);
 }
 
-.links-list a:hover {
-  background: linear-gradient(#c1ff71, #7fd943);
-}
-
-/*==========  MAIN CONTENT  ==========*/
 .content {
+  flex: 1; /* Allows content to fill space and push footer down */
+}
+
+/* Shared padding for main content areas */
+.content,
+.blog {
   padding: 24px;
-  flex: 1;
 }
 
-.content h1 {
-  font-size: 2rem;
-  margin-bottom: 16px;
-  color: #0f623b;
-}
-
-.content h2 {
-  font-size: 1.4rem;
-  margin: 24px 0 8px;
-  color: #0f623b;
-}
-
-.content p {
-  margin-bottom: 12px;
-}
-
-/*==========  HOMEPAGE GRID  ==========*/
 .home-grid {
   display: grid;
   grid-template-columns: 3fr 1fr;
@@ -214,33 +156,122 @@ nav a.active::before {
   gap: 20px;
 }
 
-/*==========  CARD GRID  ==========*/
-/* Global default: 3 columns */
+footer {
+  padding: 16px;
+  background: var(--footer-bg);
+  color: var(--footer-text);
+  font-size: .8rem;
+  text-align: center;
+}
+
+/*=================================
+  5. COMPONENTS
+=================================*/
+
+/*--- Navigation Tabs ---*/
+nav {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  color: #064926;
+  white-space: nowrap;
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  list-style: none;
+}
+
+nav li {
+  margin: 0 -6px; /* Overlap links for a seamless join */
+}
+
+nav a {
+  position: relative;
+  display: inline-block;
+  padding: 1.2em 2em 0.7em;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  color: inherit;
+  font-size: 1.1rem;
+  text-decoration: none;
+}
+
+/* The slanted "paper" face of the tab */
+nav a::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  border: 1px solid var(--accent-bot);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  background: #dcefd9;
+  box-shadow: 0 2px hsla(0, 0%, 100%, .5) inset;
+  transform: perspective(5px) rotateX(2deg);
+  transform-origin: bottom;
+  transition: background 0.2s, margin-bottom 0.2s;
+}
+
+nav a:hover::before {
+  background: #f7fff7;
+}
+
+/* Active tab sits "in front" and connects to the content area */
+nav a.active {
+  z-index: 2;
+}
+
+nav a.active::before {
+  margin-bottom: -1px; /* Extends down to hide the top of the content area */
+  background-color: var(--shell-bg-light);
+  background-image:
+    linear-gradient(to right, var(--shell-bg-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--shell-bg-grid) 1px, transparent 1px);
+  background-size: var(--shell-grid-size) var(--shell-grid-size);
+  border-color: #dadce0;
+}
+
+/*--- Cards ---*/
 .cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
-/* Homepage override: 2 columns */
+/* Homepage override for a 2-column card layout */
 .home-grid .cards {
   grid-template-columns: repeat(2, 1fr);
 }
 
-/* Remove underlines on card links */
-.home-grid .cards a,
+/* Links wrapping cards should not have underlines */
 .cards a {
+  color: inherit;
   text-decoration: none;
 }
-
 
 .card {
   display: flex;
   flex-direction: column;
-  background: #F5FFF4;
-  border-radius: 6px;
   overflow: hidden;
+  background: #f5fff4;
+  border-radius: 6px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, .15);
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card:hover {
+  background-color: var(--emerald-dark); /* Darken background */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Deepen shadow for pop */
+  transform: translateY(-6px); /* Lift the card up */
 }
 
 .card img {
@@ -250,190 +281,36 @@ nav a.active::before {
 }
 
 .card-body {
-  padding: 14px;
   display: flex;
+  flex: 1; /* Ensures card bodies are same height in a row */
   flex-direction: column;
   gap: 8px;
+  padding: 14px;
 }
 
 .card-title {
-  font-weight: bold;
   color: #064926;
   font-size: 1.05rem;
-}
-
-.card-text {
-  font-size: .9rem;
-  flex: 1;
-}
-
-/*==========  FOOTER  ==========*/
-footer {
-  padding: 16px;
-  text-align: center;
-  font-size: .8rem;
-  background: #dcefd9;
-  color: #225327;
-}
-
-/*==========  RESPONSIVE BREAKPOINTS  ==========*/
-/* Collapse to 2 columns under 960px */
-@media (max-width: 959px) {
-  .cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* Collapse to 1 column under 600px */
-@media (max-width: 599px) {
-  .cards {
-    grid-template-columns: 1fr;
-  }
-
-  /* Homepage: force 1 column */
-  .home-grid .cards {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Collapse homepage grid to 1 column under 800px */
-@media (max-width: 800px) {
-  .home-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* 1️⃣ Body / default text */
-body {
-  font-family: "avenir-lt-pro", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-/* 2️⃣ Headings */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "aesthet-nova", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-/* Italic body text */
-em,
-.italic {
-  font-style: italic;
-  /* uses the 400 italic or 700 italic variant */
-}
-
-/* Bold body text */
-strong,
-.bold {
-  font-weight: 700;
-  /* uses the 700 normal variant */
-}
-
-/* Bold italic */
-.italic.bold {
-  font-weight: 700;
-  font-style: italic;
-}
-
-/*==========  Remove underline & default link color from cards  ==========*/
-.cards .card>a {
-  text-decoration: none;
-  /* no underline */
-  color: inherit;
-  /* use the card’s text color */
-}
-
-/* make sure hover/visited don’t re-introduce it */
-.cards .card>a:hover,
-.cards .card>a:visited {
-  text-decoration: none;
-  color: inherit;
-}
-
-/*==========  CARD HOVER ANIMATION  ==========*/
-/* Ensure the card and its text transition smoothly */
-.cards .card {
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Also transition the nested title/text */
-.cards .card .card-title,
-.cards .card .card-text {
+  font-weight: bold;
   transition: color 0.3s ease;
 }
 
-/* On hover: dark emerald BG + white text */
-.cards .card:hover {
-  background-color: var(--emerald-dark);
+.card-text {
+  color: var(--text-color);
+  font-size: .9rem;
+  transition: color 0.3s ease;
 }
 
-.cards .card:hover .card-title {
+/* Change text color on card hover */
+.card:hover .card-title {
   color: var(--accent-top);
 }
 
-.cards .card:hover .card-text {
+.card:hover .card-text {
   color: #fff;
 }
 
-/*==========  CARD RISE ON HOVER  ==========*/
-.cards .card {
-  /* ensure smooth movement */
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.cards .card:hover {
-  /* lift the card up */
-  transform: translateY(-6px);
-  /* deepen the shadow for extra pop */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-/*==========  SHELL BACKDROP (text area) ==========*/
-:root {
-  /*
-  --shell-bg-light: #e8f5e9;
- very pale mint 
-  --shell-bg-grid: #c8e6c9;
- slightly darker mint */
-  --shell-bg-light: #e8f5e9;
-  /* very pale mint */
-  --shell-bg-grid: #dceedc;
-  /* slightly darker mint */
-  --shell-grid-size: 20px;
-  /* size of each grid cell */
-}
-
-.shell {
-  /* base pastel fill */
-  background-color: var(--shell-bg-light);
-
-  /* overlay a light grid */
-  background-image:
-    linear-gradient(to right, var(--shell-bg-grid) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--shell-bg-grid) 1px, transparent 1px);
-  background-size: var(--shell-grid-size) var(--shell-grid-size);
-
-  /* keep your existing layout rules */
-  width: 100%;
-  max-width: var(--shell-width);
-  margin: 0 auto;
-  box-shadow: 0 0 15px rgba(0, 0, 0, .35);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
+/*--- Buttons & Links ---*/
 .links-container {
   display: flex;
   flex-direction: column;
@@ -441,19 +318,361 @@ strong,
   gap: 16px;
 }
 
-@media (max-width: 700px) {
-  .header {
-    flex-direction: column;
-    align-items: center;      /* center logo & nav */
-    gap: 8px;                 /* a little space between logo and tabs */
-  }
+.links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* A bit more space between buttons */
+  padding: 0;
+  list-style: none;
+}
 
-  .header img {
-    margin: 0;                /* remove any leftover margins */
-  }
+/* 1. The Main Link Container (<a> tag) */
+.link-button {
+  /* Positioning & Box Model */
+  position: relative;
+  display: flex;
+  justify-content: center; /* Center the label inside */
+  align-items: center;
+  width: 300px;
+  min-height: 44px; /* Good for accessibility */
+  margin: 5px 0;
+  /* Typography & Visuals */
+  color: #fff;
+  text-decoration: none;
+  /* Transition for hover effect */
+  transition: transform 0.2s ease;
+}
 
-  nav ul {
-    justify-content: center;  /* center the tabs under the logo */
+.link-button:hover {
+  transform: translateY(-2px);
+}
+
+/* 2. The Icon Container (<span>) */
+.link-button .icon {
+  /* Position it on the left */
+  position: absolute;
+  left: 1rem; /* 16px from the left edge */
+  top: 50%;
+  transform: translateY(-50%);
+  /* ✅ CRITICAL: Set an explicit size for the icon container */
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 3. The Icon Image Itself (<img>) */
+.link-button .icon img {
+  /* ✅ CRITICAL: Ensure image fits within the container */
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
+
+/* 4. The Visible Button Label (<span>) */
+.link-button .label {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 0px 0px rgba(0, 0, 0, .4);
+  /* Default background (optional, can be removed if all buttons have a modifier) */
+  background: linear-gradient(var(--accent-top), var(--accent-bot));
+  transition: background 0.15s;
+  transition: box-shadow 0.15s ease;
+}
+
+.link-button:hover .label {
+  background: linear-gradient(#c1ff71, #7fd943);
+  box-shadow: 0 -4px 4px rgba(0, 0, 0, .3);
+}
+
+/* 5. Modifier for the Instagram Button */
+.link-button .label.insta-button {
+  background: linear-gradient(190deg, rgba(246, 5, 127, 1) 0%, rgba(247, 182, 1, 1) 100%);
+}
+
+.link-button:hover .label.insta-button {
+  background: linear-gradient(190deg, rgba(246, 5, 127, 1) 0%, rgba(247, 182, 1, 1) 70%);
+}
+
+.link-button .label.spica-button {
+background: #000000;
+background: linear-gradient(190deg,rgba(0, 0, 0, 1) 0%, rgba(11, 20, 0, 1) 29%, rgba(38, 67, 0, 1) 61%, rgba(54, 95, 0, 1) 77%, rgba(85, 150, 0, 1) 100%);
+}
+
+.link-button:hover .label.spica-button {
+  background: linear-gradient(190deg, rgb(0, 0, 0) 0%, #91FF00 100%);
+}
+
+.link-button .label.behance-button {
+background: #0033d9;
+background: linear-gradient(190deg, rgba(0, 51, 217, 1) 0%, rgba(66, 110, 255, 1) 100%);
+}
+
+.link-button:hover .label.behance-button {
+background: #0033d9;
+background: linear-gradient(190deg, rgba(0, 51, 217, 1) 0%, rgba(40, 87, 240, 1) 31%, rgba(66, 110, 255, 1) 65%, rgba(66, 211, 255, 1) 100%);
+}
+
+.link-button .label.github-button {
+background: #000000;
+background: linear-gradient(190deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 31%, rgba(23, 23, 23, 1) 65%, rgba(51, 51, 51, 1) 100%);
+}
+
+.link-button:hover .label.github-button {
+  background: linear-gradient(190deg, rgb(0, 0, 0) 0%, #7c7c7c 100%);
+}
+
+.link-button .label.discord-button {
+background: #001fba;
+background: linear-gradient(190deg, rgba(0, 31, 186, 1) 0%, rgba(54, 87, 255, 1) 100%);
+}
+
+.link-button:hover .label.discord-button {
+background: #072ce8;
+background: linear-gradient(190deg, rgba(7, 44, 232, 1) 0%, rgba(54, 131, 255, 1) 100%);
+}
+
+.link-button .label.steam-button {
+background: #000000;
+background: linear-gradient(190deg, rgba(0, 0, 0, 1) 0%, rgba(4, 42, 89, 1) 100%);
+}
+
+.link-button:hover .label.steam-button {
+background: #000000;
+background: linear-gradient(190deg, rgba(0, 0, 0, 1) 0%, rgba(4, 42, 89, 1) 62%, rgba(0, 102, 227, 1) 100%);
+}
+
+.tag {
+  color: var(--emerald-dark);
+}
+
+/*==================================================
+  6. BLOG - PROSE TYPOGRAPHY (scoped to .prose-blog)
+==================================================*/
+
+/* 0️⃣ Base container */
+.prose-blog {
+  --step--1: clamp(0.87rem, 0.84rem + 0.1vw, 0.94rem);
+  --step-0: clamp(1.00rem, 0.97rem + 0.2vw, 1.05rem);
+  --step-1: clamp(1.25rem, 1.19rem + 0.3vw, 1.31rem);
+  --step-2: clamp(1.56rem, 1.48rem + 0.5vw, 1.64rem);
+  --step-3: clamp(1.95rem, 1.81rem + 0.6vw, 2.05rem);
+  --step-4: clamp(2.44rem, 2.26rem + 0.8vw, 2.56rem);
+  --step-5: clamp(3.05rem, 2.83rem + 1.1vw, 3.20rem);
+  max-width: 72ch;
+  margin-inline: auto;
+  color: var(--text-color);
+  font-size: var(--step-0);
+  line-height: 1.54;
+  font-feature-settings: "liga", "kern";
+  hyphens: auto;
+  overflow-wrap: anywhere;
+  scroll-margin-top: 6ex;
+}
+
+/* 1️⃣ Headings */
+.prose-blog :is(h1, h2, h3, h4, h5, h6) {
+  margin-block: 1.8rem 0.6rem;
+  color: var(--heading-color);
+  font-family: "aesthet-nova", serif;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.prose-blog h1 { font-size: var(--step-5); }
+.prose-blog h2 { font-size: var(--step-4); }
+.prose-blog h3 { font-size: var(--step-3); }
+.prose-blog h4 { font-size: var(--step-2); }
+.prose-blog h5,
+.prose-blog h6 {
+  font-size: var(--step-1);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+/* 2️⃣ Paragraphs & Lists */
+.prose-blog :is(p, ol, ul) {
+  margin-block: 1rem;
+  font-size: var(--step-0);
+}
+
+.prose-blog ol,
+.prose-blog ul {
+  padding-inline-start: 1.25rem;
+}
+
+.prose-blog li + li {
+  margin-block-start: 0.4rem;
+}
+
+.prose-blog li > p {
+  margin-block: 0.6rem;
+}
+
+/* 3️⃣ Blockquotes */
+.prose-blog blockquote {
+  margin-block: 1.6rem;
+  padding: 0.8rem 1.2rem;
+  border-inline-start: 4px solid var(--emerald-dark);
+  background: #f0f8f0;
+  font-size: var(--step-0);
+  font-style: italic;
+}
+
+/* 4️⃣ Tables */
+.prose-blog table {
+  width: 100%;
+  margin-block: 1.6rem;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+}
+
+.prose-blog th,
+.prose-blog td {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--emerald-light);
+  text-align: left;
+}
+
+.prose-blog thead {
+  background: #e2f2e3;
+  font-weight: 700;
+}
+
+/* 5️⃣ Code */
+.prose-blog code {
+  padding: 0.1em 0.3em;
+  background: #efefef;
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 0.94em;
+}
+
+.prose-blog pre {
+  margin-block: 1.6rem;
+  padding: 1rem 1.25rem;
+  background: #111;
+  border-radius: 6px;
+  color: #d6ffdb;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: var(--step--1);
+  line-height: 1.45;
+  overflow-x: auto;
+}
+
+/* 6️⃣ Media */
+.prose-blog :is(img, video, svg, canvas, iframe) {
+  display: block;
+  max-width: 100%;
+  margin-block: 1.6rem;
+  border-radius: 4px;
+}
+
+/* 7️⃣ Figure / Caption */
+.prose-blog figure {
+  margin: 1.6rem 0;
+}
+
+.prose-blog figcaption {
+  margin-top: 0.6rem;
+  color: #555;
+  font-size: var(--step--1);
+  text-align: center;
+}
+
+/* 8️⃣ Links */
+.prose-blog a:not(.button) {
+  color: var(--accent-bot);
+  text-decoration-thickness: .12em;
+  text-underline-offset: 2px;
+  transition: color .2s;
+}
+
+.prose-blog a:not(.button):hover {
+  color: var(--accent-top);
+}
+
+/* 9️⃣ Pull Quotes */
+.prose-blog .pull {
+  float: right;
+  width: 40%;
+  margin: 0 0 1rem 1.5rem;
+  font-size: var(--step-1);
+  font-style: italic;
+}
+
+/*=================================
+  7. RESPONSIVE STYLES
+=================================*/
+@media (max-width: 959px) {
+  /* Collapse project cards to 2 columns */
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
+@media (max-width: 800px) {
+  /* Collapse homepage grid to a single column */
+  .home-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  /* Stack header items */
+  .header {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Make pull quotes full-width */
+  .prose-blog .pull {
+    float: none;
+    width: auto;
+    margin: 1rem 0;
+  }
+}
+
+@media (max-width: 599px) {
+  /* Collapse all card layouts to a single column */
+  .cards,
+  .home-grid .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    padding: 24px;
+  }
+}
+
+/* Mobile screens: Reduce padding */
+@media (max-width: 414px) {
+  .content,
+  .blog,
+  .sidebar {
+    padding: 12px;
+  }
+
+  nav a {
+    padding: 1.2em 1.5em 0.5em;
+  }
+}
+
+/* Small mobile screens: Further reduce nav padding */
+@media (max-width: 320px) {
+  nav a {
+    padding: 1.2em 1.2em 0.6em;
+  }
+}
+
+.back-button a 
+  {
+  text-decoration: none;
+}

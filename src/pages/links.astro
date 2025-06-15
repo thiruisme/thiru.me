@@ -2,40 +2,49 @@
 // src/pages/links.astro
 import Layout from "../components/Layout.astro";
 ---
+
 <Layout current="links" title="More Links">
-  <div class="links-container" style="max-width:600px; margin:0 auto;">
-    <h1>More Links</h1>
-    <ul class="links-list" style="list-style:none; padding:0; margin-top:1rem; text-align:left;">
-    <li>
-      <a href="https://pokemondb.net" target="_blank">
-        <img src="https://via.placeholder.com/24" alt="Pokémon Database logo" class="link-icon" style="width:24px; height:24px; vertical-align:middle; margin-right:8px;" />
-       Instagram
-      </a>
-    </li>
-    <li>
-      <a href="https://bulbapedia.bulbagarden.net" target="_blank">
-        <img src="https://via.placeholder.com/24" alt="Bulbapedia logo" class="link-icon" style="width:24px; height:24px; vertical-align:middle; margin-right:8px;" />
-        spica
-      </a>
-    </li>
-    <li>
-      <a href="https://smogon.com" target="_blank">
-        <img src="https://via.placeholder.com/24" alt="Smogon Strategy logo" class="link-icon" style="width:24px; height:24px; vertical-align:middle; margin-right:8px;" />
-        Behance
-      </a>
-    </li>
-    <li>
-      <a href="https://pokemon.com/us/" target="_blank">
-        <img src="https://via.placeholder.com/24" alt="Official Pokémon logo" class="link-icon" style="width:24px; height:24px; vertical-align:middle; margin-right:8px;" />
-        Github
-      </a>
-    </li>
-    <li>
-      <a href="https://twitch.tv/" target="_blank">
-        <img src="https://via.placeholder.com/24" alt="Live Streams logo" class="link-icon" style="width:24px; height:24px; vertical-align:middle; margin-right:8px;" />
-        Live Streams
-      </a>
-    </li>
-    </ul>
-  </div>
+  <main class="content">
+    <div class="links-container">
+      <h1>More Links</h1>
+      <ul class="links-list">
+        <li>
+          <a href="https://www.instagram.com/thiru.me" target="_blank" class="link-button">
+            <span class="icon"><img src="/images/icons/instagram.png" alt="Instagram" /></span>
+            <span class="label insta-button">Instagram</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.spica.studio" target="_blank" class="link-button">
+            <span class="icon"><img src="/images/icons/spica.png" alt="Spica" /></span>
+            <span class="label spica-button">spica</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.behance.net/thirun2" target="_blank" class="link-button">
+            <span class="icon"><img src="/images/icons/behance.png" alt="Behance" /></span>
+            <span class="label behance-button">Behance</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/thiruisme" target="_blank" class="link-button">
+            <span class="icon"><img src="/images/icons/github.png" alt="Github" /></span>
+            <span class="label github-button">Github</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://discordapp.com/users/331312346486013955" target="_blank" class="link-button">
+            <span class="icon"><img src="/images/icons/discord.png" alt="Discord" /></span>
+            <span class="label discord-button">Discord</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://steamcommunity.com/id/ThiruN/" target="_blank" class="link-button">
+            <span class="icon"><img src="/images/icons/steam.png" alt="Steam" /></span>
+            <span class="label steam-button">Steam</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </main>
 </Layout>

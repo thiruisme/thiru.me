@@ -33,7 +33,11 @@ const { Content } = await render(post);
 </style>
 
 <Layout current="blog" hero={true} title={`${post.data.title} – Emerald Blog`}>
-  <article>
+  <article class="prose-blog">
+    <!-- back link -->
+    <div class="back-button">
+      <a href="/blog/">&larr; Back to Blog</a>
+    </div>
     <!-- post title & date -->
     <h1>{post.data.title}</h1>
     <p style="font-size:0.6rem; margin-bottom:1rem;">
@@ -44,8 +48,8 @@ const { Content } = await render(post);
     <Content />
 
     <!-- back link -->
-    <p style="margin-top:2rem;">
-      <a class="button" href="/blog/">&larr; Back to Blog</a>
-    </p>
+    <div class="back-button">
+      <a href="/blog/">&larr; Back to Blog</a>
+    </div>
   </article>
 </Layout>

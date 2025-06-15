@@ -5,16 +5,16 @@ const { current = "" } = Astro.props;
 ---
 <header class="header">
   <img
-    src="/public/images/thiru-banner.webp"
+    src="/images/thiru-banner.webp"
     alt="Emerald Logo"
     style="height:48px; width:auto;"
   />
   <nav>
     <ul>
-      <li><a href="/"       class={current==="home"    ? "active" : ""}>Home</a></li>
-      <li><a href="/blog"   class={current==="blog"    ? "active" : ""}>Blog</a></li>
-      <li><a href="/links"  class={current==="links"   ? "active" : ""}>Links</a></li>
-      <li><a href="/contact"class={current==="contact" ? "active" : ""}>Contact</a></li>
+      <li><a href="/" class={current==="home"?"active":""}><span>Home</span></a></li>
+      <li><a href="/blog" class={current==="blog"?"active":""}><span>Blog</span></a></li>
+      <li><a href="/links" class={current==="links"?"active":""}><span>Links</span></a></li>
+      <li><a href="/contact" class={current==="contact"?"active":""}><span>Contact</span></a></li>
     </ul>
   </nav>
 </header>

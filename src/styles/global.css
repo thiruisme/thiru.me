@@ -164,6 +164,12 @@ footer {
   text-align: center;
 }
 
+hr {
+  border: none;
+  border-top: 1px solid var(--accent-bot);
+  margin: 24px 0;
+}
+
 /*=================================
   5. COMPONENTS
 =================================*/
@@ -545,13 +551,62 @@ textarea {
 
 /* 3️⃣ Blockquotes */
 .prose-blog blockquote {
-  margin-block: 1.6rem;
-  padding: 0.8rem 1.2rem;
-  border-inline-start: 4px solid var(--emerald-dark);
-  background: #f0f8f0;
+  display: block;
+  position: relative;
+  margin-block: 1.6rem; /* Consistent vertical margin */
+  padding: 15px 20px 15px 45px; /* Specific padding for the quote mark */
+  
+  /* MODIFIED: Background similar to shell, but with horizontal lines only */
+  background-color: #ffffff;
+  background-image: linear-gradient(to bottom, var(--shell-bg-grid) 1px, transparent 1px);
+  background-size: auto var(--shell-grid-size);
+
+  /* Borders */
+  border-left: 15px solid var(--emerald-light);
+  /*border-right: 2px solid var(--emerald-light);*/
+  
   font-size: var(--step-0);
   font-style: italic;
 }
+
+
+.prose-blog blockquote::before{
+  content: "\201C"; /*Unicode for Left Double Quote*/
+  
+  /*Font*/
+  font-family: serif;
+  font-size: 60px;
+  font-weight: bold;
+  color: var(--emerald-dark);
+  
+  /*Positioning*/
+  position: absolute;
+  left: 10px;
+  top:5px;
+  
+}
+
+.prose-blog blockquote::after{
+  /*Reset to make sure*/
+  content: "";
+}
+
+.prose-blog blockquote a{
+  text-decoration: none;
+  background: #eee;
+  cursor: pointer;
+  padding: 0 3px;
+  color: #064926;
+}
+
+.prose-blog blockquote a:hover{
+ color: #2b7a57;
+}
+
+.prose-blog blockquote em{
+  font-style: italic;
+}
+
 
 /* 4️⃣ Tables */
 .prose-blog table {
@@ -702,4 +757,9 @@ textarea {
 .back-button a 
   {
   text-decoration: none;
+}
+
+.back-button {
+  margin-top: 50px;
+  margin-bottom: 20px;
 }

@@ -1,6 +1,7 @@
 ---
-// src/components/Header.astro
-export interface Props { current?: "home" | "blog" | "contact" | "links"; }
+export interface Props {
+  current?: "home" | "blog" | "tags" | "links" | "contact";
+}
 const { current = "" } = Astro.props;
 ---
 <header class="header">
@@ -11,10 +12,26 @@ const { current = "" } = Astro.props;
   />
   <nav>
     <ul>
-      <li><a href="/" class={current==="home"?"active":""}><span>Home</span></a></li>
-      <li><a href="/blog" class={current==="blog"?"active":""}><span>Blog</span></a></li>
-      <li><a href="/links" class={current==="links"?"active":""}><span>Links</span></a></li>
-      <li><a href="/contact" class={current==="contact"?"active":""}><span>Contact</span></a></li>
+      <li>
+        <a href="/" class={current === "home" ? "active" : ""}>
+          <span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="/blog" class={current === "blog" ? "active" : ""}>
+          <span>Blog</span>
+        </a>
+      </li>
+      <li>
+        <a href="/links" class={current === "links" ? "active" : ""}>
+          <span>Links</span>
+        </a>
+      </li>
+      <li>
+        <a href="/contact" class={current === "contact" ? "active" : ""}>
+          <span>Contact</span>
+        </a>
+      </li>
     </ul>
   </nav>
 </header>

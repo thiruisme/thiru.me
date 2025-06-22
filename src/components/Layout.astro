@@ -5,7 +5,7 @@ import "../styles/global.css";
 
 export interface Props {
   title?: string;
-  current?: "home" | "blog" | "links" | "contact";
+  current?: "home" | "blog" | "tags" | "links" | "contact";
   hero?: boolean;
 }
 const {
@@ -20,7 +20,7 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#2b7a57" />
-    <link rel="stylesheet" href="https://use.typekit.net/qft7ovr.css">
+    <link rel="stylesheet" href="https://use.typekit.net/qft7ovr.css" />
     <title>{title}</title>
   </head>
   <body>
@@ -42,13 +42,11 @@ const {
             />
           </picture>
         </header>
-      )}
+)}
       <Header current={current} />
-
       <main class="content">
         <slot />
       </main>
-
       <Footer />
     </div>
   </body>

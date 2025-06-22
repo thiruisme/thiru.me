@@ -3,12 +3,28 @@ import Layout from "../components/Layout.astro";
 import { getCollection } from "astro:content";
 
 const posts = await getCollection("posts");
+
+// Build tag frequency map
+const tagMap = new Map<string, typeof posts>();
+for (const post of posts) {
+  if (post.data.tags) {
+    for (const tag of post.data.tags) {
+      if (!tagMap.has(tag)) tagMap.set(tag, []);
+      tagMap.get(tag)!.push(post);
+    }
+  }
+}
+
+// Derive top-10 popular tags
+const popularTags = Array.from(tagMap.entries())
+  .sort(([, a], [, b]) => b.length - a.length)
+  .map(([tag]) => tag)
+  .slice(0, 10);
 ---
 <Layout current="home" hero={true} title="GBA • Emerald Fan Blog">
-  <!-- two-col layout: main + sidebar -->
   <div class="home-grid">
 
-    <!-- ——— MAIN COLUMN ——— -->
+    <!-- MAIN COLUMN -->
     <main class="content">
       <h1>Latest Posts</h1>
 
@@ -42,17 +58,15 @@ const posts = await getCollection("posts");
 
       <section>
         <h2>Popular Tags</h2>
-        <div class="tags" style="display:flex;flex-wrap:wrap;gap:8px;">
-          <a class="tag" href="#">Emerald</a>
-          <a class="tag" href="#">Hoenn</a>
-          <a class="tag" href="#">Hidden Abilities</a>
-          <a class="tag" href="#">Fan Art</a>
-          <a class="tag" href="#">Speedruns</a>
+        <div class="tags">
+          {popularTags.map((tag) => (
+            <a class="tag-pill" href={`/tags/${tag}/`}>{tag}</a>
+          ))}
         </div>
       </section>
     </main>
 
-    <!-- ——— SIDEBAR ——— -->
+    <!-- SIDEBAR -->
     <aside class="sidebar">
       <section>
         <h2>Tip of the Day</h2>
@@ -73,7 +87,7 @@ const posts = await getCollection("posts");
         <img
           src="https://placehold.co/200x200?text=Pokémon"
           alt="Random Pokémon"
-          style="width:100%;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.15)"
+          class="sidebar-image"
         />
       </section>
     </aside>

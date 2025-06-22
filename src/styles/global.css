@@ -50,11 +50,23 @@
 /*=================================
   3. BASE & TYPOGRAPHY
 =================================*/
-html,
+html {
+  /* Set base font-size on html for easier rem calculations */
+  font-size: 100%; /* Usually 16px */
+  
+  /* Smoother font rendering on supported displays */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* More advanced text rendering, prioritizes legibility over speed. Use with care. */
+  /* text-rendering: optimizeLegibility; */
+}
+
 body {
   /* Typography */
   color: var(--text-color);
-  font: 16px/1.5 "avenir-lt-pro", sans-serif;
+  /* Use rem for font-size for better accessibility scaling */
+  font: 1rem/1.6 "avenir-lt-pro", sans-serif; 
   font-style: normal;
   font-weight: 400;
   /* Visuals */
@@ -74,6 +86,9 @@ h6 {
   font-family: "aesthet-nova", serif;
   font-style: normal;
   font-weight: 400;
+  /* Use text-wrap: balance for more visually pleasing, balanced headlines */
+  text-wrap: balance;
+  -webkit-text-wrap: balance;
 }
 
 h1 {
@@ -86,10 +101,11 @@ h2 {
   margin: 24px 0 8px;
 }
 
+/* Use logical properties (margin-block) and relative units (rem) for consistency */
 p {
-  margin-bottom: 12px;
+  margin-block-start: 0;
+  margin-block-end: 1rem;
 }
-
 em,
 .italic {
   font-style: italic;
@@ -105,6 +121,17 @@ strong,
   font-weight: 700;
 }
 
+::selection {
+  background-color: var(--accent-bot);
+  color: #fff;
+  text-shadow: none;
+}
+
+::-moz-selection { /* For Firefox */
+  background-color: var(--accent-bot);
+  color: #fff;
+  text-shadow: none;
+}
 /*=================================
   4. LAYOUT (SHELL, HEADER, FOOTER, GRIDS)
 =================================*/
@@ -490,8 +517,9 @@ textarea {
   6. BLOG - PROSE TYPOGRAPHY (scoped to .prose-blog)
 ==================================================*/
 
-/* 0️⃣ Base container */
+/* 0️⃣ Base Container: The foundation for all blog content */
 .prose-blog {
+  /* --- Fluid Type Scale (Your implementation is EXCELLENT) --- */
   --step--1: clamp(0.87rem, 0.84rem + 0.1vw, 0.94rem);
   --step-0: clamp(1.00rem, 0.97rem + 0.2vw, 1.05rem);
   --step-1: clamp(1.25rem, 1.19rem + 0.3vw, 1.31rem);
@@ -499,92 +527,102 @@ textarea {
   --step-3: clamp(1.95rem, 1.81rem + 0.6vw, 2.05rem);
   --step-4: clamp(2.44rem, 2.26rem + 0.8vw, 2.56rem);
   --step-5: clamp(3.05rem, 2.83rem + 1.1vw, 3.20rem);
-  max-width: 72ch;
-  margin-inline: auto;
+
+  /* --- Core Readability --- */
+  /* Consolidated to a single, ideal measure */
+  max-width: 68ch; 
+  margin-inline: auto; /* Use logical property for center-alignment */
   color: var(--text-color);
   font-size: var(--step-0);
-  line-height: 1.54;
-  font-feature-settings: "liga", "kern";
-  hyphens: auto;
-  overflow-wrap: anywhere;
-  scroll-margin-top: 6ex;
+  /* Slightly increased line-height for better readability */
+  line-height: 1.65; 
+
+  /* --- Typographic Polish --- */
+  font-feature-settings: "liga", "kern"; /* Great! Keep it. */
+  text-wrap: pretty; /* More subtle than balance, great for paragraphs */
+  -webkit-text-wrap: pretty;
+  hyphens: auto; /* Great! Keep it. */
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  overflow-wrap: break-word; /* Better than 'anywhere' for preventing layout breaks */
+  
+  /* --- Orphan/Widow Control (Excellent!) --- */
+  orphans: 2;
+  widows: 2;
 }
 
 /* 1️⃣ Headings */
-.prose-blog :is(h1, h2, h3, h4, h5, h6) {
-  margin-block: 1.8rem 0.6rem;
-  color: var(--heading-color);
-  font-family: "aesthet-nova", serif;
-  font-weight: 400;
-  line-height: 1.2;
-}
+/* NOTE: Global heading styles are good. Specific overrides for prose can go here if needed. */
+.prose-blog h1 { font-size: var(--step-4); line-height: 1.1; margin-block: 2.5rem 1.5rem; }
+.prose-blog h2 { font-size: var(--step-3); line-height: 1.2; margin-block: 2.5rem 1rem; }
+.prose-blog h3 { font-size: var(--step-2); line-height: 1.3; margin-block: 2rem 0.5rem; }
 
-.prose-blog h1 { font-size: var(--step-5); }
-.prose-blog h2 { font-size: var(--step-4); }
-.prose-blog h3 { font-size: var(--step-3); }
-.prose-blog h4 { font-size: var(--step-2); }
-.prose-blog h5,
-.prose-blog h6 {
-  font-size: var(--step-1);
-  text-transform: uppercase;
-  letter-spacing: .04em;
+/* 2️⃣ Paragraphs, Lists & Spacing */
+.prose-blog :is(p, ol, ul, blockquote, pre, table) {
+  /* All block-level elements share a consistent bottom margin for rhythm */
+  margin-block-start: 0;
+  margin-block-end: 1.25rem;
 }
-
-/* 2️⃣ Paragraphs & Lists */
-.prose-blog :is(p, ol, ul) {
-  margin-block: 1rem;
-  font-size: var(--step-0);
+.prose-blog :is(h1, h2, h3, h4, h5, h6) + * {
+  /* Remove top margin from elements that directly follow a heading */
+  margin-block-start: 0;
 }
 
 .prose-blog ol,
 .prose-blog ul {
-  padding-inline-start: 1.25rem;
+  padding-inline-start: 1.5rem; /* A bit more breathing room */
+}
+
+.prose-blog li::marker {
+  /* Style list markers to match theme */
+  color: var(--heading-color);
+  font-weight: 600;
 }
 
 .prose-blog li + li {
-  margin-block-start: 0.4rem;
+  margin-block-start: 0.5rem; /* Space between list items */
 }
-
-.prose-blog li > p {
-  margin-block: 0.6rem;
-}
-
-/* 3️⃣ Blockquotes */
+/* 3️⃣ Blockquotes - Updated for Vertical Centering */
 .prose-blog blockquote {
-  display: block;
+  /* --- 👇 NEW: Flexbox properties for centering --- */
+  display: flex;
+  align-items: center;     /* This is the magic property for vertical centering */
+  min-height: 100px;       /* Crucial: gives short quotes space to be centered in. Adjust as needed. */
+
+  /* --- MODIFIED: Padding adjusted for flexbox --- */
+  /* We remove vertical padding and let flexbox/min-height handle the space. */
+  padding: 0 20px 0 45px;
+
+  /* --- Your existing styles (mostly unchanged) --- */
   position: relative;
-  margin-block: 1.6rem; /* Consistent vertical margin */
-  padding: 15px 20px 15px 45px; /* Specific padding for the quote mark */
-  
-  /* MODIFIED: Background similar to shell, but with horizontal lines only */
+  margin-block: 1.6rem;
   background-color: #ffffff;
   background-image: linear-gradient(to bottom, var(--shell-bg-grid) 1px, transparent 1px);
   background-size: auto var(--shell-grid-size);
-
-  /* Borders */
   border-left: 15px solid var(--emerald-light);
-  /*border-right: 2px solid var(--emerald-light);*/
-  
   font-size: var(--step-0);
   font-style: italic;
 }
 
+/* 👇 IMPORTANT: Add this new rule to remove default paragraph margins */
+/* This prevents extra space from throwing off the perfect centering. */
+.prose-blog blockquote p {
+  margin-block: 0;
+}
 
-.prose-blog blockquote::before{
-  content: "\201C"; /*Unicode for Left Double Quote*/
-  
-  /*Font*/
+
+/* Your ::before pseudo-element is safe! Its styling does not need to change. */
+.prose-blog blockquote::before {
+  content: "\201C";
   font-family: serif;
   font-size: 60px;
   font-weight: bold;
   color: var(--emerald-dark);
-  
-  /*Positioning*/
   position: absolute;
   left: 10px;
-  top:5px;
-  
+  top: 5px;
 }
+
 
 .prose-blog blockquote::after{
   /*Reset to make sure*/
@@ -678,7 +716,7 @@ textarea {
 }
 
 .prose-blog a:not(.button):hover {
-  color: var(--accent-top);
+  color: var(--emerald-dark);
 }
 
 /* 9️⃣ Pull Quotes */
@@ -688,6 +726,11 @@ textarea {
   margin: 0 0 1rem 1.5rem;
   font-size: var(--step-1);
   font-style: italic;
+}
+
+.prose-blog h1, .prose-blog h2, .prose-blog h3, .prose-blog h4, .prose-blog h5, .prose-blog h6 {
+  text-wrap: balance;
+  -webkit-text-wrap: balance;
 }
 
 /*=================================
@@ -739,7 +782,11 @@ textarea {
   .content,
   .blog,
   .sidebar {
-    padding: 12px;
+    padding: 1.2em;
+  }
+
+  .prose-blog {
+    padding: 1.2em;
   }
 
   nav a {
@@ -750,7 +797,7 @@ textarea {
 /* Small mobile screens: Further reduce nav padding */
 @media (max-width: 320px) {
   nav a {
-    padding: 1.2em 1.2em 0.6em;
+    padding: 1.2em;
   }
 }
 
@@ -762,4 +809,35 @@ textarea {
 .back-button {
   margin-top: 50px;
   margin-bottom: 20px;
+}
+
+/* Popular-tags pill styling (used on both pages) */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.5rem 0 2rem;
+}
+
+.tag-pill {
+  display: inline-block;
+  padding: 0.25em 0.75em;
+  background-color: var(--accent-bot);
+  color: #fff;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.tag-pill:hover {
+  background-color: var(--accent-top);
+  color: var(--emerald-dark);
+}
+
+/* Sidebar image styling */
+.sidebar-image {
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }

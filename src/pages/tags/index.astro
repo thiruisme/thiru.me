@@ -1,0 +1,31 @@
+---
+import Layout from "../../components/Layout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("posts");
+
+// Build tag frequency map
+const tagMap = new Map<string, typeof posts>();
+for (const p of posts) {
+  if (p.data.tags) {
+    for (const t of p.data.tags) {
+      if (!tagMap.has(t)) tagMap.set(t, []);
+      tagMap.get(t)!.push(p);
+    }
+  }
+}
+
+const tags = Array.from(tagMap.keys()).sort();
+---
+<Layout current="tags" title="Tags – Emerald Fan Blog">
+  <main class="content">
+    <h1>All Tags</h1>
+    <div class="tags">
+      {tags.map((tag) => (
+        <a class="tag-pill" href={`/tags/${tag}/`}>
+          {tag} ({tagMap.get(tag)!.length})
+        </a>
+      ))}
+    </div>
+  </main>
+</Layout>

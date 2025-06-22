@@ -1,11 +1,24 @@
 ---
 import Layout from "../../components/Layout.astro";
 import { getCollection } from "astro:content";
-const posts = await getCollection("posts");
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  const tags = new Set<string>();
+  for (const p of posts) {
+    if (p.data.tags) for (const t of p.data.tags) tags.add(t);
+  }
+  return Array.from(tags).map((t) => ({ params: { tag: t } }));
+}
+
+const { tag } = Astro.params;
+const posts = (await getCollection("posts")).filter(
+  (p) => p.data.tags && p.data.tags.includes(tag)
+);
 ---
-<Layout current="blog" title="All Posts – Emerald Blog">
+<Layout current="tags" title={`${tag} – Tags – Emerald Blog`}>
   <main class="content">
-    <h1>Blog Archive</h1>
+    <h1>Posts tagged "{tag}"</h1>
     <div class="cards">
       {posts.map((p) => (
         <article class="card">

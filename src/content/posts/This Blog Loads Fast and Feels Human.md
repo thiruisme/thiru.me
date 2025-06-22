@@ -3,6 +3,10 @@ title: "This Blog Loads Fast and Feels Human"
 date: 2025-06-17
 thumbnail: "https://placehold.co/280x160?text=Abilities"
 excerpt: "A personal space, shaped by intent and not algorithm"
+tags:
+  - blog
+  - web
+  - minimalism
 ---
 
 Slow, gradual shifts are a total mindf*ck.

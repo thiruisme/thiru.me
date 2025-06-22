@@ -19,11 +19,14 @@ const { Content } = await render(post);
 ---
 
 <style>
-  article {
+  /* Styles are now applied to the new container div */
+  .blog-post-container {
     max-width: 600px;
     width: 100%;
     margin: 0 auto;
   }
+  
+  /* This selector still works perfectly, as images are inside the <article> tag */
   article img {
     display: block;
     width: 100%;
@@ -33,29 +36,37 @@ const { Content } = await render(post);
 </style>
 
 <Layout current="blog" hero={true} title={`${post.data.title} – Emerald Blog`}>
-  <article class="prose-blog">
+  <!-- ✅ New container DIV with the main styling class -->
+  <div class="blog-post-container prose-blog">
+    
     <div class="back-button">
-      <a href="/blog/">&larr; Back to Blog</a>
+      <a href="/blog/">← Back to Blog</a>
     </div>
     <h1 class="post-date">{post.data.title}</h1>
     <p style="margin-bottom:1rem;">
       <em>{new Date(post.data.date).toLocaleDateString()}</em>
     </p>
     {post.data.tags && (
-      <p style="margin-bottom:1rem;">
-        Tags:
-        {post.data.tags.map((t) => (
-          <>
-            {' '}
-            <a class="tag" href={`/tags/${t}/`}>{t}</a>
-          </>
-        ))}
-      </p>
-      <hr>
+      <>
+        <p style="margin-bottom:1rem;">
+          Tags:
+          {post.data.tags.map((t) => (
+            <>
+              {' '}
+              <a class="tag" href={`/tags/${t}/`}>{t}</a>
+            </>
+          ))}
+        </p>
+        <hr />
+      </>
     )}
-    <Content />
+    
+    <article>
+      <Content />
+    </article>
+    
     <div class="back-button">
-      <a href="/blog/">&larr; Back to Blog</a>
+      <a href="/blog/">← Back to Blog</a>
     </div>
-  </article>
+  </div>
 </Layout>

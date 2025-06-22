@@ -2,6 +2,7 @@
 import Layout from "../components/Layout.astro";
 import { getCollection } from "astro:content";
 
+
 const posts = await getCollection("posts");
 
 // Build tag frequency map
@@ -78,8 +79,7 @@ const popularTags = Array.from(tagMap.entries())
       </section>
 
       <section>
-        <h2>Upcoming Event</h2>
-        <p>Join our <strong>GBA Fan Jam</strong> on Discord—June 20, 2025.</p>
+        <h2><a href="/tags">Browse Tags</a></h2>
       </section>
 
       <section>

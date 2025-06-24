@@ -2,7 +2,6 @@
 import Layout from "../components/Layout.astro";
 import { getCollection } from "astro:content";
 
-
 const posts = await getCollection("posts");
 
 // Build tag frequency map
@@ -22,47 +21,55 @@ const popularTags = Array.from(tagMap.entries())
   .map(([tag]) => tag)
   .slice(0, 10);
 ---
-<Layout current="home" hero={true} title="GBA • Emerald Fan Blog">
-  <div class="home-grid">
 
+<Layout current="home" hero={true} title="Thiru's Internet Corner – Home">
+  <div class="home-grid">
     <!-- MAIN COLUMN -->
     <main class="content">
       <h1>Latest Posts</h1>
 
       <section class="cards">
-        {posts
-          .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-          .slice(0, 4)
-          .map((p) => (
-            <article class="card">
-              <a href={`/blog/${p.slug}/`}>
-                <img
-                  src={p.data.thumbnail ?? "https://placehold.co/280x160?text=Thumbnail"}
-                  alt={p.data.title}
-                />
-                <div class="card-body">
-                  <div class="card-title">{p.data.title}</div>
-                  <p class="card-text">{p.data.excerpt}</p>
-                </div>
-              </a>
-            </article>
-          ))}
+        {
+          posts
+            .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+            .slice(0, 4)
+            .map((p) => (
+              <article class="card">
+                <a href={`/blog/${p.slug}/`}>
+                  <img
+                    src={
+                      p.data.thumbnail ??
+                      "https://placehold.co/280x160?text=Thumbnail"
+                    }
+                    alt={p.data.title}
+                  />
+                  <div class="card-body">
+                    <div class="card-title">{p.data.title}</div>
+                    <p class="card-text">{p.data.excerpt}</p>
+                  </div>
+                </a>
+              </article>
+            ))
+        }
       </section>
 
       <section>
-        <h2>Quick Facts</h2>
+        <h2 style="margin-top: 40px;">Quick Wonder</h2>
         <p>
-          The GBA sold over <strong>80 million</strong> units worldwide.
-          The SP’s back-light dropped in 2003!
+         If a thing doesn’t affect you in any way, does its existence matter?
         </p>
       </section>
 
       <section>
         <h2>Popular Tags</h2>
         <div class="tags">
-          {popularTags.map((tag) => (
-            <a class="tag-pill" href={`/tags/${tag}/`}>{tag}</a>
-          ))}
+          {
+            popularTags.map((tag) => (
+              <a class="tag-pill" href={`/tags/${tag}/`}>
+                {tag}
+              </a>
+            ))
+          }
         </div>
       </section>
     </main>
@@ -70,27 +77,27 @@ const popularTags = Array.from(tagMap.entries())
     <!-- SIDEBAR -->
     <aside class="sidebar">
       <section>
-        <h2>Tip of the Day</h2>
-        <p>
-          In Pokémon Emerald, using&nbsp;<strong>Rain Dance</strong> plus
-          <em>Swift Swim</em> can make Ludicolo faster than almost any other
-          Pokémon!
-        </p>
-      </section>
-
-      <section>
         <h2><a href="/tags">Browse Tags</a></h2>
       </section>
 
       <section>
-        <h2>Random Pokémon</h2>
+        <h2>What am I up to...</h2>
+        <p>
+          Trying to create a <strong>physical habit tracker</strong> that's also
+          <em>unique and delightful</em> to track my daily activities and keep me
+          motivated. 💪
+        </p>
+      </section>
+
+      <section>
+        <h2>Recent Snap</h2>
         <img
-          src="https://placehold.co/200x200?text=Pokémon"
-          alt="Random Pokémon"
+          src="/public/images/snaps/recentsnap1.webp"
+          alt="A lone tree stands silhouetted against a bright blue sky, scattered with soft, cotton-like clouds."
           class="sidebar-image"
         />
+        <p style="margin-top:5px;">Early morning visual treat!</p>
       </section>
     </aside>
-
   </div>
 </Layout>

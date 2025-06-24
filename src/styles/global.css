@@ -245,14 +245,14 @@ nav a::before {
   border-bottom: none;
   border-radius: 8px 8px 0 0;
   background: #dcefd9;
-  box-shadow: 0 2px hsla(0, 0%, 100%, .5) inset;
   transform: perspective(5px) rotateX(2deg);
   transform-origin: bottom;
-  transition: background 0.2s, margin-bottom 0.2s;
 }
 
 nav a:hover::before {
-  background: #f7fff7;
+  background: #F7FFF7;
+  background: linear-gradient(180deg,rgb(255, 255, 255) 0%, rgba(220, 239, 217, 1) 100%);
+  border: 1px solid var(--accent-top);
 }
 
 /* Active tab sits "in front" and connects to the content area */
@@ -268,6 +268,10 @@ nav a.active::before {
     linear-gradient(to bottom, var(--shell-bg-grid) 1px, transparent 1px);
   background-size: var(--shell-grid-size) var(--shell-grid-size);
   border-color: #dadce0;
+}
+
+nav a.active:hover::before {
+  border: 0px;
 }
 
 /*--- Cards ---*/
@@ -741,6 +745,7 @@ textarea {
   /* Collapse project cards to 2 columns */
   .cards {
     grid-template-columns: repeat(2, 1fr);
+    
   }
 }
 
@@ -838,7 +843,7 @@ textarea {
 
 /* Sidebar image styling */
 .sidebar-image {
-  width: 100%;
+  width: 200px;
   border-radius: 6px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
@@ -852,4 +857,8 @@ h6 a {
   color: inherit;
   text-decoration: none;
   font: inherit;
+}
+
+nav {
+  margin-top: -60px;
 }

@@ -1,5 +1,5 @@
 ---
-title: "Reclaiming Web 2.0: A Cozy Corner on the Internet"
+title: "Reclaiming a Cozy Corner on the Internet"
 date: 2025-06-17
 thumbnail: "/images/covers/blog01cover.webp"
 excerpt: "A small personal space on the internet, untouched by the influence of algorithms"

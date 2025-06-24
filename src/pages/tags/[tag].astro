@@ -16,7 +16,7 @@ const posts = (await getCollection("posts")).filter(
   (p) => p.data.tags && p.data.tags.includes(tag)
 );
 ---
-<Layout current="tags" title={`${tag} – Tags – Emerald Blog`}>
+<Layout current="tags" title={`${tag} – Tags – Thiru's Internet Corner`}>
   <main class="content">
     <h1>Posts tagged "{tag}"</h1>
     <div class="cards">

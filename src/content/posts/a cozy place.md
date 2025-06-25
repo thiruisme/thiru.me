@@ -17,6 +17,9 @@ Ten years ago, minimalism was all the rage. It was the shiny new aesthetic that 
 
 Now, in 2025, I crave the pre-minimalism designs again. They were unique, colorful, and interesting to look at. There’s no reason we can’t revive Web 2.0 aesthetics, especially now that people are growing tired of the flat trend (which, in my opinion, overstayed its welcome).
 
+<blockquote class="pullquote">
+I want to carve out a cozy little space—a place to share my ideas freely, without obligations on either side.</blockquote>
+
 Yes, those designs had issues with accessibility and visual contrast, but modern techniques have largely addressed these problems. We can rewind to the time when the internet was something much simpler. No server-side scripts, no heavy JavaScript, no trackers, no desperate SEO optimizations—just pure HTML and CSS.
 
 Creating this blog was a personal challenge for myself. I want to move away from the complex cacophony of the internet, with its overreliance on money-making being the primary motivator for any sort of content posted online. I want to carve out a cozy little space—a place to share my ideas freely, without obligations on either side.

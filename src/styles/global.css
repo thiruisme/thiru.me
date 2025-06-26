@@ -925,13 +925,175 @@ h6 a {
   color: var(--emerald-dark);
   line-height: 1.4;
   text-indent: 1.5em;
+  transform: rotate(-2deg);
+}
+
+/* Safari only: immediately pull the box back into place */
+@supports (-webkit-hyphens:none) and (not (hyphens:none)){ /* WebKit hack */
+  .prose-blog .pullquote{
+    margin-left: calc(-1.5em + 0px);   /* negate the indent shift */
+  }
 }
 
 /* clear it on small screens */
-@media (max-width: 800px) {
+@media (max-width: 768px) {
+  .prose-blog .pullquote {
+    float: none;
+    width: 60vw;
+    margin: 1em auto;
+      transform: rotate(-2deg);
+  }
+}
+
+@media (max-width: 600px) {
   .prose-blog .pullquote {
     float: none;
     width: auto;
     margin: 1em auto;
+      transform: rotate(-2deg);
+  }
+}
+
+/* ─── H-Card Base ─── */
+.h-card {
+  background: #ffffff;
+  padding: 2rem;
+  border: 12px solid transparent;
+}
+
+/* ─── Profile Block (photo + info) ─── */
+.h-card-main {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* On widescreen (801px and up): stack vertically */
+@media (min-width: 801px) {
+  .h-card {
+      transform: rotate(-1deg) scale(100%);
+        transition: transform 0.5s ease;
+  }
+
+  .h-card:hover {
+    transform: rotate(0deg) scale(105%);
+  }
+
+  .h-card-main {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* On smaller screens (800px and below): side-by-side */
+@media (max-width: 800px) {
+  .h-card-main {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.h-card {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  background: #F5FFF4;
+  border-radius: .5em;
+  padding: 2rem;
+  align-items: center;
+  justify-content: center;
+  max-width: 700px;
+  margin: auto;
+  margin-bottom: 30px;
+background-color: #F5FFF4;
+opacity: 1;
+background: radial-gradient(circle, transparent 20%, #F5FFF4 20%, #F5FFF4 80%, transparent 80%, transparent), radial-gradient(circle, transparent 20%, #F5FFF4 20%, #F5FFF4 80%, transparent 80%, transparent) 25px 25px, linear-gradient(#e9fae7 2px, transparent 2px) 0 -1px, linear-gradient(90deg, #e9fae7 2px, #F5FFF4 2px) -1px 0;
+background-size: 50px 50px, 50px 50px, 25px 25px, 25px 25px;
+}
+
+.h-card-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+  align-items: center;
+}
+.u-photo {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: center;
+}
+.profile-info .p-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--emerald-dark);
+  text-decoration: none;
+}
+.profile-info .p-job-title,
+.profile-info .p-org {
+  font-size: 1rem;
+  color: var(--emerald-dark);
+}
+.profile-info .u-email {
+  font-size: 0.95rem;
+  color: var(--accent-bot);
+  text-decoration: none;
+}
+
+.h-card-rest {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1 1 0;
+  max-width: 300px;
+}
+
+.p-note {
+  margin: 0;
+  font-style: italic;
+  line-height: 1.4;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.p-category {
+  background: var(--emerald-light);
+  color: #fff;
+  padding: 0.25em 0.6em;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.social {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.social a {
+  color: var(--emerald-dark);
+  text-decoration: none;
+  font-weight: 500;
+}
+.social a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive: stack on narrow screens */
+@media (max-width: 800px) {
+  .h-card {
+    flex-direction: column;
+  }
+  .h-card-main,
+  .h-card-rest {
+    width: 100%;
   }
 }

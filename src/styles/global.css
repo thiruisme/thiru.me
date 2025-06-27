@@ -71,9 +71,10 @@ body {
   font-style: normal;
   font-weight: 400;
   /* Visuals */
-  background:
-    repeating-linear-gradient(0deg, var(--emerald-dark) 0 8px, var(--emerald-light) 8px 16px),
-    repeating-linear-gradient(90deg, var(--emerald-dark) 0 8px, var(--emerald-light) 8px 16px);
+background-color: #1b4d3e;
+opacity: 1;
+background-image:  linear-gradient(#2B7A57 1.5px, transparent 1.5px), linear-gradient(to right, #2B7A57 1.5px, #1b4d3e 1.5px);
+background-size: 30px 30px;
   background-attachment: fixed, fixed;
 }
 
@@ -629,10 +630,7 @@ textarea {
   display: flex;
   align-items: center;
   min-height: 100px;
-
-
   padding: 0 20px 0 45px;
-
   position: relative;
   margin-block: 1.6rem;
   background-color: #ffffff;
@@ -640,6 +638,13 @@ textarea {
   background-size: auto var(--shell-grid-size);
   font-size: var(--step-0);
   font-style: italic;
+  box-shadow: 3px 4px 6px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.2s ease-out;
+  overflow: visible;
+}
+
+.prose-blog blockquote:hover {
+  box-shadow: 7px 8px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* This prevents extra space from throwing off the perfect centering. */
@@ -649,28 +654,15 @@ textarea {
 
 
 .prose-blog blockquote::before {
-  /* quotation mark — now 40 % opaque */
-  color: rgba(175, 255, 151, 0.363); 
-
-  content: "\201C";
-  font-family: serif;
-  font-size: 60px;
-  font-weight: bold;
+    content: "";
   position: absolute;
-  left: -.2em;
-
-  /* bamboo stripe */
-  width: 15px;
-  height: 100%;
-  border-radius: 3px;
-  background:
-    repeating-linear-gradient(
-      to bottom,
-      #2C6705 10px,
-      rgba(27, 77, 62, 1) 12px,
-      #2C6705 15px,
-      rgba(27, 77, 62, 1) 40px
-    );
+  top: -0.8rem;             /* pull it up above the box */
+  left: -0.5rem;            /* pull it left of the box */
+  width: 2.5rem;              /* size of your pin graphic */
+  height: 2.5rem;
+  background: url('/public/images/thumbpin.webp') no-repeat center/100% 100%;
+  pointer-events: none;
+  z-index: 1;     
 }
 
 .prose-blog blockquote::after {
@@ -926,7 +918,7 @@ h6 a {
   /* float it into the text */
   float: left;
   width: 42%;
-  margin: 1em 2em 1em 0em;
+  margin: 1em 2em 1em 2em;
   padding: 1em 1em 1em 1.4em;
 
   /* make it stand out */
@@ -934,7 +926,21 @@ h6 a {
   font-style: italic;
   color: var(--emerald-dark);
   line-height: 1.4;
-  text-indent: 1.5em;
+  transform: rotate(-2deg);
+}
+
+.prose-blog .pullquote-right {
+  /* float it into the text */
+  float: right;
+  width: 42%;
+  margin: 1em 0em 1em 2em;
+  padding: 1em 1em 1em 1.4em;
+
+  /* make it stand out */
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--emerald-dark);
+  line-height: 1.4;
   transform: rotate(-2deg);
 }
 
@@ -946,10 +952,22 @@ h6 a {
     margin: 1em auto;
       transform: rotate(-2deg);
   }
+    .prose-blog .pullquote-right {
+    float: none;
+    width: 60vw;
+    margin: 1em auto;
+      transform: rotate(-2deg);
+  }
 }
 
 @media (max-width: 600px) {
   .prose-blog .pullquote {
+    float: none;
+    width: auto;
+    margin: 1em auto;
+      transform: rotate(-2deg);
+  }
+    .prose-blog .pullquote-right {
     float: none;
     width: auto;
     margin: 1em auto;

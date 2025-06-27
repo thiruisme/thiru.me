@@ -1,9 +1,10 @@
 ---
 import Layout from "../../components/Layout.astro";
 import { getCollection } from "astro:content";
+const archiveDesc = "Browse all posts on design, ideas, technology and aesthetics.";
 const posts = await getCollection("posts");
 ---
-<Layout current="blog" title="All Posts – Thiru's Internet Corner">
+<Layout current="blog" title="All Posts – Thiru's Internet Corner" description= {archiveDesc}>
   <main class="content">
     <h1>Blog Archive</h1>
     <div class="cards">

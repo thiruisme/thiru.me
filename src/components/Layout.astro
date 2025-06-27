@@ -7,10 +7,12 @@ export interface Props {
   title?: string;
   current?: "home" | "blog" | "tags" | "links" | "contact";
   hero?: boolean;
+  description?: string;
 }
 const {
   title   = "Thiru's Internet Corner",
   current,
+  description,
   hero    = true
 } = Astro.props;
 ---
@@ -21,6 +23,7 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#2b7a57" />
     <link rel="stylesheet" href="https://use.typekit.net/qft7ovr.css" />
+    {description && <meta name="description" content={description} />}
     <title>{title}</title>
   </head>
   <body>

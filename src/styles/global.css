@@ -650,7 +650,7 @@ textarea {
 
 .prose-blog blockquote::before {
   /* quotation mark — now 40 % opaque */
-  color: rgb(27 77 62 / 0.4);   /* same emerald-dark hue, 40 % opacity */
+  color: rgba(175, 255, 151, 0.363); 
 
   content: "\201C";
   font-family: serif;
@@ -975,11 +975,13 @@ h6 a {
 @media (min-width: 801px) {
   .h-card {
       transform: rotate(-1deg) scale(100%);
-        transition: transform 0.5s ease;
+      box-shadow: 0px 0px 0px #b2c2b4;
+        transition: transform 0.5s ease, box-shadow 0.2s ease-out;
   }
 
   .h-card:hover {
     transform: rotate(0deg) scale(105%);
+    box-shadow: 0px 0px 50px #b2c2b4;
   }
 
   .h-card-main {

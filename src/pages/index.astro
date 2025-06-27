@@ -2,6 +2,7 @@
 import Layout from "../components/Layout.astro";
 import { getCollection } from "astro:content";
 
+const homepageDesc = "Designer, filmmaker, and explorer of ideas. I tinker, tell stories, build things from scratch, and chase the eerie, the beautiful, and the deeply human."
 const posts = await getCollection("posts");
 
 // Build tag frequency map
@@ -22,7 +23,7 @@ const popularTags = Array.from(tagMap.entries())
   .slice(0, 10);
 ---
 
-<Layout current="home" hero={true} title="Thiru's Internet Corner – Home">
+<Layout current="home" hero={true} title="Thiru's Internet Corner – Home" description={homepageDesc}>
   <div class="home-grid">
     <!-- MAIN COLUMN -->
     <main class="content">
@@ -105,6 +106,7 @@ const popularTags = Array.from(tagMap.entries())
   <!-- Left column: photo + profile info -->
   <div class="h-card-main">
     <img
+      id="profile-photo"
       class="u-photo"
       src="/images/author-photo.webp"
       alt="Portrait of Thiru N"
@@ -113,15 +115,11 @@ const popularTags = Array.from(tagMap.entries())
     />
 
     <div class="profile-info">
-      <!-- canonical identity URL: p-name, u-url, u-uid -->
       <a class="p-name u-url u-uid"
          href="https://thiru.me"
          rel="author me">Thiru N</a>
-
       <span class="p-job-title">Co-founder</span>
       <span class="p-org">Spica Designwork</span>
-
-      <!-- email is already a u-email; adding rel="me" strengthens the identity link -->
       <a class="u-email"
          href="mailto:hey@thiru.me"
          rel="me">hey@thiru.me</a>
@@ -144,19 +142,51 @@ const popularTags = Array.from(tagMap.entries())
     </div>
 
     <div class="social">
-      <a class="u-url u-x-instagram"
-         href="https://instagram.com/thiru.me"
-         rel="me">Instagram</a>
-      <a class="u-url u-x-behance"
-         href="https://www.behance.net/thirun2"
-         rel="me">Behance</a>
-      <a class="u-url u-x-linkedin"
-         href="https://linkedin.com/in/nthiru/"
-         rel="me">LinkedIn</a>
-      <a class="u-url u-x-github"
-         href="https://github.com/thiruisme"
-         rel="me">GitHub</a>
-    </div>
+  <a class="u-url u-x-instagram"
+     href="https://instagram.com/thiru.me"
+     rel="me"
+     data-photo="/images/author-photo-instagram.webp">
+    Instagram
+  </a>
+  <a class="u-url u-x-behance"
+     href="https://www.behance.net/thirun2"
+     rel="me"
+     data-photo="/images/author-photo-behance.webp">
+    Behance
+  </a>
+  <a class="u-url u-x-linkedin"
+     href="https://linkedin.com/in/nthiru/"
+     rel="me"
+     data-photo="/images/author-photo-linkedin.webp">
+    LinkedIn
+  </a>
+  <a class="u-url u-x-github"
+     href="https://github.com/thiruisme"
+     rel="me"
+     data-photo="/images/author-photo-github.webp">
+    GitHub
+  </a>
+</div>
   </div>
 </div>
+<script>
+  const photoEl     = document.getElementById('profile-photo');
+  const defaultSrc  = photoEl.src;    // original image
+  let   revertTimer = null;
+
+  document.querySelectorAll('.social a[data-photo]').forEach(link => {
+    link.addEventListener('mouseenter', () => {
+      // cancel any pending revert
+      clearTimeout(revertTimer);
+      // swap in the hovered image immediately
+      photoEl.src = link.dataset.photo;
+    });
+    link.addEventListener('mouseleave', () => {
+      // after 2 s, put the default back
+      revertTimer = setTimeout(() => {
+        photoEl.src = defaultSrc;
+      }, 2000);
+    });
+  });
+</script>
 </Layout>

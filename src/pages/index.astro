@@ -100,43 +100,63 @@ const popularTags = Array.from(tagMap.entries())
       </section>
     </aside>
   </div>
-  <div class="h-card">
-    <!-- Left column: photo + profile info -->
-    <div class="h-card-main">
-      <img
-        class="u-photo"
-        src="/images/author-photo.webp"
-        alt="Thiru N"
-        width="200"
-        height="200"
-      />
-      <div class="profile-info">
-        <a class="p-name u-url u-uid" href="https://thiru.me">Thiru N</a>
-        <span class="p-job-title">Co-founder</span>
-        <span class="p-org">Spica Designwork</span>
-        <a class="u-email" href="mailto:hey@thiru.me">hey@thiru.me</a>
-      </div>
-    </div>
+<!-- Personal h-card for Thiru N -->
+<div class="h-card">
+  <!-- Left column: photo + profile info -->
+  <div class="h-card-main">
+    <img
+      class="u-photo"
+      src="/images/author-photo.webp"
+      alt="Portrait of Thiru N"
+      width="200"
+      height="200"
+    />
 
-    <!-- Right column: logo, note, categories, socials -->
-    <div class="h-card-rest">
-      <p class="p-note">
-        I like creating and tinkering—be it a design, a gadget, a short film, or a story. When the day ends, I unwind with games, foreign words, eerie adventures, and quiet pondering.
-      </p>
+    <div class="profile-info">
+      <!-- canonical identity URL: p-name, u-url, u-uid -->
+      <a class="p-name u-url u-uid"
+         href="https://thiru.me"
+         rel="author me">Thiru N</a>
 
-      <div class="tags">
-        <span class="p-category">Ideas</span>
-        <span class="p-category">Design</span>
-        <span class="p-category">Technology</span>
-        <span class="p-category">Philosophy</span>
-      </div>
+      <span class="p-job-title">Co-founder</span>
+      <span class="p-org">Spica Designwork</span>
 
-      <div class="social">
-        <a class="u-instagram" href="https://instagram.com/thiru.me">Instagram</a>
-        <a class="u-behance" href="https://www.behance.net/thirun2">Behance</a>
-        <a class="u-linkedin" href="https://linkedin.com/in/nthiru/">LinkedIn</a>
-        <a class="u-github" href="https://github.com/thiruisme">GitHub</a>
-      </div>
+      <!-- email is already a u-email; adding rel="me" strengthens the identity link -->
+      <a class="u-email"
+         href="mailto:hey@thiru.me"
+         rel="me">hey@thiru.me</a>
     </div>
   </div>
+
+  <!-- Right column: logo, note, categories, socials -->
+  <div class="h-card-rest">
+    <p class="p-note">
+      I like creating and tinkering—be it a design, a gadget, a short film, or a
+      story. When the day ends, I unwind with games, foreign words, eerie
+      adventures, and quiet pondering.
+    </p>
+
+    <div class="tags">
+      <span class="p-category">Ideas</span>
+      <span class="p-category">Design</span>
+      <span class="p-category">Technology</span>
+      <span class="p-category">Philosophy</span>
+    </div>
+
+    <div class="social">
+      <a class="u-url u-x-instagram"
+         href="https://instagram.com/thiru.me"
+         rel="me">Instagram</a>
+      <a class="u-url u-x-behance"
+         href="https://www.behance.net/thirun2"
+         rel="me">Behance</a>
+      <a class="u-url u-x-linkedin"
+         href="https://linkedin.com/in/nthiru/"
+         rel="me">LinkedIn</a>
+      <a class="u-url u-x-github"
+         href="https://github.com/thiruisme"
+         rel="me">GitHub</a>
+    </div>
+  </div>
+</div>
 </Layout>

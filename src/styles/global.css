@@ -649,22 +649,29 @@ textarea {
 
 
 .prose-blog blockquote::before {
+  /* quotation mark — now 40 % opaque */
+  color: rgb(27 77 62 / 0.4);   /* same emerald-dark hue, 40 % opacity */
+
   content: "\201C";
   font-family: serif;
   font-size: 60px;
   font-weight: bold;
-  color: var(--emerald-dark);
   position: absolute;
   left: -.2em;
+
+  /* bamboo stripe */
   width: 15px;
   height: 100%;
   border-radius: 3px;
   background:
-    /* darker line at each node */
-    repeating-linear-gradient(to bottom,
-      #2C6705 10px, rgba(27, 77, 62, 1) 12px, #2C6705 15px, rgba(27, 77, 62, 1) 40px);
+    repeating-linear-gradient(
+      to bottom,
+      #2C6705 10px,
+      rgba(27, 77, 62, 1) 12px,
+      #2C6705 15px,
+      rgba(27, 77, 62, 1) 40px
+    );
 }
-
 
 .prose-blog blockquote::after {
   /*Reset to make sure*/
@@ -799,6 +806,9 @@ textarea {
   .home-grid {
     grid-template-columns: 1fr;
   }
+  .sidebar {
+    padding: 24px;
+  }
 }
 
 @media (max-width: 700px) {
@@ -926,13 +936,6 @@ h6 a {
   line-height: 1.4;
   text-indent: 1.5em;
   transform: rotate(-2deg);
-}
-
-/* Safari only: immediately pull the box back into place */
-@supports (-webkit-hyphens:none) and (not (hyphens:none)){ /* WebKit hack */
-  .prose-blog .pullquote{
-    margin-left: calc(-1.5em + 0px);   /* negate the indent shift */
-  }
 }
 
 /* clear it on small screens */

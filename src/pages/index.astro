@@ -26,7 +26,7 @@ const popularTags = Array.from(tagMap.entries())
 <Layout current="home" hero={true} title="Thiru's Internet Corner – Home" description={homepageDesc}>
   <div class="home-grid">
     <!-- MAIN COLUMN -->
-    <main class="content">
+    <main class="content homepage-content">
       <h1>Latest Posts</h1>
 
       <section class="cards">
@@ -77,6 +77,7 @@ const popularTags = Array.from(tagMap.entries())
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
+      <hr class="homepage-divider">
       <section>
         <h2><a href="/tags">Browse Tags</a></h2>
       </section>

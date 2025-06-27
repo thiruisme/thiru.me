@@ -203,6 +203,11 @@ hr {
   margin: 24px 0;
 }
 
+.homepage-divider {
+  margin: 0px;
+  visibility: hidden;
+}
+
 /*=================================
   5. COMPONENTS
 =================================*/
@@ -801,6 +806,19 @@ textarea {
   .sidebar {
     padding: 24px;
   }
+  .homepage-divider {
+  margin: 0px;
+  visibility: visible;}
+
+  .homepage-content {
+    padding-bottom: 0px;
+    margin-bottom:0px;
+  }
+
+  .sidebar {
+    padding-top: 0px;
+    margin-top: 0px;
+  }
 }
 
 @media (max-width: 700px) {
@@ -817,6 +835,16 @@ textarea {
     width: auto;
     margin: 1rem 0;
   }
+
+    .homepage-content {
+    padding-bottom: 0px;
+    margin-bottom:0px;
+  }
+
+  .sidebar {
+    padding-top: 0px;
+    margin-top: 0px;
+  }
 }
 
 @media (max-width: 599px) {
@@ -830,6 +858,16 @@ textarea {
 
   .sidebar {
     padding: 24px;
+  }
+
+    .homepage-content {
+    padding-bottom: 0px;
+    margin-bottom:0px;
+  }
+
+  .sidebar {
+    padding-top: 0px;
+    margin-top: 0px;
   }
 }
 
@@ -852,6 +890,15 @@ textarea {
 
   nav {
     margin-top: -56px;
+  }
+    .homepage-content {
+    padding-bottom: 0px;
+    margin-bottom:0px;
+  }
+
+  .sidebar {
+    padding-top: 0px;
+    margin-top: 0px;
   }
 }
 
@@ -1013,6 +1060,10 @@ h6 a {
   .h-card-main {
     flex-direction: row;
     align-items: center;
+  }
+
+  .sidebar-image {
+    width: 100%;
   }
 }
 

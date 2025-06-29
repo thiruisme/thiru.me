@@ -1172,3 +1172,110 @@ background-size: 50px 50px, 50px 50px, 25px 25px, 25px 25px;
     width: 100%;
   }
 }
+
+/* —— 8. MAIL-STYLE FORM —— */
+.mail-form {
+  width: 80vw;              /* fills 80% of viewport width */
+  max-width: 600px;         /* but never wider than 700px */
+  position: relative;
+  margin: 2rem auto;
+  padding: 3rem;
+  background: #fcf8f3;
+  /* Subtle ruled-paper lines */
+  background-image:
+    linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+  background-size: 100% 30px;
+  /* Airmail stripe border */
+  border: 0px solid transparent;
+  border-image: 
+    repeating-linear-gradient(
+      45deg,
+      var(--emerald-light) 0 10px,
+      var(--emerald-dark) 10px 20px
+    ) 1;
+  border-radius: 6px;
+  font-family: 'Courier New', monospace;
+  transform: rotate(-1deg);
+  transition: box-shadow .2s ease-out, transform .2s ease-out;
+  box-shadow: 0px 0px px #b2c2b4;
+}
+
+.mail-form:hover,
+.mail-form:focus-within {
+  box-shadow: 0px 0px 30px #b2c2b4;
+  transform: rotate(0deg);
+}
+
+/* Stamp in the top-right corner */
+.mail-form::before {
+  content: "";
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 100px;
+  height: 100px;
+  rotate: 2deg;
+  background: url('/images/stamp.png') no-repeat center/contain;
+}
+
+/* Labels look like they’re part of the letter */
+.mail-form label {
+  display: block;
+  margin: 1.2rem 0 0.3rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--heading-color);
+}
+
+/* Inputs with “underlined” look */
+.mail-form input,
+.mail-form textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed #aaa;
+  padding: 0.3rem 0;
+  font-family: inherit;
+  font-size: 1.3rem;
+  line-height: 1rem;
+  color: var(--text-color);
+  transition: border-color 0.2s;
+  font-family: "adobe-handwriting-ernie", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Stronger line on focus */
+.mail-form input:focus,
+.mail-form textarea:focus {
+  outline: none;
+  border-bottom: 1px solid var(--accent-bot);
+}
+
+/* Message area taller */
+.mail-form textarea {
+  min-height: 140px;
+  line-height: 1.4;
+  resize: vertical;
+}
+
+/* Send button as a tiny seal */
+.mail-form button {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.2rem;
+  font-family: inherit;
+  background: var(--accent-bot);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.mail-form button:hover {
+  background: var(--accent-top);
+}
+.mail-form button:active {
+  transform: scale(0.97);
+}

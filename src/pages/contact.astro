@@ -2,57 +2,55 @@
 import Layout from "../components/Layout.astro";
 ---
 <Layout current="contact" title="Contact Us – Thiru's Internet Corner" description="Contact me via mail."> <main class="content">
-  <div style="max-width:400px;width:100%;margin:0 auto;">
+  <div style="margin:0px auto;">
   <h1>Contact Us</h1>
   <p>
     If you have any thoughts, ideas, suggestions or queries, please put a mail to me. I'd be happy to read and respond to them. Thanks!
   </p>
-
-  <!-- Add an ID so we can hook JS to it -->
-  <form id="contact-form" style="width:80%;max-width:320px;margin:0 auto;display:flex;flex-direction:column;gap:12px;margin-top:1rem;">
-    <label>
-      Name:<br />
-      <input type="text" name="name" placeholder="Your name" required
-        style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;" />
-    </label>
-
-    <label>
-      Email:<br />
-      <input type="email" name="email" placeholder="you@example.com" required
-        style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;" />
-    </label>
-
-    <label>
-      Message:<br />
-      <textarea name="message" rows="6" required
-        style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;"></textarea>
-    </label>
-
-    <button type="submit" class="button" style="align-self:start;">
-      Send Message
-    </button>
-  </form>
   </div>
-  </main>
-
-  <!-- Inline script to build the mailto: URL -->
-  <script is:inline>
-    const form = document.getElementById("contact-form");
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const nameVal = form.elements["name"].value;
-      const emailVal = form.elements["email"].value;
-      const msgVal = form.elements["message"].value;
-
-      const to = "hey@thiru.me"; 
-      const subject = encodeURIComponent(`Contact from ${nameVal} via thiru.me`);
-      const body = encodeURIComponent(
-        `Name: ${nameVal}\nEmail: ${emailVal}\n\n${msgVal}`
-      );
-
-      // Launch the default mail client:
-      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+  <form class="mail-form">
+    <label for="name">From:</label>
+    <input id="name" name="name" type="text" placeholder="Your name" required>
+  
+    <label for="email">Your email address:</label>
+    <input id="email" name="email" type="email" placeholder="you@example.com" required>
+  
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" placeholder="Type your letter…" required></textarea>
+  
+    <!-- change type to "button" so it doesn’t try to POST anywhere -->
+    <button type="button" id="send-btn" class="button">Send Letter</button>
+  </form>
+  <script>
+    document.getElementById('send-btn').addEventListener('click', function() {
+      const nameField    = document.getElementById('name').value.trim();
+      const emailField   = document.getElementById('email').value.trim();
+      const messageField = document.getElementById('message').value.trim();
+    
+      if (!nameField || !emailField) {
+        alert('Please fill both your name and email address.');
+        return;
+      }
+    
+      // Build the mailto: link
+      const to      = 'hey@thiru.me';
+      const subject = `A message from ${nameField}`;
+      // If you like, you can include their message *and* their email in the body:
+      const bodyLines = [
+        `From: ${emailField}`,
+        '',
+        messageField
+      ];
+      const body = bodyLines.join('\n');
+    
+      const mailtoLink = 
+        `mailto:${encodeURIComponent(to)
+        }?subject=${encodeURIComponent(subject)
+        }&body=${encodeURIComponent(body)}`;
+    
+      // Open default mail client
+      window.location.href = mailtoLink;
     });
-  </script>
+    </script>
+  </main>
 </Layout>

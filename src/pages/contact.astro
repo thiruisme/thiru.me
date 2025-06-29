@@ -3,9 +3,9 @@ import Layout from "../components/Layout.astro";
 ---
 <Layout current="contact" title="Contact Us – Thiru's Internet Corner" description="Contact me via mail."> <main class="content">
   <div style="margin:0px auto;">
-  <h1>Contact Us</h1>
+  <h1>Send me a Mail</h1>
   <p>
-    If you have any thoughts, ideas, suggestions or queries, please put a mail to me. I'd be happy to read and respond to them. Thanks!
+    If you have any thoughts, ideas, suggestions or queries, please put a mail to me.<br>I'd be happy to read and respond to them. Thanks!
   </p>
   </div>
   <form class="mail-form" action="https://api.web3forms.com/submit" method="POST">
@@ -23,7 +23,7 @@ import Layout from "../components/Layout.astro";
     <button type="submit" id="send-btn" class="send-seal-button" aria-label="Send letter">
       <img src="/images/sendseal.webp" alt="A send button made to look like a green wax seal">
     </button>
-    <input type="hidden" name="redirect" value="https://thiru.me/thank-you.html">
+    <input type="hidden" name="redirect" value="https://thiru.me/thank-you">
   </form>
   </main>
 </Layout>

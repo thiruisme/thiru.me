@@ -1235,6 +1235,7 @@ background-size: 50px 50px, 50px 50px, 25px 25px, 25px 25px;
   border: none;
   border-bottom: 1px dashed #aaa;
   padding: 0.3rem 0;
+  overflow: visible;
   font-size: 1.3rem;
   line-height: 1rem;
   color: var(--text-color);
@@ -1256,6 +1257,11 @@ background-size: 50px 50px, 50px 50px, 25px 25px, 25px 25px;
   min-height: 140px;
   line-height: 1.4;
   resize: vertical;
+}
+
+.mail-form input::placeholder,
+.mail-form textarea::placeholder {
+  text-indent: 0.6rem; /* or more, depending on how much the flourish extends */
 }
 
 .send-seal-button {

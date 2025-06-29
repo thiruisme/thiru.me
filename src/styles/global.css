@@ -665,7 +665,7 @@ textarea {
   left: -0.5rem;            /* pull it left of the box */
   width: 2.5rem;              /* size of your pin graphic */
   height: 2.5rem;
-  background: url('/public/images/thumbpin.webp') no-repeat center/100% 100%;
+  background: url('/images/thumbpin.webp') no-repeat center/100% 100%;
   pointer-events: none;
   z-index: 1;     
 }
@@ -965,7 +965,7 @@ h6 a {
   /* float it into the text */
   float: left;
   width: 42%;
-  margin: 1em 2em 1em 2em;
+  margin: 1em 2em 1em 1em;
   padding: 1em 1em 1em 1.4em;
 
   /* make it stand out */
@@ -1011,7 +1011,7 @@ h6 a {
   .prose-blog .pullquote {
     float: none;
     width: auto;
-    margin: 1em auto;
+    margin: 2em auto;
       transform: rotate(-2deg);
   }
     .prose-blog .pullquote-right {
@@ -1151,6 +1151,7 @@ background-size: 50px 50px, 50px 50px, 25px 25px, 25px 25px;
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
+  justify-content: center;
 }
 .social a {
   color: var(--emerald-dark);

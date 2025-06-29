@@ -8,7 +8,8 @@ import Layout from "../components/Layout.astro";
     If you have any thoughts, ideas, suggestions or queries, please put a mail to me. I'd be happy to read and respond to them. Thanks!
   </p>
   </div>
-  <form class="mail-form">
+  <form class="mail-form" action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value="55c52e47-bf53-4b36-a8d6-3ea7d031a206">
     <label for="name">From:</label>
     <input id="name" name="name" type="text" placeholder="Your name" required>
   
@@ -17,40 +18,12 @@ import Layout from "../components/Layout.astro";
   
     <label for="message">Message:</label>
     <textarea id="message" name="message" placeholder="Type your letter…" required></textarea>
-  
-    <!-- change type to "button" so it doesn’t try to POST anywhere -->
-    <button type="button" id="send-btn" class="button">Send Letter</button>
+   <!-- Honeypot Spam Protection -->
+   <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+    <button type="submit" id="send-btn" class="send-seal-button" aria-label="Send letter">
+      <img src="/images/sendseal.webp" alt="A send button made to look like a green wax seal">
+    </button>
+    <input type="hidden" name="redirect" value="https://thiru.me/thank-you.html">
   </form>
-  <script>
-    document.getElementById('send-btn').addEventListener('click', function() {
-      const nameField    = document.getElementById('name').value.trim();
-      const emailField   = document.getElementById('email').value.trim();
-      const messageField = document.getElementById('message').value.trim();
-    
-      if (!nameField || !emailField) {
-        alert('Please fill both your name and email address.');
-        return;
-      }
-    
-      // Build the mailto: link
-      const to      = 'hey@thiru.me';
-      const subject = `A message from ${nameField}`;
-      // If you like, you can include their message *and* their email in the body:
-      const bodyLines = [
-        `From: ${emailField}`,
-        '',
-        messageField
-      ];
-      const body = bodyLines.join('\n');
-    
-      const mailtoLink = 
-        `mailto:${encodeURIComponent(to)
-        }?subject=${encodeURIComponent(subject)
-        }&body=${encodeURIComponent(body)}`;
-    
-      // Open default mail client
-      window.location.href = mailtoLink;
-    });
-    </script>
   </main>
 </Layout>

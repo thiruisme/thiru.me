@@ -754,14 +754,14 @@ textarea {
 }
 
 /* 8️⃣ Links */
-.prose-blog a:not(.button) {
+.prose-blog a:not(.button), #backarrow a {
   color: var(--accent-bot);
   text-decoration-thickness: .12em;
   text-underline-offset: 2px;
   transition: color .2s;
 }
 
-.prose-blog a:not(.button):hover {
+.prose-blog a:not(.button):hover, #backarrow a:hover {
   color: var(--emerald-dark);
 }
 
@@ -1235,7 +1235,6 @@ background-size: 50px 50px, 50px 50px, 25px 25px, 25px 25px;
   border: none;
   border-bottom: 1px dashed #aaa;
   padding: 0.3rem 0;
-  font-family: inherit;
   font-size: 1.3rem;
   line-height: 1rem;
   color: var(--text-color);
@@ -1259,23 +1258,40 @@ background-size: 50px 50px, 50px 50px, 25px 25px, 25px 25px;
   resize: vertical;
 }
 
-/* Send button as a tiny seal */
-.mail-form button {
-  display: inline-block;
-  margin-top: 1.5rem;
-  padding: 0.6rem 1.2rem;
-  font-family: inherit;
-  background: var(--accent-bot);
-  color: #fff;
+.send-seal-button {
+  background: none;
   border: none;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  padding: 0;
+  margin-top: 1.5rem;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  display: inline-block;
+  transition: transform 0.1s ease;
 }
-.mail-form button:hover {
-  background: var(--accent-top);
+
+.send-seal-button img {
+  width: 100px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0px 0px 3px rgba(0,0,0,0.3));
+  rotate: -4deg;
+  transition: transform 0.2s ease, filter 0.2s ease, rotate 0.2s ease;
 }
-.mail-form button:active {
-  transform: scale(0.97);
+
+/* Animate on hover/click */
+.send-seal-button:hover img {
+  transform: scale(1.05);
+  filter: drop-shadow(2px 3px 10px rgba(0,0,0,0.4));
+  rotate: -0deg;
+}
+
+.send-seal-button:active img {
+  transform: scale(0.95);
+  filter: drop-shadow(0px 0px 1px rgba(0,0,0,0.3));
+  rotate: -0deg;
+}
+
+#thank-you-mail-pic { 
+  width: 100%;
+  max-width: 550px;
+  margin: 1rem auto;
 }

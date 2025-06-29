@@ -1215,7 +1215,7 @@ background-size: 50px 50px, 50px 50px, 25px 25px, 25px 25px;
   width: 100px;
   height: 100px;
   rotate: 2deg;
-  background: url('/images/stamp.png') no-repeat center/contain;
+  background: url('/images/stamp.webp') no-repeat center/contain;
 }
 
 /* Labels look like they’re part of the letter */

@@ -1,7 +1,12 @@
 ---
 import Header from "./Header.astro";
 import Footer from "./Footer.astro";
+import { Image } from 'astro:assets';
 import "../styles/global.css";
+
+// Import hero images
+import heroDesktop from '../images/hero-desktop.webp';
+import heroMobile from '../images/hero-mobile.webp';
 
 export interface Props {
   title?: string;
@@ -34,18 +39,21 @@ const {
             <!-- Mobile: up to 600px -->
             <source
               media="(max-width: 600px)"
-              srcset="/images/hero-mobile.webp"
+              srcset={heroMobile.src}
             />
             <!-- Desktop fallback -->
-            <img
-              src="/images/hero-desktop.webp"
+            <Image
+              src={heroDesktop}
               alt="Web banner featuring bridge from Monet's Water Lilies with the text 'My Internet Corner' written on it"
-              width="960" height="360"
-              style="display:block; width:100%; height:auto; align:center;"
+              width={960}
+              height={360}
+              loading="eager"
+              format="webp"
+              style="display:block; width:100%; height:auto;"
             />
           </picture>
         </header>
-)}
+      )}
       <Header current={current} />
       <main class="content">
         <slot />

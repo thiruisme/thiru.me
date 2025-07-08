@@ -1,6 +1,8 @@
 import { defineConfig } from "astro/config";
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  output: "static", // fully pre‑rendered
-  site: "https://thiru.me" // ← update when deploying
+  output: "static",
+  site: "https://thiru.me",
+  integrations: [sitemap()],
 });

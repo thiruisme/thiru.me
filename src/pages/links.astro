@@ -1,46 +1,67 @@
 ---
 // src/pages/links.astro
 import Layout from "../components/Layout.astro";
+import { Image } from 'astro:assets';
+
+// Import all icon images
+import instagramIcon from '../images/icons/instagram.png';
+import spicaIcon from '../images/icons/spica.png';
+import behanceIcon from '../images/icons/behance.png';
+import githubIcon from '../images/icons/github.png';
+import discordIcon from '../images/icons/discord.png';
+import steamIcon from '../images/icons/steam.png';
 ---
 
-<Layout current="links" title="More Links" description = "My profiles across the web.">
+<Layout current="links" title="More Links" description="My profiles across the web.">
   <main class="content">
     <div class="links-container">
       <h1>More Links</h1>
       <ul class="links-list">
         <li>
           <a href="https://www.instagram.com/thiru.me" target="_blank" class="link-button">
-            <span class="icon"><img src="/images/icons/instagram.png" alt="Instagram" /></span>
+            <span class="icon">
+              <Image src={instagramIcon} alt="Instagram" width={24} height={24} loading="lazy" />
+            </span>
             <span class="label insta-button">Instagram</span>
           </a>
         </li>
         <li>
           <a href="https://www.spica.studio" target="_blank" class="link-button">
-            <span class="icon"><img src="/images/icons/spica.png" alt="Spica" /></span>
+            <span class="icon">
+              <Image src={spicaIcon} alt="Spica" width={24} height={24} loading="lazy" />
+            </span>
             <span class="label spica-button">spica</span>
           </a>
         </li>
         <li>
           <a href="https://www.behance.net/thirun2" target="_blank" class="link-button">
-            <span class="icon"><img src="/images/icons/behance.png" alt="Behance" /></span>
+            <span class="icon">
+              <Image src={behanceIcon} alt="Behance" width={24} height={24} loading="lazy" />
+            </span>
             <span class="label behance-button">Behance</span>
           </a>
         </li>
         <li>
           <a href="https://github.com/thiruisme" target="_blank" class="link-button">
-            <span class="icon"><img src="/images/icons/github.png" alt="Github" /></span>
+            <span class="icon">
+              <Image src={githubIcon} alt="Github" width={24} height={24} loading="lazy" />
+            </span>
             <span class="label github-button">Github</span>
           </a>
         </li>
         <li>
           <a href="https://discordapp.com/users/331312346486013955" target="_blank" class="link-button">
-            <span class="icon"><img src="/images/icons/discord.png" alt="Discord" /></span>
+            <span class="icon">
+              <Image src={discordIcon} alt="Discord" width={24} height={24} loading="lazy" />
+            </span>
             <span class="label discord-button">Discord</span>
           </a>
         </li>
         <li>
           <a href="https://steamcommunity.com/id/ThiruN/" target="_blank" class="link-button">
-            <span class="icon"><img src="/images/icons/steam.png" alt="Steam" /></span>
+            <span class="icon">
+              <Image src={steamIcon} alt="Steam" width={24} height={24} loading="lazy" />
+            </span>
             <span class="label steam-button">Steam</span>
           </a>
         </li>

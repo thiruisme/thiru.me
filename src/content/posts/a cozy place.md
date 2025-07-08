@@ -1,7 +1,7 @@
 ---
 title: "Reclaiming a Cozy Corner on the Internet"
 date: 2025-06-17
-thumbnail: "/images/covers/blog01cover.webp"
+thumbnail: "../../images/covers/blog01cover.webp" 
 excerpt: "A small personal space on the internet, untouched by the influence of algorithms"
 tags:
   - blog

@@ -1,0 +1,52 @@
+---
+// src/components/PostCard.astro
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+
+// Import placeholder image for fallback
+import placeholderImg from '../images/placeholder.webp';
+---
+
+<article class="card">
+  <a href={`/blog/${post.slug}/`}>
+    {post.data.thumbnail ? (
+      <Image
+        src={post.data.thumbnail}
+        alt={post.data.title}
+        width={280}
+        height={160}
+        loading="lazy"
+        format="webp"
+        class="card-thumbnail"
+      />
+    ) : (
+      <Image
+        src={placeholderImg}
+        alt="Thumbnail placeholder"
+        width={280}
+        height={160}
+        loading="lazy"
+        format="webp"
+        class="card-thumbnail"
+      />
+    )}
+    <div class="card-body">
+      <div class="card-title">{post.data.title}</div>
+      <p class="card-text">{post.data.excerpt || ""}</p>
+    </div>
+  </a>
+</article>
+
+<style>
+  .card-thumbnail {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+  }
+</style>

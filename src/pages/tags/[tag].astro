@@ -1,5 +1,6 @@
 ---
 import Layout from "../../components/Layout.astro";
+import PostCard from "../../components/PostCard.astro";
 import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
@@ -16,25 +17,11 @@ const posts = (await getCollection("posts")).filter(
   (p) => p.data.tags && p.data.tags.includes(tag)
 );
 ---
-<Layout current="tags" title={`${tag} – Tags – Thiru's Internet Corner`} description={ `Browse all posts tagged “${tag}”` }>
+<Layout current="tags" title={`${tag} – Tags – Thiru's Internet Corner`} description={`Browse all posts tagged "${tag}"`}>
   <main class="content">
     <h1>Posts tagged "{tag}"</h1>
     <div class="cards">
-      {posts.map((p) => (
-        <article class="card">
-          <a href={`/blog/${p.slug}/`}>
-            <img
-              class="frame"
-              src={p.data.thumbnail || "https://placehold.co/280x160?text=Thumbnail"}
-              alt={p.data.title}
-            />
-            <div class="card-body">
-              <div class="card-title">{p.data.title}</div>
-              <p class="card-text">{p.data.excerpt ?? ""}</p>
-            </div>
-          </a>
-        </article>
-      ))}
+      {posts.map((post) => <PostCard post={post} />)}
     </div>
   </main>
 </Layout>

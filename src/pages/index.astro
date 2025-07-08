@@ -1,6 +1,16 @@
 ---
 import Layout from "../components/Layout.astro";
+import PostCard from "../components/PostCard.astro";
+import { Image } from 'astro:assets';
 import { getCollection } from "astro:content";
+
+// Import images for optimization
+import recentSnapImg from '../images/snaps/recentsnap1.webp';
+import authorPhotoImg from '../images/author-photo.webp';
+import authorPhotoInstagram from '../images/author-photo-instagram.webp';
+import authorPhotoBehance from '../images/author-photo-behance.webp';
+import authorPhotoLinkedin from '../images/author-photo-linkedin.webp';
+import authorPhotoGithub from '../images/author-photo-github.webp';
 
 const homepageDesc = "Designer, filmmaker, and explorer of ideas. I tinker, tell stories, build things from scratch, and chase the eerie, the beautiful, and the deeply human."
 const posts = await getCollection("posts");
@@ -34,30 +44,14 @@ const popularTags = Array.from(tagMap.entries())
           posts
             .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
             .slice(0, 4)
-            .map((p) => (
-              <article class="card">
-                <a href={`/blog/${p.slug}/`}>
-                  <img
-                    src={
-                      p.data.thumbnail ??
-                      "https://placehold.co/280x160?text=Thumbnail"
-                    }
-                    alt={p.data.title}
-                  />
-                  <div class="card-body">
-                    <div class="card-title">{p.data.title}</div>
-                    <p class="card-text">{p.data.excerpt}</p>
-                  </div>
-                </a>
-              </article>
-            ))
+            .map((post) => <PostCard post={post} />)
         }
       </section>
 
       <section>
         <h2 style="margin-top: 40px;">Quick Wonder</h2>
         <p>
-          If a thing doesn’t affect you in any way, does its existence matter?
+          If a thing doesn't affect you in any way, does its existence matter?
         </p>
       </section>
 
@@ -93,10 +87,14 @@ const popularTags = Array.from(tagMap.entries())
 
       <section>
         <h2>Recent Snap</h2>
-        <img
-          src="/images/snaps/recentsnap1.webp"
+        <Image
+          src={recentSnapImg}
           alt="A lone tree stands silhouetted against a bright blue sky, scattered with soft, cotton-like clouds."
           class="sidebar-image"
+          width={200}
+          height={150}
+          loading="lazy"
+          format="webp"
         />
         <p style="margin-top:5px;">Early morning visual treat!</p>
       </section>
@@ -106,13 +104,15 @@ const popularTags = Array.from(tagMap.entries())
 <div class="h-card">
   <!-- Left column: photo + profile info -->
   <div class="h-card-main">
-    <img
+    <Image
       id="profile-photo"
       class="u-photo"
-      src="/images/author-photo.webp"
+      src={authorPhotoImg}
       alt="Portrait of Thiru N"
-      width="200"
-      height="200"
+      width={200}
+      height={200}
+      loading="lazy"
+      format="webp"
     />
 
     <div class="profile-info">
@@ -143,48 +143,49 @@ const popularTags = Array.from(tagMap.entries())
     </div>
 
     <div class="social">
-  <a class="u-url u-x-instagram"
-     href="https://instagram.com/thiru.me"
-     rel="me"
-     data-photo="/images/author-photo-instagram.webp">
-    Instagram
-  </a>
-  <a class="u-url u-x-behance"
-     href="https://www.behance.net/thirun2"
-     rel="me"
-     data-photo="/images/author-photo-behance.webp">
-    Behance
-  </a>
-  <a class="u-url u-x-linkedin"
-     href="https://linkedin.com/in/nthiru/"
-     rel="me"
-     data-photo="/images/author-photo-linkedin.webp">
-    LinkedIn
-  </a>
-  <a class="u-url u-x-github"
-     href="https://github.com/thiruisme"
-     rel="me"
-     data-photo="/images/author-photo-github.webp">
-    GitHub
-  </a>
-</div>
+      <a class="u-url u-x-instagram"
+         href="https://instagram.com/thiru.me"
+         rel="me"
+         data-photo={authorPhotoInstagram.src}>
+        Instagram
+      </a>
+      <a class="u-url u-x-behance"
+         href="https://www.behance.net/thirun2"
+         rel="me"
+         data-photo={authorPhotoBehance.src}>
+        Behance
+      </a>
+      <a class="u-url u-x-linkedin"
+         href="https://linkedin.com/in/nthiru/"
+         rel="me"
+         data-photo={authorPhotoLinkedin.src}>
+        LinkedIn
+      </a>
+      <a class="u-url u-x-github"
+         href="https://github.com/thiruisme"
+         rel="me"
+         data-photo={authorPhotoGithub.src}>
+        GitHub
+      </a>
+    </div>
   </div>
 </div>
 <script>
-  const photoEl     = document.getElementById('profile-photo');
+  const photoEl     = document.getElementById('profile-photo') as HTMLImageElement;
   const defaultSrc  = photoEl.src;    // original image
-  let   revertTimer = null;
+  let   revertTimer: number | null = null;
 
   document.querySelectorAll('.social a[data-photo]').forEach(link => {
     link.addEventListener('mouseenter', () => {
       // cancel any pending revert
-      clearTimeout(revertTimer);
+      if (revertTimer) clearTimeout(revertTimer);
       // swap in the hovered image immediately
-      photoEl.src = link.dataset.photo;
+      const photoUrl = (link as HTMLElement).dataset.photo;
+      if (photoUrl) photoEl.src = photoUrl;
     });
     link.addEventListener('mouseleave', () => {
       // after 2 s, put the default back
-      revertTimer = setTimeout(() => {
+      revertTimer = window.setTimeout(() => {
         photoEl.src = defaultSrc;
       }, 2000);
     });

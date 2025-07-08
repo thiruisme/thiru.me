@@ -4,8 +4,7 @@ import PostCard from "../components/PostCard.astro";
 import { Image } from 'astro:assets';
 import { getCollection } from "astro:content";
 
-// Import images for optimization
-import recentSnapImg from '../images/snaps/recentsnap1.webp';
+// Import images for optimization (only for images that need it)
 import authorPhotoImg from '../images/author-photo.webp';
 import authorPhotoInstagram from '../images/author-photo-instagram.webp';
 import authorPhotoBehance from '../images/author-photo-behance.webp';
@@ -87,14 +86,12 @@ const popularTags = Array.from(tagMap.entries())
 
       <section>
         <h2>Recent Snap</h2>
-        <Image
-          src={recentSnapImg}
+        <img
+          src="/images/snaps/recentsnap1.webp"
           alt="A lone tree stands silhouetted against a bright blue sky, scattered with soft, cotton-like clouds."
           class="sidebar-image"
-          width={200}
-          height={150}
+          width="200"
           loading="lazy"
-          format="webp"
         />
         <p style="margin-top:5px;">Early morning visual treat!</p>
       </section>

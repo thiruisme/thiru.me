@@ -11,7 +11,7 @@ tags:
   - aesthetics
   - accessibility
 ---
-![Slates inscribed with binary code poking out of a white trash can with green background](/images/covers/blog01cover.webp)
+![Illustration of a hand holding a handwritten letter on white paper with scribbled lines, green decorative elements including a plant drawing, and a small green note clipped to the top corner featuring hearts and cursive writing. The background is solid bright green.](/images/covers/blog01cover.webp)
 
 Ten years ago, minimalism was all the rage. It was the shiny new aesthetic that was finally here to take down those ghoulish Web 2.0 style aesthetics that were ubiquitous. Not only were flat and minimal websites easy to scale across devices, but they were also easy on system resources (which mobile phones back then really appreciated). I was one among the millions who cheered for it.
 

@@ -369,12 +369,27 @@ nav a.active:hover::before {
   font-size: 1.05rem;
   font-weight: bold;
   transition: color 0.3s ease;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+  max-height: 2.6em; /* 2 lines × line-height */
 }
 
 .card-text {
   color: var(--text-color);
   font-size: .9rem;
   transition: color 0.3s ease;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+  max-height: 2.8em; /* 2 lines × line-height */
+
 }
 
 /* Change text color on card hover */

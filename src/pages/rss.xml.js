@@ -4,11 +4,8 @@ import { getCollection } from 'astro:content';
 export async function GET(context) {
   const posts = await getCollection('posts');
   
-  // Sort by datetime if available, fallback to date
   const sortedPosts = posts.sort((a, b) => {
-    const dateA = a.data.datetime || a.data.date;
-    const dateB = b.data.datetime || b.data.date;
-    return dateB.getTime() - dateA.getTime();
+    return b.data.datetime.getTime() - a.data.datetime.getTime();
   });
   
   return rss({
@@ -17,8 +14,7 @@ export async function GET(context) {
     site: context.site,
     items: sortedPosts.map((post) => ({
       title: post.data.title,
-      // Use datetime if available, otherwise use date at midnight
-      pubDate: post.data.datetime || post.data.date,
+      pubDate: post.data.datetime,
       description: post.data.excerpt,
       link: `/blog/${post.slug}/`,
       categories: post.data.tags || [],

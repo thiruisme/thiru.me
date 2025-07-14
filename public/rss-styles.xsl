@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="html" encoding="UTF-8"/>
+
+<!-- Template to format RFC822 date to readable IST format -->
+<xsl:template name="formatDate">
+  <xsl:param name="dateString"/>
+  <xsl:value-of select="$dateString"/>
+</xsl:template>
+
 <xsl:template match="/">
 <html>
 <head>
@@ -33,6 +40,10 @@
       color: #666;
       font-size: 0.9rem;
     }
+    .post-date .timezone {
+      color: #999;
+      font-size: 0.85rem;
+    }
     .subscribe-info {
       background: #dcefd9;
       padding: 1rem;
@@ -40,6 +51,11 @@
       margin-bottom: 2rem;
     }
     a { color: #5db92c; }
+    code {
+      background: #f0f0f0;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
   </style>
 </head>
 <body>
@@ -62,7 +78,9 @@
         </a>
       </div>
       <div class="post-date">
-        <xsl:value-of select="pubDate"/>
+        <xsl:call-template name="formatDate">
+          <xsl:with-param name="dateString" select="pubDate"/>
+        </xsl:call-template>
       </div>
       <p><xsl:value-of select="description"/></p>
     </div>

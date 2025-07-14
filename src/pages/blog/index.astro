@@ -4,8 +4,12 @@ import { getCollection } from "astro:content";
 const archiveDesc = "Browse all posts on design, ideas, technology and aesthetics.";
 const posts = await getCollection("posts");
 
-// Sort posts by date, newest first
-const sortedPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+// Sort posts by datetime if available, fallback to date
+const sortedPosts = posts.sort((a, b) => {
+  const dateA = a.data.datetime || a.data.date;
+  const dateB = b.data.datetime || b.data.date;
+  return dateB.getTime() - dateA.getTime();
+});
 ---
 <Layout current="blog" title="All Posts – Thiru's Internet Corner" description= {archiveDesc}>
   <main class="content">

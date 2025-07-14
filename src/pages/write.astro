@@ -31,7 +31,10 @@ import Layout from "../components/Layout.astro";
                 <label for="post-date">Date</label>
                 <input type="date" id="post-date" />
               </div>
-              
+              <div class="metadata-field">
+  <label for="post-time">Time (optional)</label>
+  <input type="time" id="post-time" />
+</div>
               <div class="metadata-field">
                 <label for="post-thumbnail">Thumbnail Path</label>
                 <input type="text" id="post-thumbnail" placeholder="/images/covers/..." />
@@ -989,45 +992,55 @@ font-style: normal;
     document.getElementById('post-thumbnail').addEventListener('input', updatePreview);
     document.getElementById('post-excerpt').addEventListener('input', updatePreview);
     
-    function updatePreview() {
-      const markdown = generateMarkdown();
-      previewElement.textContent = markdown;
-      
-      // Auto-save
-      localStorage.setItem('blog-draft', JSON.stringify({
-        title: document.getElementById('post-title').value,
-        date: document.getElementById('post-date').value,
-        thumbnail: document.getElementById('post-thumbnail').value,
-        excerpt: document.getElementById('post-excerpt').value,
-        tags: tags,
-        content: editor.innerHTML
-      }));
-    }
+function updatePreview() {
+  const markdown = generateMarkdown();
+  previewElement.textContent = markdown;
+  
+  // Auto-save
+  localStorage.setItem('blog-draft', JSON.stringify({
+    title: document.getElementById('post-title').value,
+    date: document.getElementById('post-date').value,
+    time: document.getElementById('post-time').value,
+    thumbnail: document.getElementById('post-thumbnail').value,
+    excerpt: document.getElementById('post-excerpt').value,
+    tags: tags,
+    content: editor.innerHTML
+  }));
+}
     
     // Generate markdown
-    function generateMarkdown() {
-      const title = document.getElementById('post-title').value || 'Untitled';
-      const date = document.getElementById('post-date').value;
-      const thumbnail = document.getElementById('post-thumbnail').value || '/images/covers/placeholder.jpg';
-      const excerpt = document.getElementById('post-excerpt').value || '';
-      
-      let frontmatter = '---\n';
-      frontmatter += `title: "${title}"\n`;
-      frontmatter += `date: ${date}\n`;
-      frontmatter += `thumbnail: "${thumbnail}"\n`;
-      frontmatter += `excerpt: "${excerpt}"\n`;
-      if (tags.length > 0) {
-        frontmatter += 'tags:\n';
-        tags.forEach(tag => {
-          frontmatter += `  - ${tag}\n`;
-        });
-      }
-      frontmatter += '---\n\n';
-      
-      const content = htmlToMarkdown(editor.innerHTML);
-      
-      return frontmatter + content;
-    }
+function generateMarkdown() {
+  const title = document.getElementById('post-title').value || 'Untitled';
+  const date = document.getElementById('post-date').value;
+  const time = document.getElementById('post-time').value;
+  const thumbnail = document.getElementById('post-thumbnail').value || '/images/covers/placeholder.jpg';
+  const excerpt = document.getElementById('post-excerpt').value || '';
+  
+  let frontmatter = '---\n';
+  frontmatter += `title: "${title}"\n`;
+  frontmatter += `date: ${date}\n`;
+  
+  // Add datetime if time is provided
+  if (time) {
+    // Create datetime in IST (UTC+5:30)
+    const datetime = new Date(`${date}T${time}+05:30`);
+    frontmatter += `datetime: ${datetime.toISOString()}\n`;
+  }
+  
+  frontmatter += `thumbnail: "${thumbnail}"\n`;
+  frontmatter += `excerpt: "${excerpt}"\n`;
+  if (tags.length > 0) {
+    frontmatter += 'tags:\n';
+    tags.forEach(tag => {
+      frontmatter += `  - ${tag}\n`;
+    });
+  }
+  frontmatter += '---\n\n';
+  
+  const content = htmlToMarkdown(editor.innerHTML);
+  
+  return frontmatter + content;
+}
     
     // HTML to Markdown converter
     function htmlToMarkdown(html) {
@@ -1110,21 +1123,26 @@ font-style: normal;
     });
     
     // Load draft on page load
-    window.addEventListener('load', () => {
-      const draft = localStorage.getItem('blog-draft');
-      if (draft) {
-        const data = JSON.parse(draft);
-        document.getElementById('post-title').value = data.title || '';
-        document.getElementById('post-date').value = data.date || new Date().toISOString().split('T')[0];
-        document.getElementById('post-thumbnail').value = data.thumbnail || '';
-        document.getElementById('post-excerpt').value = data.excerpt || '';
-        tags = data.tags || [];
-        renderTags();
-        editor.innerHTML = data.content || '';
-        updatePreview();
-      } else {
-        updatePreview();
-      }
-    });
+window.addEventListener('load', () => {
+  const draft = localStorage.getItem('blog-draft');
+  if (draft) {
+    const data = JSON.parse(draft);
+    document.getElementById('post-title').value = data.title || '';
+    document.getElementById('post-date').value = data.date || new Date().toISOString().split('T')[0];
+    document.getElementById('post-time').value = data.time || '';
+    document.getElementById('post-thumbnail').value = data.thumbnail || '';
+    document.getElementById('post-excerpt').value = data.excerpt || '';
+    tags = data.tags || [];
+    renderTags();
+    editor.innerHTML = data.content || '';
+    updatePreview();
+  } else {
+    // Set current date and time by default
+    document.getElementById('post-date').value = new Date().toISOString().split('T')[0];
+    document.getElementById('post-time').value = new Date().toTimeString().slice(0, 5);
+    updatePreview();
+  }
+});
+document.getElementById('post-time').addEventListener('input', updatePreview);
   </script>
 </Layout>

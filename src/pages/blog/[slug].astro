@@ -17,6 +17,24 @@ if (!post) throw new Error(`Post not found: ${slug}`);
 
 const desc = post.data.excerpt || post.data.title;
 const { Content } = await render(post);
+
+// Format date and time
+const postDate = post.data.datetime || post.data.date;
+const dateOptions: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+};
+const timeOptions: Intl.DateTimeFormatOptions = {
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: true,
+};
+
+const formattedDate = new Date(postDate).toLocaleDateString('en-IN', dateOptions);
+const formattedTime = post.data.datetime 
+  ? new Date(post.data.datetime).toLocaleTimeString('en-IN', timeOptions)
+  : null;
 ---
 
 <style>
@@ -34,6 +52,16 @@ const { Content } = await render(post);
     max-width: 680px;
     margin: 1.5rem auto;
   }
+  
+  .post-meta {
+    color: #666;
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+  
+  .post-meta time {
+    display: inline-block;
+  }
 </style>
 
 <Layout current="blog" hero={true} title={`${post.data.title} – Thiru's Internet Corner`} description={desc}>
@@ -44,8 +72,10 @@ const { Content } = await render(post);
       <a href="/blog/">← Back to Blog</a>
     </div>
     <h1 class="post-date">{post.data.title}</h1>
-    <p style="margin-bottom:1rem;">
-      <em>{new Date(post.data.date).toLocaleDateString()}</em>
+    <p class="post-meta">
+      <time datetime={postDate.toISOString()}>
+        {formattedDate}{formattedTime && ` at ${formattedTime}`}
+      </time>
     </p>
     {post.data.tags && (
       <>

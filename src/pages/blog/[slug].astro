@@ -19,22 +19,22 @@ const desc = post.data.excerpt || post.data.title;
 const { Content } = await render(post);
 
 // Format date and time
-const postDate = post.data.datetime || post.data.date;
+const postDate = new Date(post.data.datetime);
 const dateOptions: Intl.DateTimeFormatOptions = {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
+  timeZone: 'Asia/Kolkata',
 };
 const timeOptions: Intl.DateTimeFormatOptions = {
   hour: '2-digit',
   minute: '2-digit',
   hour12: true,
+  timeZone: 'Asia/Kolkata',
 };
 
-const formattedDate = new Date(postDate).toLocaleDateString('en-IN', dateOptions);
-const formattedTime = post.data.datetime 
-  ? new Date(post.data.datetime).toLocaleTimeString('en-IN', timeOptions)
-  : null;
+const formattedDate = postDate.toLocaleDateString('en-IN', dateOptions);
+const formattedTime = postDate.toLocaleTimeString('en-IN', timeOptions);
 ---
 
 <style>
@@ -73,8 +73,8 @@ const formattedTime = post.data.datetime
     </div>
     <h1 class="post-date">{post.data.title}</h1>
     <p class="post-meta">
-      <time datetime={postDate.toISOString()}>
-        {formattedDate}{formattedTime && ` at ${formattedTime}`}
+      <time datetime={post.data.datetime.toISOString()}>
+        {formattedDate} at {formattedTime}
       </time>
     </p>
     {post.data.tags && (

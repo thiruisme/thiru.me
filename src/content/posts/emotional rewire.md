@@ -1,6 +1,5 @@
 ---
 title: "When Eerie and Bleak Becomes Positive Emotion"
-date: 2025-07-13
 datetime: 2025-07-13T17:30:00+05:30
 thumbnail: "/images/covers/blog02cover.webp"
 excerpt: "Our emotional associations with moods and atmospheres can be transformed through positive experiences."

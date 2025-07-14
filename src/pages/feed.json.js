@@ -3,11 +3,8 @@ import { getCollection } from 'astro:content';
 export async function GET() {
   const posts = await getCollection('posts');
   
-  // Sort by datetime if available, fallback to date
   const sortedPosts = posts.sort((a, b) => {
-    const dateA = a.data.datetime || a.data.date;
-    const dateB = b.data.datetime || b.data.date;
-    return dateB.getTime() - dateA.getTime();
+    return b.data.datetime.getTime() - a.data.datetime.getTime();
   });
   
   const feed = {
@@ -25,9 +22,7 @@ export async function GET() {
       url: `https://thiru.me/blog/${post.slug}/`,
       title: post.data.title,
       content_text: post.data.excerpt,
-      // Use datetime if available, otherwise use date
-      date_published: (post.data.datetime || post.data.date).toISOString(),
-      // Add date_modified if you track updates
+      date_published: post.data.datetime.toISOString(),
       tags: post.data.tags || [],
     })),
   };

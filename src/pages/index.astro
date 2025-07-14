@@ -41,7 +41,7 @@ const popularTags = Array.from(tagMap.entries())
       <section class="cards">
         {
           posts
-            .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+            .sort((a, b) => b.data.datetime.getTime() - a.data.datetime.getTime())
             .slice(0, 4)
             .map((post) => <PostCard post={post} />)
         }

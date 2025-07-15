@@ -1,0 +1,20 @@
+{
+  "name": "Thiru's Internet Corner",
+  "short_name": "Thiru.me",
+  "description": "Designer, filmmaker, and explorer of ideas. I tinker, tell stories, build things from scratch, and chase the eerie, the beautiful, and the deeply human.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1b4d3e",
+  "theme_color": "#2b7a57",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["design", "blog", "personal"],
+  "lang": "en-US"
+}

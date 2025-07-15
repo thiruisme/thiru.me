@@ -1,0 +1,579 @@
+---
+import Layout from "../components/Layout.astro";
+import { Image } from 'astro:assets';
+import sendSealImg from '../images/sendseal.webp';
+
+const sampleEntries = [
+  {
+    id: 1,
+    name: "Surya N",
+    email: "",
+    website: "",
+    location: "Bengaluru, KA, IN",
+    message: "This website is so peak just like OPM 👊👨‍🦲! It's so tidy and it's pleasant-looking.",
+    timestamp: "2025-07-15 22:07:00",
+    approved: true
+  },
+  {
+    id: 2,
+    name: "Anusha N",
+    email: "",
+    website: "",
+    location: "Bengaluru, KA, IN",
+    message: "These website colours are so cool just like my imagination.",
+    timestamp: "2025-07-15 022:16:00",
+    approved: true
+  },
+  {
+    id: 3,
+    name: "Jamie Park",
+    email: "jamie@creativestudio.com",
+    website: "https://creativestudio.com",
+    location: "Seoul, South Korea",
+    message: "Your post about emotional rewiring hit me right in the feels. Thank you for sharing such vulnerable and beautiful insights. The photography is stunning too!",
+    timestamp: "2025-07-08 21:45:00",
+    approved: false
+  },
+  {
+    id: 4,
+    name: "Morgan Taylor",
+    email: "morgan.t@example.com",
+    website: "",
+    location: "Portland, OR",
+    message: "This brings me back to the early 2000s internet in the best way possible. The attention to detail in the design is incredible. Bookmarked!",
+    timestamp: "2025-07-05 14:20:00",
+    approved: false
+  }
+];
+
+const approvedEntries = sampleEntries.filter(entry => entry.approved);
+---
+
+<Layout 
+  title="Guestbook | Thiru's Internet Corner" 
+  hero={true}
+  description="Leave a message in Thiru's digital guestbook - a nostalgic throwback to the classic web."
+>
+  <div class="guestbook-container">
+    <div class="guestbook-header">
+      <h1>📖 Guestbook</h1>
+      <p class="guestbook-intro">
+        Welcome to my digital guestbook! Leave a message, share your thoughts, 
+        or just say hello. All entries are moderated before appearing below.
+      </p>
+    </div>
+
+    <!-- Guestbook Form -->
+    <div class="guestbook-form-section">
+      <h2>Sign the Guestbook</h2>
+      <form class="guestbook-form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="55c52e47-bf53-4b36-a8d6-3ea7d031a206">
+        <input type="hidden" name="subject" value="New Guestbook Entry">
+        <input type="hidden" name="from_name" value="Thiru.me Guestbook">
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="guest-name">Name *</label>
+            <input type="text" id="guest-name" name="name" required maxlength="50" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label for="guest-email">Email *</label>
+            <input type="email" id="guest-email" name="email" required maxlength="100" placeholder="your@email.com">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="guest-website">Website</label>
+            <input type="text" id="guest-website" name="website" maxlength="200" placeholder="yoursite.com">
+          </div>
+          <div class="form-group">
+            <label for="guest-location">Location</label>
+            <input type="text" id="guest-location" name="location" maxlength="100" placeholder="City, Country">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="guest-message">Message *</label>
+          <textarea id="guest-message" name="message" required maxlength="500" rows="4" placeholder="Share your thoughts, feedback, or just say hello..."></textarea>
+        </div>
+
+        <!-- Honeypot Spam Protection -->
+        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+        <input type="hidden" name="redirect" value="https://thiru.me/thank-you">
+        
+        <div class="form-submit">
+          <button type="submit" class="guestbook-submit-btn" aria-label="Sign guestbook">
+            <Image src={sendSealImg} alt="A send button made to look like a green wax seal" width={100} height={100} loading="lazy" />
+          </button>
+          <p class="form-note">
+            * Required fields. Your message will be reviewed before appearing.
+          </p>
+        </div>
+      </form>
+    </div>
+
+    <!-- Guestbook Entries -->
+    <div class="guestbook-entries">
+      <h2>💬 Recent Entries ({approvedEntries.length})</h2>
+      
+      {approvedEntries.map((entry) => (
+        <div class="guestbook-entry">
+          <div class="entry-header">
+            <div class="entry-author">
+              {entry.website ? (
+                <a href={entry.website} target="_blank" rel="noopener noreferrer" class="author-link">
+                  {entry.name}
+                </a>
+              ) : (
+                <span class="author-name">{entry.name}</span>
+              )}
+              {entry.location && (
+                <span class="author-location">from {entry.location}</span>
+              )}
+            </div>
+            <div class="entry-timestamp">
+              {new Date(entry.timestamp).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              })}
+            </div>
+          </div>
+          <div class="entry-message">
+            {entry.message}
+          </div>
+        </div>
+      ))}
+      
+      {approvedEntries.length === 0 && (
+        <div class="no-entries">
+          <p>No entries yet. Be the first to sign the guestbook!</p>
+        </div>
+      )}
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .guestbook-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .guestbook-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .guestbook-header h1 {
+    font-size: 2.5rem;
+    color: var(--heading-color);
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .guestbook-intro {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+    font-style: italic;
+  }
+
+  .guestbook-form-section {
+    width: 80vw;
+    max-width: 600px;
+    position: relative;
+    margin: 2rem auto;
+    padding: 3rem;
+    background: #fcf8f3;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 100% 30px;
+    border: 0px solid transparent;
+    border-image: repeating-linear-gradient(45deg, var(--emerald-light) 0 10px, var(--emerald-dark) 10px 20px) 1;
+    border-radius: 6px;
+    font-family: "bulletin-typewriter-mn", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: .25ch;
+    transform: rotate(-1deg);
+    transition: box-shadow .2s ease-out, transform .2s ease-out;
+    box-shadow: 0px 0px 0px #b2c2b4;
+  }
+
+  .guestbook-form-section:hover,
+  .guestbook-form-section:focus-within {
+    box-shadow: 0px 0px 30px #b2c2b4;
+    transform: rotate(0deg);
+  }
+
+  .guestbook-form-section::before {
+    content: "";
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 100px;
+    height: 100px;
+    rotate: 2deg;
+    background: url('/images/stamp.webp') no-repeat center/contain;
+  }
+
+  .guestbook-form-section h2 {
+    color: var(--heading-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+  }
+
+  .guestbook-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group label {
+    display: block;
+    margin: 1.2rem 0 0.3rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--heading-color);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed #aaa;
+    padding: 0.3rem 0;
+    overflow: visible;
+    font-size: 1.3rem;
+    line-height: 1rem;
+    color: var(--text-color);
+    transition: border-color 0.2s;
+    font-family: "adobe-handwriting-ernie", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-bottom: 1px solid var(--accent-bot);
+  }
+
+  .form-group textarea {
+    min-height: 140px;
+    line-height: 1.4;
+    resize: vertical;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    text-indent: 0.6rem;
+    font-family: "bulletin-typewriter-mn", sans-serif;
+    font-size: .8em;
+  }
+
+  .form-submit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .guestbook-submit-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-top: 1.5rem;
+    cursor: pointer;
+    display: inline-block;
+    transition: transform 0.1s ease;
+  }
+
+  .guestbook-submit-btn img {
+    width: 100px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0px 0px 3px rgba(0,0,0,0.3));
+    rotate: -4deg;
+    transition: transform 0.2s ease, filter 0.2s ease, rotate 0.2s ease;
+  }
+
+  .guestbook-submit-btn:hover img {
+    transform: scale(1.05);
+    filter: drop-shadow(2px 3px 10px rgba(0,0,0,0.4));
+    rotate: -0deg;
+  }
+
+  .guestbook-submit-btn:active img {
+    transform: scale(0.95);
+    filter: drop-shadow(0px 0px 1px rgba(0,0,0,0.3));
+    rotate: -0deg;
+  }
+
+  .form-note {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #666;
+    text-align: center;
+    letter-spacing: .1em;
+  }
+
+  .guestbook-entries {
+    margin-top: 3rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .guestbook-entries h2 {
+    color: var(--heading-color);
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .guestbook-entry {
+    background: #faf8f5;
+    border: none;
+    border-radius: 4px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    position: relative;
+    font-family: "bulletin-typewriter-mn", sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    
+    /* Vintage paper texture */
+    background-image: 
+      radial-gradient(circle at 20% 50%, transparent 20%, rgba(255,248,220,0.3) 21%, rgba(255,248,220,0.3) 34%, transparent 35%, transparent),
+      linear-gradient(0deg, transparent 24%, rgba(255,248,220,0.05) 25%, rgba(255,248,220,0.05) 26%, transparent 27%, transparent 74%, rgba(255,248,220,0.05) 75%, rgba(255,248,220,0.05) 76%, transparent 77%, transparent);
+    background-size: 50px 50px;
+  }
+
+  .guestbook-entry:nth-child(odd) {
+    transform: rotate(-1deg);
+    margin-left: 2rem;
+    background: #f9f6f2;
+  }
+
+  .guestbook-entry:nth-child(even) {
+    transform: rotate(1deg);
+    margin-right: 2rem;
+    background: #faf8f5;
+  }
+
+  .guestbook-entry:nth-child(3n) {
+    transform: rotate(-0.5deg);
+    margin-left: 1rem;
+    margin-right: 1rem;
+    background: #f8f5f1;
+  }
+
+  .guestbook-entry:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+
+  /* Scrapbook corner effects */
+  .guestbook-entry::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid var(--accent-bot);
+    border-bottom: 15px solid var(--accent-bot);
+    opacity: 0.7;
+    transform: rotate(45deg);
+  }
+
+  .guestbook-entry::after {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, var(--emerald-light) 30%, transparent 31%);
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    margin-top: 1em;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed var(--emerald-light);
+  }
+
+  .entry-author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .author-link {
+    color: var(--emerald-dark);
+    text-decoration: none;
+    font-weight: 600;
+    font-family: "bulletin-typewriter-mn", sans-serif;
+    font-size: 1.1rem;
+  }
+
+  .author-link:hover {
+    text-decoration: underline;
+    color: var(--emerald-light);
+  }
+
+  .author-name {
+    font-weight: 600;
+    color: var(--heading-color);
+    font-family: "bulletin-typewriter-mn", sans-serif;
+    font-size: 1.1rem;
+  }
+
+  .author-location {
+    color: var(--emerald-light);
+    font-size: 0.9rem;
+    font-style: italic;
+    opacity: 0.7;
+  }
+
+  .entry-timestamp {
+    color: #8b4513;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    font-family: "bulletin-typewriter-mn", sans-serif;
+    opacity: 0.6;
+    transform: rotate(-2deg);
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  .entry-message {
+    color: var(--text-color);
+    line-height: 1.6;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    text-indent: 1rem;
+    position: relative;
+    font-family: "bulletin-typewriter-mn", sans-serif;
+  }
+
+  .entry-message::before {
+    content: "💭";
+    position: absolute;
+    left: -1.5rem;
+    top: 0;
+    opacity: 0.4;
+    font-size: 1.2rem;
+  }
+
+  .no-entries {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 2rem;
+  }
+
+  @media (max-width: 600px) {
+    .guestbook-container {
+      padding: 1rem;
+    }
+
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+
+    .guestbook-header h1 {
+      font-size: 2rem;
+    }
+
+    .guestbook-entry:nth-child(odd),
+    .guestbook-entry:nth-child(even),
+    .guestbook-entry:nth-child(3n) {
+      transform: rotate(0deg);
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .guestbook-entry:hover {
+      transform: scale(1.01);
+    }
+
+    .entry-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .entry-timestamp {
+      position: static;
+      transform: none;
+      background: none;
+      padding: 0;
+      margin-top: 0.5rem;
+    }
+
+    .entry-message {
+      text-indent: 0;
+    }
+
+    .entry-message::before {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('.guestbook-form');
+    const websiteInput = document.getElementById('guest-website');
+    
+    if (form && websiteInput) {
+      form.addEventListener('submit', function(e) {
+        const websiteValue = websiteInput.value.trim();
+        
+        // Auto-prepend https:// if user entered a website but didn't include protocol
+        if (websiteValue && !websiteValue.startsWith('http://') && !websiteValue.startsWith('https://')) {
+          websiteInput.value = 'https://' + websiteValue;
+        }
+      });
+    }
+  });
+</script>

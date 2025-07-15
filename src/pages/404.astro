@@ -1,0 +1,119 @@
+---
+import Layout from "../components/Layout.astro";
+---
+
+<Layout 
+  title="404 - Page Not Found | Thiru's Internet Corner" 
+  hero={true}
+  description="The page you're looking for doesn't exist. Explore other sections of Thiru's Internet Corner."
+>
+  <div class="error-page">
+    <div class="error-content">
+      <h1 class="error-code">404</h1>
+      <h2 class="error-message">Page Not Found</h2>
+      <p class="error-description">
+        The page you're looking for seems to have wandered off into the digital void. 
+        Perhaps it's exploring new dimensions of the internet, or maybe it just never existed.
+      </p>
+      
+      <div class="error-actions">
+        <a href="/" class="error-link primary">Go Home</a>
+        <a href="/blog" class="error-link">Browse Blog</a>
+        <a href="/contact" class="error-link">Contact Me</a>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .error-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    padding: 2rem;
+  }
+
+  .error-content {
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .error-code {
+    font-size: 8rem;
+    font-weight: bold;
+    color: var(--emerald-light);
+    margin: 0;
+    line-height: 1;
+  }
+
+  .error-message {
+    font-size: 2rem;
+    color: var(--heading-color);
+    margin: 1rem 0;
+    font-weight: normal;
+  }
+
+  .error-description {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 2rem 0;
+  }
+
+  .error-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .error-link {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--emerald-light);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .error-link:hover {
+    background: var(--emerald-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .error-link.primary {
+    background: var(--accent-bot);
+    font-weight: 600;
+  }
+
+  .error-link.primary:hover {
+    background: var(--accent-top);
+    color: var(--emerald-dark);
+  }
+
+  @media (max-width: 600px) {
+    .error-code {
+      font-size: 5rem;
+    }
+    
+    .error-message {
+      font-size: 1.5rem;
+    }
+    
+    .error-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .error-link {
+      width: 200px;
+      text-align: center;
+    }
+  }
+</style>

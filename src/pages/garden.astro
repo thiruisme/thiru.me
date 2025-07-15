@@ -1,0 +1,593 @@
+---
+import Layout from "../components/Layout.astro";
+import { getCollection } from "astro:content";
+
+// Get all garden entries and render their content
+const gardenEntries = await getCollection("garden", ({ data }) => {
+  return data.draft !== true;
+});
+
+// Sort by date added (newest first)
+gardenEntries.sort((a, b) => b.data.dateAdded.getTime() - a.data.dateAdded.getTime());
+
+// Render content for each entry
+const entriesWithContent = await Promise.all(
+  gardenEntries.map(async (entry) => {
+    const { Content } = await entry.render();
+    return { ...entry, Content };
+  })
+);
+
+function getEntryBySlug(slug) {
+  return gardenEntries.find(entry => entry.slug === slug);
+}
+
+function getGrowthIcon(growth) {
+  switch(growth) {
+    case 'seedling': return '🌱';
+    case 'growing': return '🌿';
+    case 'blooming': return '🌸';
+    case 'mature': return '🌳';
+    default: return '🌱';
+  }
+}
+
+function getTypeIcon(type) {
+  switch(type) {
+    case 'reflection': return '🪞';
+    case 'insight': return '💡';
+    case 'observation': return '👁️';
+    case 'principle': return '⚖️';
+    default: return '💭';
+  }
+}
+---
+
+<Layout 
+  title="Digital Garden | Thiru's Internet Corner" 
+  hero={true}
+  description="A growing collection of interconnected thoughts, ideas, and reflections—cultivated over time."
+>
+  <div class="garden-container">
+    <div class="garden-header">
+      <h1>🌿 Digital Garden</h1>
+      <p class="garden-intro">
+        A living collection of thoughts, ideas, and reflections that grow and evolve over time. 
+        Each entry connects to others, creating a web of interconnected knowledge.
+      </p>
+      <div class="garden-stats">
+        <span class="stat-item">
+          <strong>{entriesWithContent.length}</strong> entries growing
+        </span>
+        <span class="stat-item">
+          <strong>{entriesWithContent.filter(e => e.data.growth === 'mature').length}</strong> mature thoughts
+        </span>
+        <span class="stat-item">
+          <strong>{entriesWithContent.reduce((acc, entry) => acc + (entry.data.connections?.length || 0), 0)}</strong> connections
+        </span>
+      </div>
+    </div>
+
+    <div class="garden-controls">
+      <div class="control-group">
+        <label for="sortBy">🔄 Sort by:</label>
+        <select id="sortBy" class="control-select">
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+          <option value="title">Title A-Z</option>
+          <option value="growth">Growth Stage</option>
+        </select>
+      </div>
+      
+      <div class="control-group">
+        <label for="filterGrowth">🌱 Growth Stage:</label>
+        <select id="filterGrowth" class="control-select">
+          <option value="all">All Stages</option>
+          <option value="seedling">🌱 Seedling</option>
+          <option value="growing">🌿 Growing</option>
+          <option value="blooming">🌸 Blooming</option>
+          <option value="mature">🌳 Mature</option>
+        </select>
+      </div>
+      
+      <div class="control-group">
+        <label for="filterType">🎭 Type:</label>
+        <select id="filterType" class="control-select">
+          <option value="all">All Types</option>
+          <option value="reflection">🪞 Reflection</option>
+          <option value="insight">💡 Insight</option>
+          <option value="observation">👁️ Observation</option>
+          <option value="principle">⚖️ Principle</option>
+        </select>
+      </div>
+      
+      <div class="control-group">
+        <label for="filterTag">🏷️ Tags:</label>
+        <select id="filterTag" class="control-select">
+          <option value="all">All Tags</option>
+          {Array.from(new Set(entriesWithContent.flatMap(e => e.data.tags || []))).sort().map(tag => (
+            <option value={tag}>{tag}</option>
+          ))}
+        </select>
+      </div>
+    </div>
+
+    <div class="garden-grid">
+      {entriesWithContent.map((entry) => (
+        <article class={`garden-entry ${entry.data.growth}`} data-slug={entry.slug}>
+          <div class="entry-header">
+            <div class="entry-meta">
+              <span class="growth-indicator" title={`Growth stage: ${entry.data.growth}`}>
+                {getGrowthIcon(entry.data.growth)}
+              </span>
+              <span class="type-indicator" title={`Type: ${entry.data.type}`}>
+                {getTypeIcon(entry.data.type)}
+              </span>
+            </div>
+            <time class="entry-date" datetime={entry.data.dateAdded.toISOString()}>
+              {entry.data.dateAdded.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric' 
+              })}
+            </time>
+          </div>
+          
+          <h2 class="entry-title">{entry.data.title}</h2>
+          
+          <div class="entry-content">
+            {(() => {
+              const { Content } = entry;
+              return <Content />;
+            })()}
+          </div>
+          
+          {entry.data.tags && entry.data.tags.length > 0 && (
+            <div class="entry-tags">
+              {entry.data.tags.map(tag => (
+                <span class="garden-tag">{tag}</span>
+              ))}
+            </div>
+          )}
+          
+          {entry.data.connections && entry.data.connections.length > 0 && (
+            <div class="entry-connections">
+              <span class="connections-label">Connected to:</span>
+              <div class="connections-list">
+                {entry.data.connections.map(connectionSlug => {
+                  const connectedEntry = getEntryBySlug(connectionSlug);
+                  return connectedEntry ? (
+                    <button 
+                      class="connection-link" 
+                      data-target={connectionSlug}
+                      title={`Connected to: ${connectedEntry.data.title}`}
+                    >
+                      {getGrowthIcon(connectedEntry.data.growth)} {connectedEntry.data.title}
+                    </button>
+                  ) : null;
+                })}
+              </div>
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .garden-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .garden-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .garden-header h1 {
+    font-size: 2.5rem;
+    color: var(--heading-color);
+    margin-bottom: 1rem;
+  }
+
+  .garden-intro {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    font-style: italic;
+  }
+
+  .garden-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    padding: 1rem;
+    background: rgba(43, 122, 87, 0.05);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(43, 122, 87, 0.1);
+  }
+
+  .stat-item {
+    color: var(--emerald-dark);
+    font-size: 0.9rem;
+  }
+
+  .stat-item strong {
+    color: var(--emerald-light);
+    font-size: 1.2rem;
+  }
+
+  .garden-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .garden-entry {
+    background: #f8fdf8;
+    border: 1px solid rgba(43, 122, 87, 0.15);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(43, 122, 87, 0.1);
+  }
+
+  .garden-entry:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(43, 122, 87, 0.2);
+    border-color: var(--emerald-light);
+  }
+
+  /* Growth stage styling */
+  .garden-entry.seedling {
+    background: #f0f8f0;
+    border-left: 4px solid #90EE90;
+  }
+
+  .garden-entry.growing {
+    background: #f4fbf4;
+    border-left: 4px solid var(--emerald-light);
+  }
+
+  .garden-entry.blooming {
+    background: #f8fdf8;
+    border-left: 4px solid var(--emerald-light);
+    box-shadow: 0 2px 8px rgba(43, 122, 87, 0.15);
+  }
+
+  .garden-entry.mature {
+    background: #f6fcf6;
+    border-left: 4px solid var(--emerald-dark);
+    box-shadow: 0 4px 12px rgba(43, 122, 87, 0.2);
+  }
+
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .entry-meta {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .growth-indicator, .type-indicator {
+    font-size: 1.2rem;
+    cursor: help;
+  }
+
+  .entry-date {
+    font-size: 0.85rem;
+    color: var(--emerald-dark);
+    font-weight: 500;
+  }
+
+  .entry-title {
+    font-size: 1.3rem;
+    color: var(--heading-color);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .entry-content {
+    margin-bottom: 1.5rem;
+  }
+
+  .entry-content p {
+    color: var(--text-color);
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+
+  .entry-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .garden-tag {
+    background: rgba(43, 122, 87, 0.1);
+    color: var(--emerald-dark);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid rgba(43, 122, 87, 0.2);
+  }
+
+  .entry-connections {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px dashed rgba(43, 122, 87, 0.3);
+  }
+
+  .connections-label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--emerald-dark);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .connections-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .connection-link {
+    background: none;
+    border: none;
+    color: var(--emerald-light);
+    font-size: 0.85rem;
+    text-align: left;
+    cursor: pointer;
+    padding: 0.25rem 0;
+    transition: color 0.2s ease;
+    text-decoration: none;
+  }
+
+  .connection-link:hover {
+    color: var(--emerald-dark);
+    text-decoration: underline;
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .garden-container {
+      padding: 1rem;
+    }
+
+    .garden-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .garden-stats {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .garden-header h1 {
+      font-size: 2rem;
+    }
+  }
+
+  /* Subtle animation for mature entries */
+  .garden-entry.mature::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: linear-gradient(45deg, var(--emerald-light), var(--emerald-dark), var(--emerald-light));
+    border-radius: var(--radius-lg);
+    z-index: -1;
+    opacity: 0.3;
+    animation: subtle-glow 4s ease-in-out infinite alternate;
+  }
+
+  @keyframes subtle-glow {
+    0% { opacity: 0.1; }
+    100% { opacity: 0.3; }
+  }
+
+  .garden-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(43, 122, 87, 0.05);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(43, 122, 87, 0.1);
+  }
+
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .control-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--emerald-dark);
+  }
+
+  .control-select {
+    padding: 0.5rem;
+    border: 1px solid rgba(43, 122, 87, 0.3);
+    border-radius: var(--radius-sm);
+    background: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .control-select:focus {
+    outline: none;
+    border-color: var(--emerald-light);
+    box-shadow: 0 0 0 2px rgba(43, 122, 87, 0.1);
+  }
+
+  .control-select:hover {
+    border-color: var(--emerald-light);
+  }
+
+  .garden-entry {
+    transition: all 0.3s ease;
+  }
+
+  .garden-entry.hidden {
+    display: none;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const connectionLinks = document.querySelectorAll('.connection-link');
+    const sortSelect = document.getElementById('sortBy');
+    const filterGrowthSelect = document.getElementById('filterGrowth');
+    const filterTypeSelect = document.getElementById('filterType');
+    const filterTagSelect = document.getElementById('filterTag');
+    const gardenGrid = document.querySelector('.garden-grid');
+    
+    // Get all entries
+    const entries = Array.from(document.querySelectorAll('.garden-entry'));
+    
+    // Extract data from entries
+    const entriesData = entries.map(entry => ({
+      element: entry,
+      slug: entry.dataset.slug,
+      title: entry.querySelector('.entry-title').textContent,
+      growth: entry.classList.contains('seedling') ? 'seedling' :
+              entry.classList.contains('growing') ? 'growing' :
+              entry.classList.contains('blooming') ? 'blooming' : 'mature',
+      type: entry.querySelector('.type-indicator').getAttribute('title').split(': ')[1],
+      tags: Array.from(entry.querySelectorAll('.garden-tag')).map(tag => tag.textContent),
+      dateAdded: new Date(entry.querySelector('.entry-date').getAttribute('datetime'))
+    }));
+    
+    function sortEntries(entries, sortBy) {
+      return [...entries].sort((a, b) => {
+        switch(sortBy) {
+          case 'newest':
+            return b.dateAdded - a.dateAdded;
+          case 'oldest':
+            return a.dateAdded - b.dateAdded;
+          case 'title':
+            return a.title.localeCompare(b.title);
+          case 'growth':
+            const growthOrder = ['seedling', 'growing', 'blooming', 'mature'];
+            return growthOrder.indexOf(a.growth) - growthOrder.indexOf(b.growth);
+          default:
+            return 0;
+        }
+      });
+    }
+    
+    function filterEntries(entries, filters) {
+      return entries.filter(entry => {
+        // Growth filter
+        if (filters.growth !== 'all' && entry.growth !== filters.growth) {
+          return false;
+        }
+        
+        // Type filter
+        if (filters.type !== 'all' && entry.type !== filters.type) {
+          return false;
+        }
+        
+        // Tag filter
+        if (filters.tag !== 'all' && !entry.tags.includes(filters.tag)) {
+          return false;
+        }
+        
+        return true;
+      });
+    }
+    
+    function updateDisplay() {
+      const filters = {
+        growth: filterGrowthSelect.value,
+        type: filterTypeSelect.value,
+        tag: filterTagSelect.value
+      };
+      
+      const sortBy = sortSelect.value;
+      
+      // Filter entries
+      const filteredEntries = filterEntries(entriesData, filters);
+      
+      // Sort entries
+      const sortedEntries = sortEntries(filteredEntries, sortBy);
+      
+      // Clear grid
+      gardenGrid.innerHTML = '';
+      
+      // Add sorted and filtered entries
+      sortedEntries.forEach(entry => {
+        gardenGrid.appendChild(entry.element);
+      });
+      
+      // Update stats
+      const totalVisible = sortedEntries.length;
+      const matureVisible = sortedEntries.filter(e => e.growth === 'mature').length;
+      
+      // Update stats display (optional)
+      const statItems = document.querySelectorAll('.stat-item strong');
+      if (statItems.length >= 2) {
+        statItems[0].textContent = totalVisible;
+        statItems[1].textContent = matureVisible;
+      }
+    }
+    
+    // Event listeners for controls
+    sortSelect.addEventListener('change', updateDisplay);
+    filterGrowthSelect.addEventListener('change', updateDisplay);
+    filterTypeSelect.addEventListener('change', updateDisplay);
+    filterTagSelect.addEventListener('change', updateDisplay);
+    
+    // Connection links functionality
+    connectionLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetSlug = this.dataset.target;
+        const targetEntry = document.querySelector(`[data-slug="${targetSlug}"]`);
+        
+        if (targetEntry) {
+          // Highlight the connection
+          targetEntry.style.transform = 'translateY(-8px)';
+          targetEntry.style.boxShadow = '0 12px 30px rgba(43, 122, 87, 0.3)';
+          targetEntry.style.borderColor = '#2b7a57';
+          
+          // Scroll to the connected entry
+          targetEntry.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+          });
+          
+          // Reset highlighting after animation
+          setTimeout(() => {
+            targetEntry.style.transform = '';
+            targetEntry.style.boxShadow = '';
+            targetEntry.style.borderColor = '';
+          }, 2000);
+        }
+      });
+    });
+  });
+</script>

@@ -207,9 +207,9 @@ function getTypeIcon(type) {
     gap: 2rem;
     margin-top: 2rem;
     padding: 1rem;
-    background: rgba(43, 122, 87, 0.05);
+    background: rgba(var(--emerald-light-rgb), 0.05);
     border-radius: var(--radius-lg);
-    border: 1px solid rgba(43, 122, 87, 0.1);
+    border: 1px solid rgba(var(--emerald-light-rgb), 0.1);
   }
 
   .stat-item {
@@ -230,42 +230,42 @@ function getTypeIcon(type) {
   }
 
   .garden-entry {
-    background: #f8fdf8;
-    border: 1px solid rgba(43, 122, 87, 0.15);
+    background: var(--card-bg);
+    border: 1px solid rgba(var(--emerald-light-rgb), 0.15);
     border-radius: var(--radius-lg);
     padding: 2rem;
     position: relative;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(43, 122, 87, 0.1);
+    box-shadow: 0 2px 8px rgba(var(--emerald-light-rgb), 0.1);
   }
 
   .garden-entry:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(43, 122, 87, 0.2);
+    box-shadow: 0 8px 25px rgba(var(--emerald-light-rgb), 0.2);
     border-color: var(--emerald-light);
   }
 
   /* Growth stage styling */
   .garden-entry.seedling {
-    background: #f0f8f0;
-    border-left: 4px solid #90EE90;
+    background: var(--card-bg);
+    border-left: 4px solid var(--accent-top);
   }
 
   .garden-entry.growing {
-    background: #f4fbf4;
+    background: var(--card-bg);
     border-left: 4px solid var(--emerald-light);
   }
 
   .garden-entry.blooming {
-    background: #f8fdf8;
+    background: var(--card-bg);
     border-left: 4px solid var(--emerald-light);
-    box-shadow: 0 2px 8px rgba(43, 122, 87, 0.15);
+    box-shadow: 0 2px 8px rgba(var(--emerald-light-rgb), 0.15);
   }
 
   .garden-entry.mature {
-    background: #f6fcf6;
+    background: var(--card-bg);
     border-left: 4px solid var(--emerald-dark);
-    box-shadow: 0 4px 12px rgba(43, 122, 87, 0.2);
+    box-shadow: 0 4px 12px rgba(var(--emerald-light-rgb), 0.2);
   }
 
   .entry-header {
@@ -317,19 +317,19 @@ function getTypeIcon(type) {
   }
 
   .garden-tag {
-    background: rgba(43, 122, 87, 0.1);
+    background: rgba(var(--emerald-light-rgb), 0.1);
     color: var(--emerald-dark);
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-size: 0.85rem;
     font-weight: 500;
-    border: 1px solid rgba(43, 122, 87, 0.2);
+    border: 1px solid rgba(var(--emerald-light-rgb), 0.2);
   }
 
   .entry-connections {
     margin-top: 1.5rem;
     padding-top: 1rem;
-    border-top: 1px dashed rgba(43, 122, 87, 0.3);
+    border-top: 1px dashed rgba(var(--emerald-light-rgb), 0.3);
   }
 
   .connections-label {
@@ -410,9 +410,9 @@ function getTypeIcon(type) {
     gap: 1rem;
     margin-bottom: 2rem;
     padding: 1.5rem;
-    background: rgba(43, 122, 87, 0.05);
+    background: rgba(var(--emerald-light-rgb), 0.05);
     border-radius: var(--radius-lg);
-    border: 1px solid rgba(43, 122, 87, 0.1);
+    border: 1px solid rgba(var(--emerald-light-rgb), 0.1);
   }
 
   .control-group {
@@ -429,9 +429,9 @@ function getTypeIcon(type) {
 
   .control-select {
     padding: 0.5rem;
-    border: 1px solid rgba(43, 122, 87, 0.3);
+    border: 1px solid rgba(var(--emerald-light-rgb), 0.3);
     border-radius: var(--radius-sm);
-    background: white;
+    background: var(--blockquote-bg);
     font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -440,7 +440,7 @@ function getTypeIcon(type) {
   .control-select:focus {
     outline: none;
     border-color: var(--emerald-light);
-    box-shadow: 0 0 0 2px rgba(43, 122, 87, 0.1);
+    box-shadow: 0 0 0 2px rgba(var(--emerald-light-rgb), 0.1);
   }
 
   .control-select:hover {
@@ -571,8 +571,8 @@ function getTypeIcon(type) {
         if (targetEntry) {
           // Highlight the connection
           targetEntry.style.transform = 'translateY(-8px)';
-          targetEntry.style.boxShadow = '0 12px 30px rgba(43, 122, 87, 0.3)';
-          targetEntry.style.borderColor = '#2b7a57';
+          targetEntry.style.boxShadow = '0 12px 30px rgba(var(--emerald-light-rgb), 0.3)';
+          targetEntry.style.borderColor = 'var(--emerald-light)';
           
           // Scroll to the connected entry
           targetEntry.scrollIntoView({ 

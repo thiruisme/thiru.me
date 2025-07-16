@@ -1,0 +1,161 @@
+---
+// Theme Switcher Component
+import { themes, themeNames, themeMetadata } from '../config/themes.js';
+---
+
+<div class="theme-switcher-container">
+  <div class="theme-switcher-label">Choose your vibe</div>
+  <div class="theme-switcher">
+    {themeNames.map(themeName => {
+      const metadata = themeMetadata[themeName];
+      return (
+        <button class="theme-button" data-theme={themeName} title={`${metadata.name} Theme`}>
+          <span class={`theme-preview theme-preview-${themeName}`}></span>
+        </button>
+      );
+    })}
+  </div>
+</div>
+
+<script>
+  // Import themes from configuration
+  import { themes } from '../config/themes.js';
+  
+  // Theme switching logic
+  const themeButtons = document.querySelectorAll('.theme-button');
+  const root = document.documentElement;
+
+  // Load saved theme
+  const savedTheme = localStorage.getItem('theme') || 'default';
+  applyTheme(savedTheme);
+  updateActiveButton(savedTheme);
+
+  // Add click listeners
+  themeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const theme = button.dataset.theme;
+      applyTheme(theme);
+      updateActiveButton(theme);
+      localStorage.setItem('theme', theme);
+    });
+  });
+
+  function applyTheme(themeName) {
+    const theme = themes[themeName];
+    for (const [property, value] of Object.entries(theme)) {
+      root.style.setProperty(`--${property}`, value);
+    }
+    // Update theme-specific hover colors
+    updateThemeHoverColors(themeName);
+  }
+
+  function updateActiveButton(activeTheme) {
+    themeButtons.forEach(button => {
+      button.classList.toggle('active', button.dataset.theme === activeTheme);
+    });
+  }
+
+  function updateThemeHoverColors(themeName) {
+    const theme = themes[themeName];
+    const hoverColor = theme['accent-bot'];
+    
+    // Update CSS custom property for hover color
+    root.style.setProperty('--theme-hover-color', hoverColor);
+  }
+</script>
+
+<style>
+  .theme-switcher-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 8px 8px 8px;
+  }
+
+  .theme-switcher-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-color);
+    text-align: center;
+    opacity: 0.8;
+    margin-bottom: 4px;
+  }
+
+  .theme-switcher {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .theme-button {
+    background: none;
+    border: 2px solid var(--emerald-light);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .theme-button:hover {
+    border-color: var(--theme-hover-color, var(--accent-bot));
+    transform: scale(1.1);
+  }
+
+  .theme-button.active {
+    border-color: var(--theme-hover-color, var(--accent-bot));
+    border-width: 3px;
+    transform: scale(1.1);
+  }
+
+  .theme-preview {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .theme-preview-default {
+    background: linear-gradient(45deg, #1b4d3e 0%, #2b7a57 50%, #a7f542 100%);
+  }
+
+  .theme-preview-autumn {
+    background: linear-gradient(45deg, #8b4513 0%, #cd853f 50%, #ff8c00 100%);
+  }
+
+  .theme-preview-beach {
+    background: linear-gradient(45deg, #1e3a8a 0%, #3b82f6 50%, #fde047 100%);
+  }
+
+  @media (max-width: 600px) {
+    .theme-switcher-container {
+      padding: 8px 6px 6px 6px;
+      gap: 6px;
+    }
+
+    .theme-switcher-label {
+      font-size: 0.8rem;
+      margin-bottom: 2px;
+    }
+
+    .theme-switcher {
+      gap: 6px;
+    }
+    
+    .theme-button {
+      width: 28px;
+      height: 28px;
+    }
+    
+    .theme-preview {
+      width: 16px;
+      height: 16px;
+    }
+  }
+</style>

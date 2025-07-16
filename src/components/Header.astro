@@ -4,13 +4,13 @@ export interface Props {
 }
 const { current = "" } = Astro.props;
 ---
-<header class="header">
+<header class="header" transition:name="main-header">
 <!--  <img
     src="/images/thiru-banner.webp"
     alt="Thiru Logo"
     style="height:48px; width:auto;"
   /> -->
-  <nav>
+  <nav transition:name="navigation">
     <ul>
       <li>
         <a href="/" class={current === "home" ? "active" : ""}>

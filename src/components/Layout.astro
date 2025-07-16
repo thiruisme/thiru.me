@@ -2,6 +2,7 @@
 import Header from "./Header.astro";
 import Footer from "./Footer.astro";
 import { Image } from 'astro:assets';
+import { ViewTransitions } from 'astro:transitions';
 import "../styles/global.css";
 
 // Import hero images
@@ -33,11 +34,12 @@ const {
     <link rel="manifest" href="/manifest.json" />
     {description && <meta name="description" content={description} />}
     <title>{title}</title>
+    <ViewTransitions fallback="animate" />
   </head>
   <body>
     <div class="shell">
       {hero && (
-        <header class="hero">
+        <header class="hero" transition:name="hero-section">
           <picture>
             <!-- Mobile: up to 600px -->
             <source
@@ -58,7 +60,7 @@ const {
         </header>
       )}
       <Header current={current} />
-      <main class="content">
+      <main class="content" transition:name="main-content">
         <slot />
       </main>
       <Footer />

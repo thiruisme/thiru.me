@@ -3,7 +3,7 @@
 import { themes, themeNames, themeMetadata } from '../config/themes.js';
 ---
 
-<div class="theme-switcher-container">
+<div class="theme-switcher-container" transition:name="theme-switcher">
   <div class="theme-switcher-label">Choose your vibe</div>
   <div class="theme-switcher">
     {themeNames.map(themeName => {
@@ -21,47 +21,55 @@ import { themes, themeNames, themeMetadata } from '../config/themes.js';
   // Import themes from configuration
   import { themes } from '../config/themes.js';
   
-  // Theme switching logic
-  const themeButtons = document.querySelectorAll('.theme-button');
-  const root = document.documentElement;
+  function initializeThemes() {
+    // Theme switching logic
+    const themeButtons = document.querySelectorAll('.theme-button');
+    const root = document.documentElement;
 
-  // Load saved theme
-  const savedTheme = localStorage.getItem('theme') || 'default';
-  applyTheme(savedTheme);
-  updateActiveButton(savedTheme);
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'default';
+    applyTheme(savedTheme);
+    updateActiveButton(savedTheme);
 
-  // Add click listeners
-  themeButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const theme = button.dataset.theme;
-      applyTheme(theme);
-      updateActiveButton(theme);
-      localStorage.setItem('theme', theme);
-    });
-  });
-
-  function applyTheme(themeName) {
-    const theme = themes[themeName];
-    for (const [property, value] of Object.entries(theme)) {
-      root.style.setProperty(`--${property}`, value);
-    }
-    // Update theme-specific hover colors
-    updateThemeHoverColors(themeName);
-  }
-
-  function updateActiveButton(activeTheme) {
+    // Add click listeners
     themeButtons.forEach(button => {
-      button.classList.toggle('active', button.dataset.theme === activeTheme);
+      button.addEventListener('click', () => {
+        const theme = button.dataset.theme;
+        applyTheme(theme);
+        updateActiveButton(theme);
+        localStorage.setItem('theme', theme);
+      });
     });
+
+    function applyTheme(themeName) {
+      const theme = themes[themeName];
+      for (const [property, value] of Object.entries(theme)) {
+        root.style.setProperty(`--${property}`, value);
+      }
+      // Update theme-specific hover colors
+      updateThemeHoverColors(themeName);
+    }
+
+    function updateActiveButton(activeTheme) {
+      themeButtons.forEach(button => {
+        button.classList.toggle('active', button.dataset.theme === activeTheme);
+      });
+    }
+
+    function updateThemeHoverColors(themeName) {
+      const theme = themes[themeName];
+      const hoverColor = theme['accent-bot'];
+      
+      // Update CSS custom property for hover color
+      root.style.setProperty('--theme-hover-color', hoverColor);
+    }
   }
 
-  function updateThemeHoverColors(themeName) {
-    const theme = themes[themeName];
-    const hoverColor = theme['accent-bot'];
-    
-    // Update CSS custom property for hover color
-    root.style.setProperty('--theme-hover-color', hoverColor);
-  }
+  // Initialize themes on page load
+  document.addEventListener('DOMContentLoaded', initializeThemes);
+  
+  // Re-initialize themes after view transitions
+  document.addEventListener('astro:after-swap', initializeThemes);
 </script>
 
 <style>

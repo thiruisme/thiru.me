@@ -457,7 +457,7 @@ function getTypeIcon(type) {
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  function initializeGarden() {
     const connectionLinks = document.querySelectorAll('.connection-link');
     const sortSelect = document.getElementById('sortBy');
     const filterGrowthSelect = document.getElementById('filterGrowth');
@@ -589,5 +589,11 @@ function getTypeIcon(type) {
         }
       });
     });
-  });
+  }
+
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', initializeGarden);
+  
+  // Re-initialize after view transitions
+  document.addEventListener('astro:after-swap', initializeGarden);
 </script>

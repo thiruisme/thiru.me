@@ -975,6 +975,7 @@ font-weight: 300;
   }
 }
 
+
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),
@@ -1006,6 +1007,7 @@ font-weight: 300;
     animation-duration: 0.03s;
     animation-delay: 0.03s;
   }
+  
 }
 
 /*=================================

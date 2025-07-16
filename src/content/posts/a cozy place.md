@@ -2,6 +2,7 @@
 title: "Reclaiming a Cozy Corner on the Internet"
 datetime: 2025-06-17T19:08:00+05:30
 thumbnail: "../../images/covers/blog01cover.webp" 
+thumbnailAlt: "Illustration of a hand holding a handwritten letter on white paper with scribbled lines, green decorative elements including a plant drawing, and a small green note clipped to the top corner featuring hearts and cursive writing. The background is solid bright green."
 excerpt: "A small personal space on the internet, untouched by the influence of algorithms"
 tags:
   - blog
@@ -11,7 +12,6 @@ tags:
   - aesthetics
   - accessibility
 ---
-![Illustration of a hand holding a handwritten letter on white paper with scribbled lines, green decorative elements including a plant drawing, and a small green note clipped to the top corner featuring hearts and cursive writing. The background is solid bright green.](/images/covers/blog01cover.webp)
 
 Ten years ago, minimalism was all the rage. It was the shiny new aesthetic that was finally here to take down those ghoulish Web 2.0 style aesthetics that were ubiquitous. Not only were flat and minimal websites easy to scale across devices, but they were also easy on system resources (which mobile phones back then really appreciated). I was one among the millions who cheered for it.
 

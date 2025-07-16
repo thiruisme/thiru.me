@@ -8,6 +8,10 @@ import "../styles/global.css";
 // Import hero images
 import heroDesktop from '../images/hero-desktop.webp';
 import heroMobile from '../images/hero-mobile.webp';
+import heroDesktopBlue from '../images/hero-desktop-blue.webp';
+import heroMobileBlue from '../images/hero-mobile-blue.webp';
+import heroDesktopRed from '../images/hero-desktop-red.webp';
+import heroMobileRed from '../images/hero-mobile-red.webp';
 
 export interface Props {
   title?: string;
@@ -40,14 +44,16 @@ const {
     <div class="shell">
       {hero && (
         <header class="hero" transition:name="hero-section">
-          <picture>
+          <picture id="hero-picture">
             <!-- Mobile: up to 600px -->
             <source
+              id="hero-mobile-source"
               media="(max-width: 600px)"
               srcset={heroMobile.src}
             />
             <!-- Desktop fallback -->
             <Image
+              id="hero-desktop-image"
               src={heroDesktop}
               alt="Web banner featuring bridge from Monet's Water Lilies with the text 'My Internet Corner' written on it"
               width={960}
@@ -67,3 +73,93 @@ const {
     </div>
   </body>
 </html>
+
+<script define:vars={{
+  heroDesktop: heroDesktop.src,
+  heroMobile: heroMobile.src,
+  heroDesktopBlue: heroDesktopBlue.src,
+  heroMobileBlue: heroMobileBlue.src,
+  heroDesktopRed: heroDesktopRed.src,
+  heroMobileRed: heroMobileRed.src
+}}>
+  // Hero image theme switching
+  function updateHeroImage() {
+    const heroMobileSource = document.getElementById('hero-mobile-source');
+    const heroDesktopImage = document.getElementById('hero-desktop-image');
+    
+    if (!heroMobileSource || !heroDesktopImage) return;
+    
+    // Get current theme from localStorage
+    const currentTheme = localStorage.getItem('theme') || 'default';
+    
+    // Define image paths and alt text for each theme
+    const heroImages = {
+      default: {
+        desktop: heroDesktop,
+        mobile: heroMobile,
+        altDesktop: "\"My virtual desk\" over Claude Monet’s painting of a Japanese footbridge surrounded by vibrant green foliage and a pond of water lilies.",
+        altMobile: "\"My virtual notebook\" over an impressionist painting of a Japanese-style bridge crossing a pond filled with water lilies, surrounded by lush greenery."
+      },
+      autumn: {
+        desktop: heroDesktopRed,
+        mobile: heroMobileRed,
+        altDesktop: "Text \"My virtual desk\" over an impressionist painting of haystacks in a colorful sunset field.",
+        altMobile: "Text \"My virtual notebook\" over an impressionist painting of haystacks in a colorful sunset field."
+      },
+      beach: {
+        desktop: heroDesktopBlue,
+        mobile: heroMobileBlue,
+        altDesktop: "Text \"My virtual desk\" over a colorful, impressionist-style painting of a beach and sea with small red sailboats.",
+        altMobile: "Text \"My virtual notebook\" over a colorful, impressionist-style painting of a beach and sea with small red sailboats."
+      }
+    };
+    
+    // Get images for current theme
+    const themeImages = heroImages[currentTheme] || heroImages.default;
+    
+    // Update mobile source
+    heroMobileSource.srcset = themeImages.mobile;
+    
+    // Update desktop image
+    heroDesktopImage.src = themeImages.desktop;
+    
+    // Update alt text based on screen size
+    const isMobile = window.innerWidth <= 600;
+    const altText = isMobile ? themeImages.altMobile : themeImages.altDesktop;
+    
+    heroDesktopImage.alt = altText;
+    
+    // Debug logging
+    console.log('Hero image updated for theme:', currentTheme);
+    console.log('Desktop image:', themeImages.desktop);
+    console.log('Mobile image:', themeImages.mobile);
+  }
+  
+  // Initialize hero image on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    updateHeroImage();
+    // Force update after a brief delay to ensure DOM is ready
+    setTimeout(updateHeroImage, 100);
+  });
+  
+  // Update hero image after view transitions
+  document.addEventListener('astro:after-swap', function() {
+    updateHeroImage();
+    // Force update after a brief delay to ensure DOM is ready
+    setTimeout(updateHeroImage, 100);
+  });
+  
+  // Listen for theme changes (triggered by ThemeSwitcher)
+  window.addEventListener('themeChanged', function(e) {
+    console.log('Theme changed event received:', e.detail);
+    updateHeroImage();
+  });
+  
+  // Also listen for storage changes as fallback
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'theme') {
+      console.log('Storage change detected for theme:', e.newValue);
+      updateHeroImage();
+    }
+  });
+</script>

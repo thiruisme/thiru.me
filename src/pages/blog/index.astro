@@ -1,5 +1,6 @@
 ---
 import Layout from "../../components/Layout.astro";
+import PostCard from "../../components/PostCard.astro";
 import { getCollection } from "astro:content";
 const archiveDesc = "Browse all posts on design, ideas, technology and aesthetics.";
 const posts = await getCollection("posts");
@@ -13,20 +14,8 @@ const sortedPosts = posts.sort((a, b) => {
   <main class="content">
     <h1>Blog Archive</h1>
     <div class="cards">
-      {sortedPosts.map((p) => (
-        <article class="card">
-          <a href={`/blog/${p.slug}/`}>
-            <img
-              class="frame"
-              src={p.data.thumbnail || "https://placehold.co/280x160?text=Thumbnail"}
-              alt={p.data.title}
-            />
-            <div class="card-body">
-              <div class="card-title">{p.data.title}</div>
-              <p class="card-text">{p.data.excerpt ?? ""}</p>
-            </div>
-          </a>
-        </article>
+      {sortedPosts.map((post) => (
+        <PostCard post={post} />
       ))}
     </div>
   </main>

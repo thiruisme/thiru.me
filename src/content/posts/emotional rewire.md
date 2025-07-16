@@ -2,6 +2,7 @@
 title: "When Eerie and Bleak Becomes Positive Emotion"
 datetime: 2025-07-13T17:30:00+05:30
 thumbnail: "/images/covers/blog02cover.webp"
+thumbnailAlt: "Abstract geometric illustration of a man with a beard and glasses on a green background. The artwork uses bold shapes and a limited color palette of green, black, beige, and white. The man’s face is stylized with asymmetrical eyes, angular hair, and zigzag lines near the temple suggesting thought or energy."
 excerpt: "Our emotional associations with moods and atmospheres can be transformed through positive experiences."
 tags:
   - Emotions
@@ -11,7 +12,6 @@ tags:
   - Reconditioning
 ---
 
-![Abstract geometric illustration of a man with a beard and glasses on a green background. The artwork uses bold shapes and a limited color palette of green, black, beige, and white. The man’s face is stylized with asymmetrical eyes, angular hair, and zigzag lines near the temple suggesting thought or energy.](/images/covers/blog02cover.webp)
 What dictates my mood the most? Weather. Due to childhood experiences, I always enjoy bright, clear blue skies (I still do). Something about the warm sun rays hitting my skin, the clear blue sky with beautiful fuzzy clouds of various shapes, and cool wind blowing against me is just so soothing... It makes me feel in the moment, feel alive, and always fills me with warmth, joy, and an immense sense of hope. Part of the reason for that might be my exposure to Carl Warner's absolutely breathtaking miniature food world series of photographs, which often featured a deep azure sky, and the fact that movies from my childhood that I enjoyed like Toy Story and Cars have similarly beautiful blue skies. So the association only became stronger.
 
 On the flip side, some emotions are there without any clear association, yet they still make me feel a certain way. Take overcast skies, for example. I don't like them. Like at all! They replace the beautiful sky with something that's not ugly (that would've been better) but something worse... boring. Boring white. It's as if the heavens are saying a "F* you" to me. I can't count the number of days I've felt unmotivated whenever the sky turned pale.

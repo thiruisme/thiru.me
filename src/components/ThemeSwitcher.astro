@@ -30,6 +30,9 @@ import { themes, themeNames, themeMetadata } from '../config/themes.js';
     const savedTheme = localStorage.getItem('theme') || 'default';
     applyTheme(savedTheme);
     updateActiveButton(savedTheme);
+    
+    // Dispatch initial theme event for hero image
+    window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: savedTheme } }));
 
     // Add click listeners
     themeButtons.forEach(button => {
@@ -38,6 +41,9 @@ import { themes, themeNames, themeMetadata } from '../config/themes.js';
         applyTheme(theme);
         updateActiveButton(theme);
         localStorage.setItem('theme', theme);
+        
+        // Dispatch custom event for hero image update
+        window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
       });
     });
 

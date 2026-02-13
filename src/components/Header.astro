@@ -5,30 +5,25 @@ export interface Props {
 const { current = "" } = Astro.props;
 ---
 <header class="header" transition:name="main-header">
-<!--  <img
-    src="/images/thiru-banner.webp"
-    alt="Thiru Logo"
-    style="height:48px; width:auto;"
-  /> -->
-  <nav transition:name="navigation">
+  <nav aria-label="Main navigation" transition:name="navigation">
     <ul>
       <li>
-        <a href="/" class={current === "home" ? "active" : ""}>
+        <a href="/" class={current === "home" ? "active" : ""} {...(current === "home" ? {"aria-current": "page"} : {})}>
           <span>Home</span>
         </a>
       </li>
       <li>
-        <a href="/blog" class={current === "blog" ? "active" : ""}>
+        <a href="/blog" class={current === "blog" ? "active" : ""} {...(current === "blog" ? {"aria-current": "page"} : {})}>
           <span>Blog</span>
         </a>
       </li>
       <li>
-        <a href="/links" class={current === "links" ? "active" : ""}>
+        <a href="/links" class={current === "links" ? "active" : ""} {...(current === "links" ? {"aria-current": "page"} : {})}>
           <span>Links</span>
         </a>
       </li>
       <li>
-        <a href="/contact" class={current === "contact" ? "active" : ""}>
+        <a href="/contact" class={current === "contact" ? "active" : ""} {...(current === "contact" ? {"aria-current": "page"} : {})}>
           <span>Contact</span>
         </a>
       </li>

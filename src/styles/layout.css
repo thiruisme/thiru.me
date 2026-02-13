@@ -1,0 +1,68 @@
+/*=================================
+  LAYOUT (SHELL, HEADER, FOOTER, GRIDS)
+=================================*/
+.shell {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--shell-width);
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: var(--shell-bg-light);
+  background-image:
+    linear-gradient(to right, var(--shell-bg-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--shell-bg-grid) 1px, transparent 1px);
+  background-size: var(--shell-grid-size) var(--shell-grid-size);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  background-color: var(--emerald-dark);
+}
+
+.content {
+  flex: 1;
+}
+
+.content,
+.blog {
+  padding: 24px;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.sidebar {
+  position: sticky;
+  top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+footer {
+  padding: 16px;
+  background: var(--footer-bg);
+  color: var(--footer-text);
+  font-size: .8rem;
+  text-align: center;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--accent-bot);
+  margin: 24px 0;
+}
+
+.homepage-divider {
+  margin: 0px;
+  visibility: hidden;
+}

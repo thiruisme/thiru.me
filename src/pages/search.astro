@@ -1,0 +1,150 @@
+---
+import Layout from "../components/Layout.astro";
+---
+
+<Layout title="Search – Thiru's Internet Corner" description="Search through all posts and pages." hero={true}>
+  <div class="search-container">
+    <h1>Search</h1>
+    <div id="search"></div>
+  </div>
+</Layout>
+
+<style>
+  .search-container {
+    max-width: 600px;
+    margin: 0 auto;
+    min-height: 400px;
+  }
+
+  .search-container h1 {
+    margin-bottom: 1.5rem;
+  }
+</style>
+
+<script is:inline>
+  async function loadPagefind() {
+    var searchEl = document.getElementById("search");
+    if (!searchEl || searchEl.dataset.loaded) return;
+    searchEl.dataset.loaded = "true";
+
+    var pagefind = await import("/pagefind/pagefind.js");
+    pagefind.init();
+
+    var input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "Search posts...";
+    input.className = "search-input";
+    input.setAttribute("aria-label", "Search posts");
+
+    var results = document.createElement("div");
+    results.className = "search-results";
+
+    searchEl.appendChild(input);
+    searchEl.appendChild(results);
+
+    var debounceTimer;
+
+    input.addEventListener("input", function() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(async function() {
+        var query = input.value.trim();
+        if (!query) {
+          results.innerHTML = "";
+          return;
+        }
+
+        var search = await pagefind.search(query);
+        var items = await Promise.all(
+          search.results.slice(0, 10).map(function(r) { return r.data(); })
+        );
+
+        if (items.length === 0) {
+          results.innerHTML = '<p class="no-results">No results found.</p>';
+          return;
+        }
+
+        results.innerHTML = items
+          .map(function(item) {
+            return '<a href="' + item.url + '" class="search-result">' +
+              '<h3>' + (item.meta && item.meta.title ? item.meta.title : "Untitled") + '</h3>' +
+              '<p>' + item.excerpt + '</p>' +
+              '</a>';
+          })
+          .join("");
+      }, 200);
+    });
+
+    input.focus();
+  }
+
+  document.addEventListener("DOMContentLoaded", loadPagefind);
+  document.addEventListener("astro:after-swap", loadPagefind);
+</script>
+
+<style is:global>
+  .search-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    font-size: 1.1rem;
+    font-family: "avenir-lt-pro", sans-serif;
+    border: 2px solid var(--accent-bot);
+    border-radius: var(--radius-md);
+    background: var(--card-bg);
+    color: var(--text-color);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--emerald-light);
+    box-shadow: 0 0 0 3px rgba(43, 122, 87, 0.15);
+  }
+
+  .search-results {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .search-result {
+    display: block;
+    padding: 1rem;
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .search-result:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .search-result h3 {
+    color: var(--heading-color);
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .search-result p {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .search-result mark {
+    background: rgba(167, 245, 66, 0.3);
+    color: inherit;
+    padding: 0 2px;
+    border-radius: 2px;
+  }
+
+  .no-results {
+    color: var(--text-color);
+    font-style: italic;
+    text-align: center;
+    padding: 2rem 0;
+  }
+</style>

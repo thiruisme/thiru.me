@@ -1,6 +1,7 @@
 ---
 // 1️⃣ Imports + Static Paths
 import Layout from "../../components/Layout.astro";
+import PostCard from "../../components/PostCard.astro";
 import { getCollection, getEntryBySlug, render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -17,6 +18,10 @@ if (!post) throw new Error(`Post not found: ${slug}`);
 
 const desc = post.data.excerpt || post.data.title;
 const { Content } = await render(post);
+
+// Reading time calculation
+const wordCount = post.body?.split(/\s+/).length ?? 0;
+const readingTime = Math.max(1, Math.ceil(wordCount / 230));
 
 // Format date and time
 const postDate = new Date(post.data.datetime);
@@ -35,6 +40,44 @@ const timeOptions: Intl.DateTimeFormatOptions = {
 
 const formattedDate = postDate.toLocaleDateString('en-IN', dateOptions);
 const formattedTime = postDate.toLocaleTimeString('en-IN', timeOptions);
+
+// Related posts (by overlapping tags)
+const allPosts = await getCollection("posts");
+const currentTags = post.data.tags ?? [];
+const relatedPosts = allPosts
+  .filter(p => p.slug !== post.slug)
+  .map(p => ({
+    post: p,
+    overlap: (p.data.tags ?? []).filter(t => currentTags.includes(t)).length,
+  }))
+  .filter(p => p.overlap > 0)
+  .sort((a, b) => b.overlap - a.overlap)
+  .slice(0, 3)
+  .map(p => p.post);
+
+// JSON-LD structured data
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: post.data.title,
+  description: desc,
+  datePublished: post.data.datetime.toISOString(),
+  author: {
+    "@type": "Person",
+    name: "Thiru N",
+    url: "https://thiru.me",
+  },
+  publisher: {
+    "@type": "Person",
+    name: "Thiru N",
+  },
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": `https://thiru.me/blog/${slug}/`,
+  },
+  ...(post.data.thumbnail ? { image: post.data.thumbnail } : {}),
+  wordCount,
+};
 ---
 
 <style>
@@ -62,6 +105,20 @@ const formattedTime = postDate.toLocaleTimeString('en-IN', timeOptions);
   .post-meta time {
     display: inline-block;
   }
+
+  .reading-time {
+    color: #888;
+  }
+
+  .related-posts {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--accent-bot);
+  }
+
+  .related-posts h2 {
+    margin-bottom: 1rem;
+  }
   
   .blog-hero-image {
     margin: 2rem 0;
@@ -86,7 +143,7 @@ const formattedTime = postDate.toLocaleTimeString('en-IN', timeOptions);
   }
 </style>
 
-<Layout current="blog" hero={true} title={`${post.data.title} – Thiru's Internet Corner`} description={desc}>
+<Layout current="blog" hero={true} title={`${post.data.title} – Thiru's Internet Corner`} description={desc} ogImage={post.data.thumbnail} jsonLd={jsonLd}>
   <!-- ✅ New container DIV with the main styling class -->
   <div class="blog-post-container prose-blog">
     
@@ -109,6 +166,7 @@ const formattedTime = postDate.toLocaleTimeString('en-IN', timeOptions);
       <time datetime={post.data.datetime.toISOString()}>
         {formattedDate} at {formattedTime}
       </time>
+      <span class="reading-time">&nbsp;&middot;&nbsp;{readingTime} min read</span>
     </p>
     {post.data.tags && (
       <>
@@ -129,6 +187,17 @@ const formattedTime = postDate.toLocaleTimeString('en-IN', timeOptions);
       <Content />
     </article>
     
+    {relatedPosts.length > 0 && (
+      <section class="related-posts">
+        <h2>Related Posts</h2>
+        <div class="cards">
+          {relatedPosts.map((p) => (
+            <PostCard post={p} />
+          ))}
+        </div>
+      </section>
+    )}
+
     <div class="back-button">
       <a href="/blog/">← Back to Blog</a>
     </div>

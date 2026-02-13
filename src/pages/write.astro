@@ -2,7 +2,7 @@
 import Layout from "../components/Layout.astro";
 ---
 
-<Layout current="" title="Write Blog Post – Thiru's Internet Corner" description="A cozy digital notebook for writing blog posts">
+<Layout current="" title="Write Blog Post – Thiru's Internet Corner" description="A cozy digital notebook for writing blog posts" noindex={true}>
   <main class="content">
     <div class="writer-container">
       <div class="writer-header">
@@ -1016,17 +1016,13 @@ function generateMarkdown() {
   const thumbnail = document.getElementById('post-thumbnail').value || '/images/covers/placeholder.jpg';
   const excerpt = document.getElementById('post-excerpt').value || '';
   
+  // Create datetime in IST (UTC+5:30)
+  const timeStr = time || '00:00';
+  const datetime = new Date(`${date}T${timeStr}+05:30`);
+
   let frontmatter = '---\n';
   frontmatter += `title: "${title}"\n`;
-  frontmatter += `date: ${date}\n`;
-  
-  // Add datetime if time is provided
-  if (time) {
-    // Create datetime in IST (UTC+5:30)
-    const datetime = new Date(`${date}T${time}+05:30`);
-    frontmatter += `datetime: ${datetime.toISOString()}\n`;
-  }
-  
+  frontmatter += `datetime: ${datetime.toISOString()}\n`;
   frontmatter += `thumbnail: "${thumbnail}"\n`;
   frontmatter += `excerpt: "${excerpt}"\n`;
   if (tags.length > 0) {

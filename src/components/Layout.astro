@@ -3,7 +3,14 @@ import Header from "./Header.astro";
 import Footer from "./Footer.astro";
 import { Image } from 'astro:assets';
 import { ViewTransitions } from 'astro:transitions';
-import "../styles/global.css";
+import "../styles/reset.css";
+import "../styles/variables.css";
+import "../styles/typography.css";
+import "../styles/layout.css";
+import "../styles/components.css";
+import "../styles/prose.css";
+import "../styles/transitions.css";
+import "../styles/responsive.css";
 
 // Import hero images
 import heroDesktop from '../images/hero-desktop.webp';
@@ -18,13 +25,23 @@ export interface Props {
   current?: "home" | "blog" | "tags" | "links" | "contact";
   hero?: boolean;
   description?: string;
+  ogImage?: string;
+  jsonLd?: Record<string, unknown>;
+  noindex?: boolean;
 }
 const {
   title   = "Thiru's Internet Corner",
   current,
   description,
-  hero    = true
+  hero    = true,
+  ogImage,
+  jsonLd,
+  noindex = false,
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = ogImage ? new URL(ogImage, Astro.site).href : new URL("/images/og-default.webp", Astro.site).href;
+const metaDescription = description || "Designer, filmmaker, and explorer of ideas. A cozy internet corner for design, ideas, and quiet pondering.";
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -33,10 +50,30 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#2b7a57" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="canonical" href={canonicalURL} />
     <link rel="stylesheet" href="https://use.typekit.net/qft7ovr.css" />
     <link rel="alternate" type="application/rss+xml" title="Thiru's Internet Corner" href="/rss.xml" />
     <link rel="manifest" href="/manifest.json" />
-    {description && <meta name="description" content={description} />}
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="description" content={metaDescription} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:site_name" content="Thiru's Internet Corner" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
     <title>{title}</title>
     <ViewTransitions fallback="animate" />
   </head>

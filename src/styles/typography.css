@@ -1,0 +1,86 @@
+/*=================================
+  BASE & TYPOGRAPHY
+=================================*/
+
+@font-face {
+  font-family: 'Prose';
+  src: url('/fonts/prose-body.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+  font-size: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scrollbar-gutter: stable;
+}
+
+body {
+  color: var(--text-color);
+  font: 1rem/1.6 "avenir-lt-pro", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  background-color: var(--body-bg);
+  opacity: 1;
+  background-image: linear-gradient(var(--body-grid) 1.5px, transparent 1.5px), linear-gradient(to right, var(--body-grid) 1.5px, var(--body-bg) 1.5px);
+  background-size: 30px 30px;
+  background-attachment: fixed, fixed;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--heading-color);
+  font-family: "aesthet-nova", serif;
+  font-style: normal;
+  font-weight: 400;
+  text-wrap: balance;
+  -webkit-text-wrap: balance;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 1.4rem;
+  margin: 24px 0 8px;
+}
+
+p {
+  margin-block-start: 0;
+  margin-block-end: 1rem;
+}
+
+em,
+.italic {
+  font-style: italic;
+}
+
+strong,
+.bold {
+  font-weight: 700;
+}
+
+.italic.bold {
+  font-style: italic;
+  font-weight: 700;
+}
+
+::selection {
+  background-color: var(--accent-bot);
+  color: #fff;
+  text-shadow: none;
+}
+
+::-moz-selection {
+  background-color: var(--accent-bot);
+  color: #fff;
+  text-shadow: none;
+}

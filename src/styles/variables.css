@@ -1,0 +1,57 @@
+/*=================================
+  ROOT VARIABLES
+=================================*/
+:root {
+  /* Colors */
+  --emerald-dark: #1b4d3e;
+  --emerald-light: #2b7a57;
+  --accent-top: #a7f542;
+  --accent-bot: #5db92c;
+  --text-color: #222;
+  --heading-color: #0f623b;
+  --footer-bg: #dcefd9;
+  --footer-text: #225327;
+
+  /* Shell Grid Background */
+  --shell-bg-light: #e8f5e9;
+  --shell-bg-grid: #dceedc;
+  --shell-grid-size: 20px;
+
+  /* Theme-specific colors */
+  --emerald-light-rgb: 43, 122, 87;
+  --nav-hover-border: #a7f542;
+  --nav-inactive-border: #5db92c;
+  --body-bg: #1b4d3e;
+  --body-grid: #2B7A57;
+  --card-bg: #f5fff4;
+  --card-hover-bg: #1b4d3e;
+  --nav-tab-bg: #dcefd9;
+  --nav-tab-active-bg: #e8f5e9;
+  --blockquote-bg: #ffffff;
+  --h-card-bg: #F5FFF4;
+  --h-card-pattern: #e9fae7;
+  --mail-form-bg: #fcf8f3;
+  --code-bg: #efefef;
+  --pre-bg: #111;
+  --pre-color: #d6ffdb;
+  --table-header-bg: #e2f2e3;
+
+  /* Layout */
+  --shell-width: 960px;
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+
+  /* Navigation offsets */
+  --nav-offset: -61px;
+  --nav-offset-mobile: -56px;
+}

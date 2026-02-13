@@ -76,6 +76,10 @@
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
+
+  /* Navigation offsets */
+  --nav-offset: -61px;
+  --nav-offset-mobile: -56px;
 }
 
 /*=================================
@@ -262,7 +266,7 @@ nav {
   width: 100%;
   color: var(--heading-color);
   white-space: nowrap;
-  margin-top: -61px;
+  margin-top: var(--nav-offset);
 }
 
 nav ul {
@@ -1039,7 +1043,7 @@ font-weight: 300;
   }
 
   nav {
-    margin-top: -56px;
+    margin-top: var(--nav-offset-mobile);
   }
     .homepage-content {
     padding-bottom: 0px;

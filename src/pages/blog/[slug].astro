@@ -143,7 +143,7 @@ const jsonLd = {
   }
 </style>
 
-<Layout current="blog" hero={true} title={`${post.data.title} – Thiru's Internet Corner`} description={desc} ogImage={post.data.thumbnail} jsonLd={jsonLd}>
+<Layout current="blog" hero={true} title={`${post.data.title} – Thiru's Internet Corner`} description={desc} ogImage={`/og/${slug}.png`} jsonLd={jsonLd} ogType="article" publishedTime={post.data.datetime.toISOString()}>
   <!-- ✅ New container DIV with the main styling class -->
   <div class="blog-post-container prose-blog">
     
@@ -152,7 +152,7 @@ const jsonLd = {
     </div>
     
     {post.data.thumbnail && (
-      <div class="blog-hero-image">
+      <div class="blog-hero-image" transition:name={`blog-card-${post.slug}`}>
         <img
           src={post.data.thumbnail}
           alt={post.data.thumbnailAlt || post.data.title}

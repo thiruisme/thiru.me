@@ -2,20 +2,33 @@
 import Layout from "../components/Layout.astro";
 ---
 
-<Layout 
-  title="404 - Page Not Found | Thiru's Internet Corner" 
+<Layout
+  title="404 - Page Not Found | Thiru's Internet Corner"
   hero={true}
   description="The page you're looking for doesn't exist. Explore other sections of Thiru's Internet Corner."
+  noindex={true}
 >
   <div class="error-page">
     <div class="error-content">
-      <h1 class="error-code">404</h1>
-      <h2 class="error-message">Page Not Found</h2>
+      <div class="error-code-wrapper">
+        <span class="error-digit" style="--wobble-delay: 0s;">4</span>
+        <span class="error-digit zero" style="--wobble-delay: 0.15s;">0</span>
+        <span class="error-digit" style="--wobble-delay: 0.3s;">4</span>
+      </div>
+      <h2 class="error-message">This page wandered off...</h2>
       <p class="error-description">
-        The page you're looking for seems to have wandered off into the digital void. 
-        Perhaps it's exploring new dimensions of the internet, or maybe it just never existed.
+        Looks like this letter got lost in the mail.
+        The page you're looking for might have been moved, renamed,
+        or maybe it was just a daydream.
       </p>
-      
+
+      <div class="doodle-area">
+        <p class="doodle-hint">~ hover for a secret ~</p>
+        <div class="doodle">
+          <span class="doodle-text">but while you're here... hi! thanks for exploring my little corner of the web.</span>
+        </div>
+      </div>
+
       <div class="error-actions">
         <a href="/" class="error-link primary">Go Home</a>
         <a href="/blog" class="error-link">Browse Blog</a>
@@ -39,26 +52,100 @@ import Layout from "../components/Layout.astro";
     max-width: 600px;
   }
 
-  .error-code {
-    font-size: 8rem;
+  .error-code-wrapper {
+    display: inline-flex;
+    gap: 0.2em;
+    margin-bottom: 0.5rem;
+  }
+
+  .error-digit {
+    display: inline-block;
+    font-size: 7rem;
     font-weight: bold;
     color: var(--emerald-light);
-    margin: 0;
     line-height: 1;
+    animation: wobble 3s ease-in-out infinite;
+    animation-delay: var(--wobble-delay);
+  }
+
+  .error-digit.zero {
+    color: var(--accent-bot);
+    animation-name: wobble-alt;
+  }
+
+  @keyframes wobble {
+    0%, 100% { transform: rotate(-2deg) translateY(0); }
+    25% { transform: rotate(1deg) translateY(-4px); }
+    50% { transform: rotate(-1deg) translateY(2px); }
+    75% { transform: rotate(2deg) translateY(-2px); }
+  }
+
+  @keyframes wobble-alt {
+    0%, 100% { transform: rotate(2deg) translateY(0); }
+    25% { transform: rotate(-1deg) translateY(3px); }
+    50% { transform: rotate(1.5deg) translateY(-3px); }
+    75% { transform: rotate(-2deg) translateY(1px); }
   }
 
   .error-message {
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: var(--heading-color);
     margin: 1rem 0;
     font-weight: normal;
+    font-style: italic;
   }
 
   .error-description {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: var(--text-color);
     line-height: 1.6;
-    margin: 2rem 0;
+    margin: 1.5rem 0;
+  }
+
+  /* Doodle easter egg area */
+  .doodle-area {
+    margin: 2rem auto;
+    max-width: 320px;
+    position: relative;
+  }
+
+  .doodle-hint {
+    font-size: 0.85rem;
+    color: var(--accent-bot);
+    opacity: 0.6;
+    font-style: italic;
+    animation: pulse-hint 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-hint {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+  }
+
+  .doodle {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s ease, padding 0.6s ease;
+    padding: 0 1.5rem;
+  }
+
+  .doodle-area:hover .doodle {
+    max-height: 120px;
+    padding: 1rem 1.5rem;
+  }
+
+  .doodle-area:hover .doodle-hint {
+    animation: none;
+    opacity: 0.3;
+  }
+
+  .doodle-text {
+    display: block;
+    font-family: "adobe-handwriting-ernie", cursive;
+    font-size: 1.2rem;
+    color: var(--emerald-dark);
+    line-height: 1.5;
+    transform: rotate(-1deg);
   }
 
   .error-actions {
@@ -97,20 +184,30 @@ import Layout from "../components/Layout.astro";
     color: var(--emerald-dark);
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .error-digit {
+      animation: none;
+    }
+    .doodle-hint {
+      animation: none;
+      opacity: 0.6;
+    }
+  }
+
   @media (max-width: 600px) {
-    .error-code {
+    .error-digit {
       font-size: 5rem;
     }
-    
+
     .error-message {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
     }
-    
+
     .error-actions {
       flex-direction: column;
       align-items: center;
     }
-    
+
     .error-link {
       width: 200px;
       text-align: center;

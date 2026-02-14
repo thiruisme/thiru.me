@@ -24,6 +24,23 @@
   padding: 0;
 }
 
+/* Skip-to-content link (accessibility) */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 1000;
+  padding: 0.5rem 1rem;
+  background: var(--heading-color, #0f623b);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 0 0 0.25rem 0.25rem;
+}
+.skip-link:focus {
+  top: 0;
+}
+
 /*=================================
   2. ROOT VARIABLES
 =================================*/
@@ -87,11 +104,51 @@
 =================================*/
 
 @font-face {
-  font-family: 'Prose';
-  src: url('/fonts/prose-body.woff2') format('woff2');
-  font-weight: normal;
+  font-family: 'Atkinson Hyperlegible';
+  src: url('/fonts/WOFF2/AtkinsonHyperlegibleNext-Regular.woff2') format('woff2');
+  font-weight: 400;
   font-style: normal;
-  font-display: swap; /* Improves loading performance */
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('/fonts/WOFF2/AtkinsonHyperlegibleNext-RegularItalic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('/fonts/WOFF2/AtkinsonHyperlegibleNext-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('/fonts/WOFF2/AtkinsonHyperlegibleNext-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('/fonts/WOFF2/AtkinsonHyperlegibleNext-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('/fonts/WOFF2/AtkinsonHyperlegibleNext-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
 }
 
 html {
@@ -114,9 +171,11 @@ body {
   /* Typography */
   color: var(--text-color);
   /* Use rem for font-size for better accessibility scaling */
-  font: 1rem/1.6 "avenir-lt-pro", sans-serif;
+  font: 1rem/1.6 "Atkinson Hyperlegible", sans-serif;
   font-style: normal;
   font-weight: 400;
+  /* Custom pen cursor */
+  cursor: url('/cursors/pen.svg') 1 22, auto;
   /* Visuals */
 background-color: var(--body-bg);
 opacity: 1;
@@ -622,7 +681,7 @@ textarea {
   margin-inline: auto;
   /* Use logical property for center-alignment */
   color: var(--text-color);
-  font-size: var(--step-0);
+  font-size: 18px;
   /* Slightly increased line-height for better readability */
   line-height: 1.65;
 
@@ -666,7 +725,7 @@ textarea {
 
 .prose-blog p {
 color: var(--emerald-dark);
-font-weight: 300;
+font-weight: 400;
 }
 
 /* 2️⃣ Paragraphs, Lists & Spacing */
@@ -708,7 +767,7 @@ font-weight: 300;
   background-color: var(--blockquote-bg);
   background-image: linear-gradient(to bottom, var(--shell-bg-grid) 1px, transparent 1px);
   background-size: auto var(--shell-grid-size);
-  font-size: var(--step-0);
+  font-size: 18px;
   font-style: italic;
   box-shadow: 3px 4px 6px rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.2s ease-out;

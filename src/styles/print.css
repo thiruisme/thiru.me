@@ -1,0 +1,134 @@
+/*=================================
+  PRINT STYLES
+=================================*/
+@media print {
+  /* Hide non-essential elements */
+  nav,
+  footer,
+  .hero,
+  .sidebar,
+  .theme-switcher,
+  .back-button,
+  .related-posts,
+  .error-actions,
+  .search-container,
+  #footer-links {
+    display: none !important;
+  }
+
+  /* Reset body background */
+  body {
+    background: white !important;
+    background-image: none !important;
+    color: #000 !important;
+    font-size: 12pt;
+    cursor: auto !important;
+  }
+
+  /* Reset shell */
+  .shell {
+    max-width: 100% !important;
+    box-shadow: none !important;
+    background: white !important;
+    background-image: none !important;
+  }
+
+  /* Content area */
+  .content,
+  .blog {
+    padding: 0 !important;
+  }
+
+  /* Blog post styles */
+  .blog-post-container {
+    max-width: 100% !important;
+  }
+
+  .prose-blog {
+    max-width: 100% !important;
+    font-size: 12pt;
+    color: #000 !important;
+  }
+
+  .prose-blog p {
+    color: #000 !important;
+  }
+
+  .prose-blog h1,
+  .prose-blog h2,
+  .prose-blog h3,
+  .prose-blog h4,
+  .prose-blog h5,
+  .prose-blog h6 {
+    color: #000 !important;
+    page-break-after: avoid;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #000 !important;
+  }
+
+  /* Avoid breaking inside these */
+  .card,
+  blockquote,
+  img,
+  pre,
+  table {
+    page-break-inside: avoid;
+  }
+
+  /* Show link URLs after links in blog content */
+  .prose-blog a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #555;
+  }
+
+  .prose-blog a[href^="#"]::after,
+  .prose-blog a[href^="javascript:"]::after {
+    content: "";
+  }
+
+  /* Blog hero image */
+  .blog-hero-image {
+    box-shadow: none !important;
+  }
+
+  /* Blockquotes */
+  .prose-blog blockquote {
+    box-shadow: none !important;
+    border-left: 3px solid #000;
+    background: none !important;
+    background-image: none !important;
+    padding-left: 1rem;
+  }
+
+  .prose-blog blockquote::before {
+    display: none;
+  }
+
+  /* H-card: simplify */
+  .h-card {
+    background: none !important;
+    border: 1px solid #ccc;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  /* Code blocks */
+  .prose-blog pre {
+    background: #f5f5f5 !important;
+    color: #000 !important;
+    border: 1px solid #ccc;
+  }
+
+  /* Cards grid: single column */
+  .cards {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Home grid: single column */
+  .home-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

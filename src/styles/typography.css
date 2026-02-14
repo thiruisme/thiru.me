@@ -2,14 +2,6 @@
   BASE & TYPOGRAPHY
 =================================*/
 
-@font-face {
-  font-family: 'Prose';
-  src: url('/fonts/prose-body.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 html {
   font-size: 100%;
   -webkit-font-smoothing: antialiased;
@@ -19,7 +11,7 @@ html {
 
 body {
   color: var(--text-color);
-  font: 1rem/1.6 "avenir-lt-pro", sans-serif;
+  font: 1rem/1.6 "Atkinson Hyperlegible", sans-serif;
   font-style: normal;
   font-weight: 400;
   background-color: var(--body-bg);

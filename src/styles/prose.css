@@ -16,13 +16,17 @@
   max-width: 68ch;
   margin-inline: auto;
   color: var(--text-color);
-  font-size: var(--step-0);
-  line-height: 1.7;
+  font-size: 18px;
+  line-height: 1.55;
 
   /* Typographic Polish */
   font-feature-settings: "liga", "kern";
+  font-optical-sizing: auto;
+  font-variant-numeric: proportional-nums;
+  letter-spacing: -0.01em;
   text-wrap: pretty;
   -webkit-text-wrap: pretty;
+  hanging-punctuation: first last;
   hyphens: auto;
   -webkit-hyphens: auto;
   -ms-hyphens: auto;
@@ -37,30 +41,33 @@
 .prose-blog h1 {
   font-size: var(--step-4);
   line-height: 1.15;
+  letter-spacing: -0.03em;
   margin-block: 2.5rem 1.5rem;
 }
 
 .prose-blog h2 {
   font-size: var(--step-3);
   line-height: 1.25;
+  letter-spacing: -0.025em;
   margin-block: 2.5rem 1rem;
 }
 
 .prose-blog h3 {
   font-size: var(--step-2);
   line-height: 1.3;
+  letter-spacing: -0.02em;
   margin-block: 2rem 0.5rem;
 }
 
 .prose-blog p {
   color: var(--emerald-dark);
-  font-weight: 300;
+  font-weight: 400;
 }
 
 /* Paragraphs, Lists & Spacing */
 .prose-blog :is(p, ol, ul, blockquote, pre, table) {
   margin-block-start: 0;
-  margin-block-end: 1.25rem;
+  margin-block-end: 1.75rem;
 }
 
 .prose-blog :is(h1, h2, h3, h4, h5, h6)+* {
@@ -91,7 +98,7 @@
   background-color: var(--blockquote-bg);
   background-image: linear-gradient(to bottom, var(--shell-bg-grid) 1px, transparent 1px);
   background-size: auto var(--shell-grid-size);
-  font-size: var(--step-0);
+  font-size: 18px;
   font-style: italic;
   box-shadow: 3px 4px 6px rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.2s ease-out;

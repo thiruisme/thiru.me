@@ -1,6 +1,30 @@
 /*=================================
   LAYOUT (SHELL, HEADER, FOOTER, GRIDS)
 =================================*/
+
+/* Skip-to-content link — slides in from top on keyboard focus */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  z-index: 9999;
+  padding: 0.6rem 1.5rem;
+  background: var(--emerald-dark);
+  color: var(--accent-top);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 6px 6px;
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: translateX(-50%) translateY(0);
+  outline: 2px solid var(--accent-top);
+  outline-offset: 2px;
+}
+
 .shell {
   display: flex;
   flex-direction: column;

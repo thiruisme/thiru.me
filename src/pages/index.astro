@@ -12,6 +12,37 @@ import authorPhotoLinkedin from '../images/author-photo-linkedin.webp';
 import authorPhotoGithub from '../images/author-photo-github.webp';
 
 const homepageDesc = "Designer, filmmaker, and explorer of ideas. I tinker, tell stories, build things from scratch, and chase the eerie, the beautiful, and the deeply human."
+
+const homepageJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "Thiru's Internet Corner",
+      "url": "https://thiru.me",
+      "description": homepageDesc,
+      "author": { "@id": "https://thiru.me/#person" },
+    },
+    {
+      "@type": "Person",
+      "@id": "https://thiru.me/#person",
+      "name": "Thiru N",
+      "url": "https://thiru.me",
+      "jobTitle": "Co-founder",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Spica Designwork",
+      },
+      "sameAs": [
+        "https://instagram.com/thiru.me",
+        "https://www.behance.net/thirun2",
+        "https://linkedin.com/in/nthiru/",
+        "https://github.com/thiruisme",
+      ],
+    },
+  ],
+};
+
 const posts = await getCollection("posts");
 
 // Build tag frequency map
@@ -32,7 +63,7 @@ const popularTags = Array.from(tagMap.entries())
   .slice(0, 10);
 ---
 
-<Layout current="home" hero={true} title="Thiru's Internet Corner – Home" description={homepageDesc}>
+<Layout current="home" hero={true} title="Thiru's Internet Corner – Design, Ideas & Quiet Pondering" description={homepageDesc} jsonLd={homepageJsonLd}>
   <div class="home-grid">
     <!-- MAIN COLUMN -->
     <main class="content homepage-content">
